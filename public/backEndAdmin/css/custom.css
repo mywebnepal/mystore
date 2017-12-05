@@ -1,0 +1,36 @@
+html{
+	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust:     100%;
+    text-rendering: optimizeLegibility;
+   -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+body {
+ font-family:"Helvetica Neue",Helvetica,Arial,sans-serif !important;
+	-webkit-text-size-adjust: 100%;
+	-ms-text-size-adjust:     100%;
+}
+#ribbon ol{
+	margin-left: -5em !important;
+	float: left;
+}
+.error{
+	color: red;
+}
+#content{
+	margin-left: 7px !important;
+	margin-right: 7px !important;
+}
+#demo-setting{
+	max-width: 250px;
+	padding: 7px 20px;
+	background: yellow;
+	cursor: pointer;
+}
+.admin_user_name{
+	padding: 7px;
+	text-transform: uppercase;
+	color: #FFF;
+}
