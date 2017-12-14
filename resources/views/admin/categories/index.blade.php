@@ -4,13 +4,43 @@
          <div class="panel-title">
              <div class="row">
                  <div class="col-sm-12">
+                 @if(Session::has('message'))
+                     <div class="row errMsg" style="margin:1em;">
+                         <div class="alert alert-success">
+                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                             {!! Session::get('message') !!}
+                         </div>
+                     </div>
+                 @endif
                      <div class="col-sm-6"><h4>List of Categories</h4></div>
                      <div class="col-sm-6">
-                         <a href="" type="button" class="btn btn-success pull-right">Add New Categories</a>
+                        <button class="btn btn-primary addBtn pull-right">Add New Categories</button>
                      </div>
                  </div>
-                 <div class="col-sm-12 category-display-form">
+                 <div class="col-sm-12 category-display-form" style="display: none;">
+                       <div role="content" class="categoryForm">
+                            {{ Form::open(['route'=>'sisadmin.categories.store', 'method' => 'post', 'class'=>'form-inline']) }}
+                                    <fieldset>
+                                        <div class="form-group col-sm-4">
+                                            {{ Form::text('name', null, array('placeholder'=>'Category Name', 'class'=>'form-control')) }}
+                                        </div>
+                                        <div class="form-group col-sm-4">
+                                            {{ Form::text('slug', null, array('placeholder'=>'category slug', 'class'=>'form-control')) }}
+                                        </div>
 
+                                        <div class="form-group col-sm-4">
+                                           {{ Form::text('description', null, array('placeholder'=>'Short description', 'class'=>'form-control')) }}
+                                        
+                                        <p class="pull-right">
+                                            <button type="submit" class="btn btn-primary">
+                                            Ssve category
+                                        </button>
+                                        </p>
+                                       </div>
+                                    </fieldset>
+                               {{ Form::close() }}
+                            </div>
+                        </div>
                  </div>
              </div>
          </div>
@@ -26,27 +56,46 @@
                     </tr>
                  </thead>
                  <tbody>
+
+                    @if($data)
+                   <?php $count = 1;    ?>
+                    @foreach($data as $cat)
                     <tr>
-                        <td>1</td>
-                        <td>Clothes</td>
-                        <td>clothes</td>
-                        <td>this just for desgin testing</td>
+                        <td><?php echo $count ++;  ?></td>
+                        <td>{{ $cat->name }}</td>
+                        <td>{{ $cat->slug }}</td>
+                        <td>{{ $cat->description }}</td>
                         <td>
                             <button class="btn btn-info btn-sm">Edit</button>
-                            <button class="btn btn-danger btn-sm">Delete</button>
+
+                             <a href="#" class="txt-color-red deleteMe" data-user="{{ json_encode( $cat) }}"
+                                       data-url="{!! route('sisadmin.categories.delete', $cat->id) !!}" title="{{ 'delete category' }}">
+                                        <i class="fa fa-fw fa-lg fa-trash-o deletebutton"> </i> </a>
                         </td>
                     </tr>
+                    @endforeach
+                    @else
+                    <h3>Oops there is no category</h3>
+                    @endif
                  </tbody>
              </table>
-         </div>
-         <div class="panel-body">
-
+                    {{ $data->links()}}
          </div>
      </div>
 @endsection
 @section('custom_script')
-    <script>
-        alert('i am working here');
-    </script>
-    {{--@include('categories.validation');--}}
+   <script type="text/javascript">
+      var categoryForm = $('.category-display-form');
+      var addBtn       = $('.addBtn');
+      addBtn.on('click', function(){
+       categoryForm.toggle();
+      });
+
+      var catDel = $('.catDel');
+
+
+
+
+      /**/
+   </script>
 @endsection

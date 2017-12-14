@@ -34,3 +34,46 @@ body {
 	text-transform: uppercase;
 	color: #FFF;
 }
+.categoryForm {
+  width: 100%;
+  height: auto;
+  padding: 1em 2em;
+  float: right;
+
+}
+.categoryForm .form-inline input{
+ width: 100% !important;
+ font-size: 18px;
+}
+
+.addProductForm  .form-inline input{
+ width: 100% !important;
+ font-size: 18px;
+}
+
+.addProductForm  .form-inline textarea{
+ width: 100% !important;
+ font-size: 18px;
+}
+
+.addProductForm  .form-group select{
+	border-left: 0px;
+	border-right: 0px !important;
+	border-top: 0px;
+	width: 100%;
+	padding: 0px;
+	border-bottom: 1px solid #CCC;
+	width: 100%;
+	padding: 5px 0px;
+}
+.addProductForm .form-group{
+	margin-bottom: 1em !important;
+	width: 100% !important;
+}
+.addProductForm .form-group input{
+	width: 100% !important;
+}
+
+.addProductForm .form-group textarea{
+	width: 100% !important;
+}

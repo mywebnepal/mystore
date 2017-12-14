@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Requests\admin\CategoriesValidation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\models\category;
 
 class CategoriesController extends Controller
 {
@@ -21,10 +22,18 @@ class CategoriesController extends Controller
     
     public function index()
     {
-        $page_title = 'mywebnepal | list categories';
-        $page_description = 'mywebnepal | list categories';
+        $page['page_title']       = 'mywebnepal | list categories';
+        $page['page_description'] = 'mywebnepal | list categories';
 
-        return view('admin/categories.index');
+        $data = category::paginate(10);
+
+        if ($data) {
+           return view('admin/categories.index', compact('page', 'data'));
+        }else{
+           return view('admin/categories.index', compact('page'));
+        }
+        
+
     }
 
     /**
@@ -47,7 +56,19 @@ class CategoriesController extends Controller
      */
     public function store(CategoriesValidation $request)
     {
-        //
+        $store = category::create([
+            'name'        =>$request->name,
+            'slug'        => $request->slug,
+            'description' =>$request->description
+            ]);
+
+        if ($store) {
+            return back()->withMessage('successfully create');
+        }else{
+            return back()->withMessage('Oops Category is not created');
+        }
+
+        
     }
 
     /**
@@ -92,6 +113,10 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        dd('ia ma sdf');
+        if ($id) {
+            category::findOrFail($id)->delete();
+            return back()->withMessage('successfully delete data');
+        }
     }
 }

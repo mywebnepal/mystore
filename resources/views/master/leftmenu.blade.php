@@ -139,10 +139,10 @@
 						<a href="#"><i class="fa fa-lg fa-fw fa-desktop"></i> <span class="menu-item-parent">Product</span></a>
 						<ul>
 							<li>
-								<a href="general-elements.html">Category</a>
+								<a href="{{ route('sisadmin.categories.index') }}">Category</a>
 							</li>
 							<li>
-								<a href="buttons.html">Buttons</a>
+								<a href="{{ route('sisadmin.products.index') }}">Product</a>
 							</li>
 							<li>
 								<a href="#">Icons</a>

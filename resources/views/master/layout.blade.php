@@ -30,7 +30,6 @@
 	</head>
 	<body class="smart-style-6">
 
-		<!-- HEADER -->
 		<div class="row">
 			<div class="col-sm-12 col-md-12 col-lg-12">@include('master.deshboard_header')</div>
 		</div>
@@ -53,13 +52,17 @@
 			<!-- ending of bradcumb -->
 			<div id="content">
 			     @yield('modelView')
+			     @include('admin.partials.error')
 				 @yield('content')
 			</div>
 			<!-- END MAIN CONTENT -->
 
 		</div>
 		<!-- END MAIN PANEL -->
+		<div class="container-fluid">
 			@include('master.footer')
+			@include('admin.partials.script')
 			@yield('custom_script')
+		</div>
 	</body>
 </html>

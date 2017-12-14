@@ -1,12 +1,13 @@
 		<!-- PAGE FOOTER -->
-		<div class="page-footer">
+		<div class="clearfix"></div>
+		<div class="page-footer" style="width: 100%; height: auto;">
 			<div class="row">
 				<div class="col-xs-12 col-sm-6">
-					<span class="txt-color-white">School Management System <span class="hidden-xs"> - Web Application</span> © 2017-2020</span>
+					<span class="txt-color-white">mywebnepal <span class="hidden-xs"> - Online store application</span> © 2017-2020</span>
 				</div>
 
 				<div class="col-xs-6 col-sm-6 text-right hidden-xs">
-					sfd
+					mywebnepal.com
 				</div>
 			</div>
 		</div>

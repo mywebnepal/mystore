@@ -17,9 +17,11 @@
     <title>Ecommerce</title>
 </head>
 <body>
-@include('inc.header')
-@yield('content')
-@include('inc.footer')
-@include('inc.script')
+<div id="app">
+    @include('inc.header')
+    @yield('content')
+    @include('inc.footer')
+    @include('inc.script')
+</div>
 </body>
 </html>

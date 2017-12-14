@@ -13,7 +13,7 @@ class CategoriesValidation extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class CategoriesValidation extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|unique:categories|min:4|max:100',
+            'slug' => 'required'
         ];
     }
 }
