@@ -73,46 +73,22 @@ class ProductsController extends Controller
 
         if ($request->hasFile('featured_img')) {
            $imgFile = $request->file('featured_img');
-           $filename = time() . '.' . $imgFile->getClientOriginalExtension();
-           $lgImgPath = public_path('product_image/lg_image/');
-           $smImgPath = public_path('product_image/sm_image/');
-           Image::make( $imgFile )->resize( 300, 200 )->save($smImgPath . $filename );
-           Image::make( $imgFile )->fit( 400, 300)->save($lgImgPath . $filename );
 
-           $db_filename_sm = $smImgPath.$filename;
-           $db_filename_lg = $lgImgPath .$filename;
+           $filename = str_replace(' ', '', $request->name).$time. '.' . $imgFile->getClientOriginalExtension();
 
-           $save->featured_img_sm = $db_filename_sm;
-           $save->featured_img_lg = $db_filename_lg;
+           $this->resizeImageAndUpload($imgFile, 300, 200, 'product/featured_image_sm/',$filename);
+
+           $this->resizeImageAndUpload($imgFile, 400, 300, 'product/featured_image_lg/', $filename);
+
+           $save->featured_img_sm = 'product/featured_image_sm/'.$filename;
+           $save->featured_img_lg = 'product/featured_image_lg/' .$filename;
         }
-        if ($request->hasFile('img_path2')) {
-           $imgFile = $request->file('img_path2');
-           $filename = 'image2'.time() . '.' . $imgFile->getClientOriginalExtension();
-           $lgImgPath = public_path('product_image/lg_image/');
-           $smImgPath = public_path('product_image/sm_image/');
-           Image::make( $imgFile )->resize( 300, 200 )->save($smImgPath . $filename );
-           Image::make( $imgFile )->fit( 400, 300)->save($lgImgPath . $filename );
-
-           $db_filename_sm = $smImgPath.$filename;
-           $db_filename_lg = $lgImgPath .$filename;
-
-           $save->img_path2_sm = $db_filename_sm;
-           $save->img_path2_lg = $db_filename_lg;
-        }
-
-        if ($request->hasFile('img_path3')) {
-            $imgFile = $request->file('img_path3');
-            $filename = 'image3'.time() . '.' . $imgFile->getClientOriginalExtension();
-            $lgImgPath = public_path('product_image/lg_image/');
-            $smImgPath = public_path('product_image/sm_image/');
-            Image::make( $imgFile )->resize( 300, 200 )->save($smImgPath . $filename );
-            Image::make( $imgFile )->fit( 400, 300)->save($lgImgPath . $filename );
-
-            $db_filename_sm = $smImgPath.$filename;
-            $db_filename_lg = $lgImgPath .$filename;
-
-            $save->img_path3_sm = $db_filename_sm;
-            $save->img_path3_lg = $db_filename_lg;
+        if ($request->hasFile('product_image')) {
+           $imgFile = $request->file('product_image');
+           $filename = str_replace(' ', '', $request->name).$time . '.' . $imgFile->getClientOriginalExtension();
+           
+           $this->resizeImageAndUpload($imgFile, 400, 300, 'product/product_image/', $filename);
+           $save->product_image = 'product/product_image/'.$filename;
         }
 
         $saveData = $save->save();
@@ -122,13 +98,24 @@ class ProductsController extends Controller
             return back()->withMessage('Oops try it again')->withInput();
         }
 
+    }
 
+    /*public function getFileName($title, $request){
+       $time = date('Y-m-d h:i:s');
+        $filename = str_replace(' ', '', $title).$time . '.' . $request->featured_img->getClientOriginalExtension();
+        return $filename;
+    }*/
 
-
-
-
+    public function resizeImageAndUpload($file, $sizeWidth, $sizeHeight, $path, $imageName){
+     $upload = Image::make( $file )->resize( $sizeWidth, $sizeHeight )->save($path . $imageName );
+     if ($upload) {
+         return true;
+     }else{
+        return false;
+     }
 
     }
+
 
     /**
      * Display the specified resource.

@@ -30,11 +30,7 @@ class CreateProductsTable extends Migration
 
             $table->boolean('status');
             $table->text('vedio_link')->nullable();
-            $table->string('img_path2_sm')->nullable();
-            $table->string('img_path2_lg')->nullable();
-
-            $table->string('img_path3_sm')->nullable();
-             $table->string('img_path3_lg')->nullable();
+            $table->string('product_image ')->nullable();
             $table->timestamps();
         });
     }
