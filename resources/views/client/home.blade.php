@@ -2222,6 +2222,9 @@
         <div class="container">
             <div class="card rounded-0 border-0">
                 <div class="card-body">
+                    <div class="card-title mb-0">
+                        MOST VIEWED PRODUCTS
+                    </div>
                     <div class="row">
                         <div class="col-md-8 four-image-styled">
                             <div class="row">

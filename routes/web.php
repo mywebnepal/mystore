@@ -36,8 +36,14 @@ Route::prefix('sisadmin')->group(function(){
     
     Route::get('/products/create', 'admin\ProductsController@create')->name('sisadmin.products.create');
     Route::post('/products/store', 'admin\ProductsController@store')->name('sisadmin.products.store');
-    Route::get('/products/show', 'admin\ProductsController@show')->name('sisadmin.products.show');
-    Route::get('/products/delete', 'admin\ProductsController@delete')->name('sisadmin.products.delete');
+
+    Route::get('/products/{products}', 'admin\ProductsController@show')->name('sisadmin.products.show');
+
+    Route::get('/products/delete/{id}', 'admin\ProductsController@destroy')->name('sisadmin.products.delete');
+    /*product status*/
+    Route::get('product/changeProductStatus', 'admin\ProductsController@changeProductStatus')->name('sisadmin.product.changeProductStatus');
+
+    Route::get('product/makeFeaturedProduct', 'admin\ProductsController@makeFeaturedProduct')->name('sisadmin.product.makeFeaturedProduct');
 
 });
 

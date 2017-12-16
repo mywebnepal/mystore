@@ -29,6 +29,7 @@ class CreateProductsTable extends Migration
              $table->string('featured_lg');
 
             $table->boolean('status');
+            $table->boolean('featured_product');
             $table->text('vedio_link')->nullable();
             $table->string('product_image ')->nullable();
             $table->timestamps();

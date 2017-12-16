@@ -192,7 +192,7 @@ body {
 }
 
 .product-item .product-prices-info p a:hover {
-  color: #684eb1;
+  color: #880000;
   text-decoration: none;
 }
 
@@ -1150,6 +1150,20 @@ footer .copy-right-content {
   background-color: #de3635;
   border-color: #de3635;
 }
-
+.nav-link{
+  background: rgb(62, 177, 67);
+  color:#FFF;
+}
+.nav-link .active{
+ background: #FFF !important;
+ color: #333;
+}
+.nav-item .active{
+  background: #FFF !important;
+ color: #333 !important;
+}
+.nav-item a:hover{
+  color: #880000;
+}
 
 

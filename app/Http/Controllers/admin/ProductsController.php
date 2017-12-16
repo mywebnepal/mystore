@@ -69,6 +69,7 @@ class ProductsController extends Controller
         $save->featured       = 'it will goes later';
         $save->brand_name     = $request->brand_name;
         $save->status         = $request->status;
+        $save->featured_product = 0;
         $save->vedio_link     = $request->vedio_link;
 
         if ($request->hasFile('featured_img')) {
@@ -123,9 +124,11 @@ class ProductsController extends Controller
      * @param  \App\products  $products
      * @return \Illuminate\Http\Response
      */
-    public function show(products $products)
+    public function show(Product $products)
     {
-        //
+        $page['page_title']      = 'Mywebnepal::singleProduct';
+        $page['page_description'] = 'Product Details';
+        return view('admin.products.show', compact('products', 'page'));
     }
 
     /**
@@ -157,8 +160,71 @@ class ProductsController extends Controller
      * @param  \App\products  $products
      * @return \Illuminate\Http\Response
      */
-    public function destroy(products $products)
+    public function destroy($id)
     {
-        //
+        $product = Product::where('id', $id)->first();
+        if ($product) {
+            if (file_exists(asset($product->featured_img_sm))) {
+               unlink(asset($product->featured_img_sm));
+            }
+            if (file_exists(asset($product->featured_img_lg))) {
+                unlink(asset($product->featured_img_lg));
+            }
+            if (file_exists(asset($product->product_image))) {
+                unlink(asset($product->product_image));
+            }
+           $product->delete();
+
+           return response()->json([
+             'success' => true,
+             'message' => 'product delete'
+            ], 200);
+            
+        }
+        return response()->json([
+             'success' => false,
+             'message' => 'sorry product is not delete'
+            ], 200);
+        
+       
+    }
+
+    public function changeProductStatus(Request $request){
+      $id  = $request->id;
+      $status = $request->status==1 ? 0 : 1;
+
+      $product  = Product::findOrFail($id);
+      if ($product) {
+         $product->status = $status;
+          $product->update();
+          return response()->json([
+             'success' => true,
+             'message' => 'product status chnaged'
+            ], 200);
+      }else{
+        return response()->json([
+          'success' => false,
+            'message' => 'product status could not changed'
+        ], 401);
+      }
+    }
+    public function makeFeaturedProduct(Request $request){
+        $id  = $request->id;
+      $status = $request->status==1 ? 0 : 1;
+
+      $product  = Product::findOrFail($id);
+      if ($product) {
+         $product->featured_product = $status;
+          $product->update();
+          return response()->json([
+             'success' => true,
+             'message' => 'this product became featured product'
+            ], 200);
+      }else{
+        return response()->json([
+          'success' => false,
+            'message' => 'Oops sorry this try it again'
+        ], 401);
+      }
     }
 }
