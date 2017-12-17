@@ -851,3 +851,18 @@ footer .copy-right-content {
   .card-form .social-btn .btn-google-plus:hover {
     background-color: #de3635;
     border-color: #de3635; }
+    .nav-link{
+  background: rgb(62, 177, 67);
+  color:#FFF;
+}
+.nav-link .active{
+ background: #FFF !important;
+ color: #333;
+}
+.nav-item .active{
+  background: #FFF !important;
+ color: #333 !important;
+}
+.nav-item a:hover{
+  color: #880000;
+}

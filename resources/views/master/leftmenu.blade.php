@@ -8,21 +8,18 @@
 						<a href="#" title="Setting"><i class="fa fa-lg fa-fw fa-home"></i> <span class="menu-item-parent">Setting Parameter</span></a>
 						<ul>
 						    <li>
-								{{ HTML::link('/school', 'System Setting', array('title' => 'School Details'))}}
+								{{ HTML::link('/school', 'Vat', array('title' => 'Vat setting'))}}
 							</li>
 							<li>
-								{{ HTML::link('/schClass', 'Class Setup', array('title' => 'Create Class'))}}
+								{{ HTML::link('sisadmin/brand/index', 'Brand name', array('title' => 'Create Brand name'))}}
 							</li>
-							<li class="">
-								<a href="#"><i class="fa fa-comments"></i>Class</a>
-								<ul>
-									<li><a href="forum.html">Class Name</a></li>
-									<li><a href="forum-topic.html">Period</a></li>
-									<li><a href="forum-post.html">Post View</a></li>
-								</ul>
-							</li>
+							
 							<li>
-								{{ HTML::link('/schClass', 'Subject', array('title' => 'Subject Name'))}}
+								{{ HTML::link('sisadmin/categories/index', 'Category', array('title' => 'Create categories'))}}
+							</li>
+
+							<li>
+								{{ HTML::link('/schClass', 'Tags', array('title' => 'Create Tags'))}}
 							</li>
 							<!--  -->
 							<li class="">
@@ -138,9 +135,6 @@
 					<li>
 						<a href="#"><i class="fa fa-lg fa-fw fa-desktop"></i> <span class="menu-item-parent">Product</span></a>
 						<ul>
-							<li>
-								<a href="{{ route('sisadmin.categories.index') }}">Category</a>
-							</li>
 							<li>
 								<a href="{{ route('sisadmin.products.index') }}">Product</a>
 							</li>

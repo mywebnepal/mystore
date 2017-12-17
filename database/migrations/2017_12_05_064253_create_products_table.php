@@ -24,14 +24,14 @@ class CreateProductsTable extends Migration
             $table->string('price');
             $table->string('discount')->nullable();
             $table->text('featured');
-            $table->string('brand_name')->nullable();
+            $table->integer('brands_id')->nullable();
             $table->string('featured_img_sm');
-             $table->string('featured_lg');
+             $table->string('featured_img_lg');
 
             $table->boolean('status');
             $table->boolean('featured_product');
             $table->text('vedio_link')->nullable();
-            $table->string('product_image ')->nullable();
+            $table->string('product_image')->nullable();
             $table->timestamps();
         });
     }

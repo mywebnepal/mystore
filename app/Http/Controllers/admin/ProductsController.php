@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Requests\admin\ProductsValidation;
 use App\models\Product;
 use App\models\category;
+use App\models\Brand;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -28,10 +29,10 @@ class ProductsController extends Controller
         $page['page_description'] = 'List of all product';
 
         $catId = category::select('id', 'name')->get();
-        
         $data = Product::paginate(10);
+        $brand = Brand::select('id', 'name')->get();
         if ($data) {
-            return view('admin.products.index', compact(['page', 'data', 'catId']));
+            return view('admin.products.index', compact(['page', 'data', 'catId', 'brand']));
         }else{
             return view('admin.products.index', compact(['page']));
         } 
@@ -67,7 +68,7 @@ class ProductsController extends Controller
         $save->price          = $request->price;
         $save->discount       = $request->discount;
         $save->featured       = 'it will goes later';
-        $save->brand_name     = $request->brand_name;
+        $save->brands_id     = $request->brands_id;
         $save->status         = $request->status;
         $save->featured_product = 0;
         $save->vedio_link     = $request->vedio_link;
@@ -137,9 +138,17 @@ class ProductsController extends Controller
      * @param  \App\products  $products
      * @return \Illuminate\Http\Response
      */
-    public function edit(products $products)
+    public function edit(Product $products)
     {
-        //
+        $page['page_title']      = 'Mywebnepal::Product edit';
+        $page['page_description'] = 'Product edit ';
+        $catId = category::select('id', 'name')->get();
+        $brand = Brand::select('id', 'name')->get();
+        if ($products) {
+            return view('admin.products.edit', compact(['page', 'products', 'catId', 'brand']));
+        }else{
+            return back()->withMessage('Oops data is not found');
+        }
     }
 
     /**
@@ -149,9 +158,52 @@ class ProductsController extends Controller
      * @param  \App\products  $products
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, products $products)
+    public function update(ProductsValidation $request, $id)
     {
-        //
+        $product = Product::findOrFail($id);
+
+        if ($product) {
+            $time = date('Y-m-d h:i:s');
+            $product->name = $request->name;
+            $product->categories_id = $request->categories_id;
+            $product->description   = $request->description;
+            $product->size           = $request->size;
+            $product->sku            = $request->sku;
+            $product->quantity       = $request->quantity;
+            $product->price          = $request->price;
+            $product->discount       = $request->discount;
+            $product->featured       = 'it will goes later';
+            $product->brands_id     = $request->brands_id;
+            $product->status         = $request->status;
+            $product->vedio_link     = $request->vedio_link;
+
+            if ($request->hasFile('featured_img')) {
+               $imgFile = $request->file('featured_img');
+
+               $filename = str_replace(' ', '', $request->name).$time. '.' . $imgFile->getClientOriginalExtension();
+
+               $this->resizeImageAndUpload($imgFile, 300, 200, 'product/featured_image_sm/',$filename);
+
+               $this->resizeImageAndUpload($imgFile, 400, 300, 'product/featured_image_lg/', $filename);
+
+               $product->featured_img_sm = 'product/featured_image_sm/'.$filename;
+               $product->featured_img_lg = 'product/featured_image_lg/' .$filename;
+            }
+            if ($request->hasFile('product_image')) {
+               $imgFile = $request->file('product_image');
+               $filename = str_replace(' ', '', $request->name).$time . '.' . $imgFile->getClientOriginalExtension();
+               
+               $this->resizeImageAndUpload($imgFile, 400, 300, 'product/product_image/', $filename);
+               $product->product_image = 'product/product_image/'.$filename;
+            }
+            $saveData = $product->update();
+
+            if ($saveData) {
+                return redirect()->route('sisadmin.products.index')->withMessage('successfully update');
+            }else{
+                return back()->withMessage('Oops sorry try it again');
+            }
+        }
     }
 
     /**
@@ -164,14 +216,17 @@ class ProductsController extends Controller
     {
         $product = Product::where('id', $id)->first();
         if ($product) {
-            if (file_exists(asset($product->featured_img_sm))) {
-               unlink(asset($product->featured_img_sm));
+            if (file_exists($product->featured_img_sm)) {
+                File::delete($product->featured_img_sm);
+               // unlink(asset($product->featured_img_sm));
             }
-            if (file_exists(asset($product->featured_img_lg))) {
-                unlink(asset($product->featured_img_lg));
+            if (file_exists($product->featured_img_lg)) {
+                File::delete($product->featured_img_lg);
+                // unlink(asset($product->featured_img_lg));
             }
-            if (file_exists(asset($product->product_image))) {
-                unlink(asset($product->product_image));
+            if (file_exists($product->product_image)) {
+                File::delete($product->product_image);
+                // unlink(asset($product->product_image));
             }
            $product->delete();
 

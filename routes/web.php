@@ -12,6 +12,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 	return view('dashboard');
 });*/
 
+
 /*Route::get('/admin', 'Auth\SisadminController@showLoginForm');*/
 Route::get('user/logout', 'Auth\LoginController@userLogout')->name('user.logout');
 
@@ -37,13 +38,24 @@ Route::prefix('sisadmin')->group(function(){
     Route::get('/products/create', 'admin\ProductsController@create')->name('sisadmin.products.create');
     Route::post('/products/store', 'admin\ProductsController@store')->name('sisadmin.products.store');
 
+    Route::get('/products/{products}/edit', 'admin\ProductsController@edit')->name('sisadmin.products.edit');
+
     Route::get('/products/{products}', 'admin\ProductsController@show')->name('sisadmin.products.show');
+
+    Route::post('/products/{products}', 'admin\ProductsController@update')->name('sisadmin.products.update');
 
     Route::get('/products/delete/{id}', 'admin\ProductsController@destroy')->name('sisadmin.products.delete');
     /*product status*/
     Route::get('product/changeProductStatus', 'admin\ProductsController@changeProductStatus')->name('sisadmin.product.changeProductStatus');
 
     Route::get('product/makeFeaturedProduct', 'admin\ProductsController@makeFeaturedProduct')->name('sisadmin.product.makeFeaturedProduct');
+
+
+    /*-----------------------brand--------------------------------*/
+    Route::get('/brand/index', 'admin\brandController@index')->name('sisadmin.brand.index');
+    Route::post('/brand/store', 'admin\brandController@store')->name('sisadmin.brand.store');
+
+    Route::get('brand/destroy/{id}', 'admin\brandController@destroy')->name('sisadmin.brand.destroy');
 
 });
 

@@ -3,13 +3,6 @@
 @section('page_description', $page['page_description'])
 @section('content')
 <div class="row">
-	<div class="col-sm-12 well">
-        <div class="row">
-        	<p class="pull-right">
-        	   <button class="btn btn-primary btnProduct">Add new Product</button>
-        	</p>
-
-        </div>
         @if(Session::has('message'))
             <div class="row errMsg" style="margin:1em;">
                 <div class="alert alert-success">
@@ -18,16 +11,28 @@
                 </div>
             </div>
         @endif
+  <div class="col-sm-12 well">
+        <div class="row">
+          <p class="pull-right">
+             <button class="btn btn-primary btnProduct">Add new Product</button>
+          </p>
+
+        </div>
        <!--  -->
 		<div role="content" style="display: none;" class="addProductForm">
 					<div class="widget-body">
                          <div class="row" style="border-bottom: 1em; background: #2196F3; padding: 1em;">
-                         	<div class="col-sm-12" style="background:#F5F5F5; ">
+                         	<div class="col-sm-12" style="background:#FFF; ">
                          	   <fieldset>
                          	   	<legend>Add Product</legend>
                          	   {{ Form::open(['route'=>'sisadmin.products.store', 'method' => 'post', 'class'=>'form-inline', 'files'=>true]) }}
 
                                   @include('admin.products._form')
+                                  <div class="form-group col-sm-12 ">
+                                   <p class="pull-right">
+                                   {{ Form::submit('Submit Product', ['class'=>'btn btn-primary']) }}
+                                   </p>
+                                  </div>
 
                          	     {{ Form::close() }}
                          	      </fieldset>
@@ -71,9 +76,10 @@
 									<td>
 										<span>
 											<a href="{!! route('sisadmin.products.show', $datas->id) !!}" title="Product details" class=""><i class="fa fa-fw fa-lg fa-eye"></i></a>
+
 										</span>
 										<span>
-											<a href="#"  title="Edit" class="#" id="{!! $datas->id !!}">
+											<a href="{!! route('sisadmin.products.edit', $datas->id) !!}"  title="Edit">
 											    <i class="fa fa-fw fa-lg fa-pencil-square-o"></i>
 											</a>
 										</span>
@@ -130,7 +136,10 @@
     addProductForm.toggle();
 	});
 </script>
+
 <script type="text/javascript">
+   
+    /*product publish un publish*/
 	var productStatus = $('.productStatus');
 	var makeFeaturedProduct = $('.makeFeaturedProduct');
 	productStatus.on('click', function(e){
@@ -153,7 +162,7 @@
      });
 	});
 
-	/*-------------*/
+	/*-----make featured product--------*/
 	makeFeaturedProduct.on('click', function(e){
     e.preventDefault();
     var url    = $(this).data('url');
