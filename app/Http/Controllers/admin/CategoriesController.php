@@ -90,7 +90,22 @@ class CategoriesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $editData = category::findOrFail($id);
+        if($editData) {
+            return response()->json([
+                'success'       => true,
+                'id'            => $editData->id,
+                'name'          => $editData->name,
+                'slug'          => $editData->slug,
+                'description'     => $editData->description,
+            ], 200);
+        }
+
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Unauthorized access!'
+        ], 401);
     }
 
     /**
@@ -102,7 +117,26 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update = category::findOrFail($id);
+        if ($update) {
+           $update->name = $request->name;
+           $update->slug = $request->slug;
+           $update->description = $request->description;
+
+           $catUpdate = $update->update();
+
+           if ($catUpdate) {
+              return response()->json([
+                 'success' => true,
+                  'message' => 'successfully update!'
+                ]);
+           }else{
+               return response()->json([
+                   'success' => false,
+                   'message' => 'Oops try it again !'
+               ], 401);
+           }
+        }
     }
 
     /**

@@ -16,8 +16,8 @@ $('.nav.nav-pills a').on('click', function() {
 
 // tooltip
 $(function () {
-  $('[data-toggle="tooltip"]').tooltip()
-})
+  $('[data-toggle="tooltip"]').tooltip();
+});
 // end tooltip
 
 
@@ -45,7 +45,7 @@ $('.owl-carousel.hot-deals').owlCarousel({
             items: 1
         }
     }
-})
+});
 
 $('.owl-carousel.second-sec-main-banner').owlCarousel({
     loop: true,
@@ -90,7 +90,7 @@ $('.owl-carousel.new-arrivals-carousel').owlCarousel({
             items:5
         }
     }
-})
+});
 
 
 
@@ -137,11 +137,73 @@ $('.owl-carousel.brands-slider').owlCarousel({
         }
     }
 });
+$(function () {
+  var customer_form = $('#customer_form');
+  var customer_modal_form = $('#customerForm');
+  var siteInfoMsg         = $('.siteInfoMsg');
+  customer_form.on('submit', function(e){
+    e.preventDefault();
+    var url  = $('.supportFormUrl').val();
+    var data = $(this).serialize();
+    $.ajax({
+        'type' : 'POST',
+        'url'  : url,
+        'data' : data,
+        success:function(response){
+            customer_modal_form.modal('hide');
+            siteInfoMsg.css('display', 'block').addClass('alert alert-success').fadeOut(5000);
+            siteInfoMsg.append(response.message);
+            customer_form['input'].val('');
 
-
-
-
-// sticky
-$(document).ready(function(){
-        $(".fix-to-top").sticky({topSpacing:0, zIndex: '999'});
+        }
     });
+  });
+
+  /*search form*/
+
+  var searchProductDetails = $('.searchProductDetails');
+  var searchResultData     = $('.searchResultData');
+  searchProductDetails.on('keyup', function(e){
+    var text = searchProductDetails.val();
+    var url  = $(this).data('url');
+    if (text.length >=4) {
+        $.ajax({
+          'type' : 'GET',
+          'url'  : url,
+          'data'    : text,
+            success: function(response){
+                // console.log(response);
+                searchResultData.css('display', 'block');
+            }
+
+        });
+    }else{
+        searchResultData.fadeOut();
+    }
+  });
+
+  /*subcribe */
+  var subscribeFrm  = $('#subscribeFrm');
+  subscribeFrm.on('submit', function(e){
+   e.preventDefault();
+   var subscibe_url    = $('.subscribe_url').val();
+   var data            = $(this).serialize();
+   var subscribe_email = $('.subscribe_email');
+   $.ajax({
+        'type' : 'POST',
+        'url'   : subscibe_url,
+        'data'  : data,
+        success :function(response){
+         if (response.success == true) {
+            siteInfoMsg.css('display', 'block').fadeOut(5000);
+            siteInfoMsg.append(response.message);
+         }else{
+            siteInfoMsg.css('display', 'block').addClass('alert alert-danger').fadeOut(5000);
+            siteInfoMsg.append(response.message);
+         }
+        },complete:function(){
+          subscribe_email.val('');
+        }
+   });
+  });
+});

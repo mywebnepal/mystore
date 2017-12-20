@@ -93,9 +93,23 @@ class brandController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Brand $brand)
     {
-        //
+        if($brand) {
+            return response()->json([
+                'success'       => true,
+                'id'            => $brand->id,
+                'name'          => $brand->name,
+                'slug'          => $brand->slug,
+               'brand_logo'     => $brand->brand_logo,
+            ], 200);
+        }
+
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Unauthorized access!'
+        ], 401);
     }
 
     /**
@@ -107,7 +121,34 @@ class brandController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $brandUpdate = Brand::findOrFail($id);
+        if ($brandUpdate) {
+            $brandUpdate->name = $request->name;
+            $brandUpdate->slug = $request->slug;
+
+            if ($request->hasFile('brand_logo')) {
+                $logo = $request->file('brand_logo');
+                $logoName = str_replace(' ', '', $request->name).$date. '.' . $logo->getClientOriginalExtension();
+                Image::make($logo)->resize( 150, 150 )->save('brandLogo/' . $logoName );
+
+                $brandUpdate->brand_logo = 'brandLogo/'.$logoName;
+            }
+
+            $update = $brandUpdate->update();
+
+            if ($update) {
+                return response()->json([
+                   'success' => true,
+                   'message' => 'Successfully updated..'
+               ], 200);
+            }
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Unauthorized access!'
+            ], 401);
+
+        }
     }
 
     /**

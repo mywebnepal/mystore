@@ -9,7 +9,7 @@
             <option value="<?php echo isset($products) ? $products->id : '0'   ?>">
               <?php  echo isset($products) ? $products->categories->name : 'Select product category'   ?>
             </option>
-            @if($catId)
+            @if(isset($catId))
             @foreach($catId as $cat)
                <option value="{{$cat->id}}">{{ $cat->name }}</option>
             @endforeach
@@ -111,6 +111,6 @@
 	    <div class="col-sm-4">
 	        <h4>Product Featured List</h4><hr>
 	    	<div class="form-group col-sm-12">
-            later on json working
+            {{ Form::textarea('featured', null, array('placeholder'=>'enter product featured', 'class'=>'form-control summernote', 'rows'=>'7', 'cols'=>'35')) }}
         </div>
 	    </div>

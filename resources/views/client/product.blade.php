@@ -1,14 +1,5 @@
 @extends('layout.master')
    @section('content')
-      <nav class="breadcrumb bg-transparent">
-          <div class="container">
-            <a class="breadcrumb-item" href="#">Home</a>
-            <a class="breadcrumb-item" href="#">Library</a>
-            <a class="breadcrumb-item" href="#">Data</a>
-            <span class="breadcrumb-item active">Bootstrap</span>
-          </div>
-      </nav>
-
       <!-- =============================================================
            Category SECTION
        ==============================================================-->
@@ -20,7 +11,7 @@
                           
                           <div class="card-header bg-white">
                               <div class="card-title mb-0">
-                                  SHOP BY
+                                 {{ $page['page_title'] }}
                               </div>
                           </div>
                           <div class="card-body">

@@ -17,4 +17,8 @@ class Product extends Model
     public function brands(){
     	return $this->belongsTo(Brand::class);
     }
+
+    public function comments(){
+    	return $this->belongsTo(Comment::class);
+    }
 }

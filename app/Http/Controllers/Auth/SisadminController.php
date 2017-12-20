@@ -10,9 +10,11 @@ use Auth;
 class SisadminController extends Controller
 {
 
+    protected $redirectTo = 'sisadmin/dashboard';
+
 	public function __construct()
     {
-        $this->middleware('guest:sisadmin');
+        $this->middleware('guest:sisadmin')->except('adminlogout');
     }
 
     public function index(){

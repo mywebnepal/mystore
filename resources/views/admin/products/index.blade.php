@@ -182,5 +182,8 @@
           }
     });
 	});
+  
+  $('.summernote').summernote({focus: true});
+
 </script>
 @endsection

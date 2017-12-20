@@ -5,6 +5,9 @@ use App\Http\Requests\admin\ProductsValidation;
 use App\models\Product;
 use App\models\category;
 use App\models\Brand;
+use App\models\supportForm;
+use App\models\subscribe;
+use App\models\Comment;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
@@ -67,7 +70,7 @@ class ProductsController extends Controller
         $save->quantity       = $request->quantity;
         $save->price          = $request->price;
         $save->discount       = $request->discount;
-        $save->featured       = 'it will goes later';
+        $save->featured       = $request->featured;
         $save->brands_id     = $request->brands_id;
         $save->status         = $request->status;
         $save->featured_product = 0;
@@ -281,5 +284,50 @@ class ProductsController extends Controller
             'message' => 'Oops sorry this try it again'
         ], 401);
       }
+    }
+
+    public function supportForm(){
+     $sprtForm  = supportForm::orderBy('created_at', 'desc')->paginate(10);
+     if ($sprtForm) {
+         return view('admin.customer.supportForm', compact(['sprtForm']));
+     }else{
+        return view('admin.customer.supportForm');
+     }
+     
+    }
+    /*product comment*/
+    public function productComment(){
+      $productComment  = Comment::orderBy('created_at', 'desc')->paginate(10);
+      if ($productComment) {
+          return view('admin.customer.productComment', compact(['productComment']));
+      }else{
+         return view('admin.customer.productComment');
+      }
+    }
+    /*comment delete*/
+    public function commentDelete($id){
+     $del = Comment::findOrFail($id);
+     if ($del) {
+         $del->delete();
+         return response()->json([
+             'success' => true,
+             'message' => 'successfully delete'
+            ], 200);
+     }else{
+          return response()->json([
+             'success' => false,
+             'message' => 'Oops sorry try it again'
+            ], 200);
+     }
+    }
+    /*comment status enable or disable*/
+    public function changeCommentStatus($id){
+    
+    }
+    /*subscribe */
+    public function userSubscribe(){
+      $subData  = subscribe::orderBy('created_at', 'desc')->paginate();
+
+        return view('admin.customer.subscribe', compact(['subData']));
     }
 }

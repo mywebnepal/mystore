@@ -30,9 +30,9 @@
 				<!-- logout button -->
 				<div id="logout" class="btn-header transparent pull-right">
 					<span> <a href="{{ route('logout') }}" title="Sign Out" data-action="userLogout" data-logout-msg="You can improve your security further after logging out by closing this opened browser"><i class="fa fa-sign-out" onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();"></i></a> </span>
+                                                             document.getElementById('admin-logout-form').submit();"></i></a> </span>
 
-                    <form id="logout-form" action="{{ route('sisadmin.logout') }}" method="POST" style="display: none;">
+                    <form id="admin-logout-form" action="{{ route('sisadmin.logout') }}" method="POST" style="display: none;">
                         {{ csrf_field() }}
                     </form>
                                        

@@ -220,14 +220,25 @@
 						<a href="widgets.html"><i class="fa fa-lg fa-fw fa-list-alt"></i> <span class="menu-item-parent">Widgets</span></a>
 					</li> -->
 					<li>
-						<a href="#"><i class="fa fa-lg fa-fw fa-cloud"><em>3</em></i> <span class="menu-item-parent">Library</span></a>
+						<a href="#"><i class="fa fa-lg fa-fw fa-cloud"><em>3</em></i> <span class="menu-item-parent">Customer</span></a>
 						<ul>
 							<li>
-								<a href="calendar.html"><i class="fa fa-lg fa-fw fa-calendar"></i> <span class="menu-item-parent">Calendar</span></a>
+								<a href="{!! route('sisadmin.product.adminSupportForm') !!}"><i class="fa fa-lg fa-fw fa-calendar"></i> <span class="menu-item-parent">Support form</span></a>
 							</li>
+
 							<li>
-								<a href="gmap-xml.html"><i class="fa fa-lg fa-fw fa-map-marker"></i> <span class="menu-item-parent">GMap Skins</span><span class="badge bg-color-greenLight pull-right inbox-badge">9</span></a>
+								<a href="{!! route('sisadmin.product.productComment') !!}"><i class="fa fa-lg fa-fw fa-calendar"></i> <span class="menu-item-parent">comment</span></a>
 							</li>
+
+							<li>
+								<a href="{!! route('sisadmin.admin.subscribe') !!}"><i class="fa fa-lg fa-fw fa-calendar"></i> <span class="menu-item-parent">subscribe</span></a>
+							</li>
+
+
+
+							<!-- <li>
+								<a href="gmap-xml.html"><i class="fa fa-lg fa-fw fa-map-marker"></i> <span class="menu-item-parent">GMap Skins</span><span class="badge bg-color-greenLight pull-right inbox-badge">9</span></a>
+							</li> -->
 						</ul>
 					</li>	
 					<li>

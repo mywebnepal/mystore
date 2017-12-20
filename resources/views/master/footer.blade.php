@@ -37,6 +37,7 @@
 		{!! Html::script('backEndAdmin/js/bootstrapValidator.min.js') !!}
 
 		{!! Html::script('backEndAdmin/js/jquery.validate.min.js') !!}
+
 		<!-- Your GOOGLE ANALYTICS CODE Below -->
 
 		<!-- datatables -->
@@ -47,6 +48,7 @@
         {!! Html::script('backEndAdmin/js/plugin/datatables/dataTables.bootstrap.min.js') !!}
        {!! Html::script('backEndAdmin/js/plugin/datatable-responsive/datatables.responsive.min.js') !!}
 
+		{!! Html::script('backEndAdmin/js/plugin/summernote/summernote.min.js')  !!}
        <script type="text/javascript">
 		
 		// DO NOT REMOVE : GLOBAL FUNCTIONS!

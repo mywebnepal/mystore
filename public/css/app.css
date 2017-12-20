@@ -192,7 +192,7 @@ body {
 }
 
 .product-item .product-prices-info p a:hover {
-  color: #880000;
+  color: #684eb1;
   text-decoration: none;
 }
 
@@ -1150,20 +1150,44 @@ footer .copy-right-content {
   background-color: #de3635;
   border-color: #de3635;
 }
-.nav-link{
-  background: rgb(62, 177, 67);
-  color:#FFF;
-}
-.nav-link .active{
- background: #FFF !important;
- color: #333;
-}
-.nav-item .active{
-  background: #FFF !important;
- color: #333 !important;
-}
-.nav-item a:hover{
-  color: #880000;
+
+.nav-link {
+  background: #3eb143;
+  color: #FFF;
 }
 
+.nav-link .active {
+  background: #FFF !important;
+  color: #333;
+}
+
+.nav-item .active {
+  background: #FFF !important;
+  color: #333 !important;
+}
+
+.nav-item a:hover {
+  color: #880000;
+}
+.searchResultData{
+  z-index: 9999999 !important;
+  border-bottom-right-radius: 1em;
+  border-bottom-left-radius: 1em;
+  position: absolute;
+}
+.siteInfoMsg{
+  max-width: 250px;
+  max-height: 100px;
+  border-top-left-radius: 1em;
+  z-index: 9999999 !important;
+  position: absolute;
+  position: fixed;
+  top: 50%;
+  right: 0;
+  background: rgb(62, 177, 67);
+  color: #FFF;
+  padding: 1em 0.5em;
+  display: none;
+
+}
 

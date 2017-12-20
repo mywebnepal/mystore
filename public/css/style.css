@@ -851,3 +851,10 @@ footer .copy-right-content {
   .card-form .social-btn .btn-google-plus:hover {
     background-color: #de3635;
     border-color: #de3635; }
+    #customerForm input{
+      padding: 0.5em 1em;
+      border-top: none;
+      border-right: none;
+      border-left: none;
+    }
+   

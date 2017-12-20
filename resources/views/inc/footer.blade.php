@@ -102,14 +102,17 @@
                                 <h4 class="card-title">
                                     Your email address
                                 </h4>
-                                <form action="">
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" placeholder="Your email address">
+                                {!! Form::open(['id'=>'subscribeFrm']) !!}
+                                     {!! Form::hidden('subscribe_route', route('systemSubscribe'), ['class'=>'subscribe_url']) !!}
+                                     <div class="form-group">
+                                      {!! Form::text('subscribe_email', null, ['placeholder'=>'Your email address', 'class'=>'form-control subscribe_email', 'required']) !!}
                                     </div>
-                                    <div class="form-group cstm-btn">
-                                        <button type="submit" class="btn btn-primary">Subscribe</button>
-                                    </div>
-                                </form>
+
+
+                                     <div class="form-group cstm-btn">
+                                       {!! Form::submit('Subscribe', ['class'=>'btn btn-success']) !!}
+                                      </div>
+                                {!! Form::close() !!}
                                 <ul class="list-inline mb-0 social-icons">
                                     <li class="list-inline-item">
                                         <a href="#" class="icon-container">
@@ -135,7 +138,7 @@
         </div>
         <div class="copy-right-content">
             <div class="container">
-                Copyright © 2017 Neptrox - All rights Reserved
+                Copyright © 2017 mywebnepal - All rights Reserved
             </div>
         </div>
     </footer>
