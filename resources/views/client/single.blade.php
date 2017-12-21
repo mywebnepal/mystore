@@ -1,15 +1,11 @@
-@extends('layout.master')
+@extends('layouts.master')
+@section('page_title', $page['page_title'])
+@section('page_description', $page['page_description'])
    @section('content')
    <section id="detail-page">
         <div class="container">
             <div class="row">
                 <div class="col-sm-4 col-md-3 pr-md-1">
-                    <div class="card border-light bg-dark text-white  mb-4">
-                        <img class="card-img" src="img/03.png" height="263px" alt="Card image">
-                        <div class="card-img-overlay">
-                            <h4 class="card-title">image add here</h4>
-                        </div>
-                    </div>
                     <!-- HOT DEALS -->
                     <aside class="aside-left card rounded-0 border-0 mb-4">
                         <div class="card-header bg-white">
@@ -347,40 +343,20 @@
                     <div class="card border-0 rounded-0 mb-3 mb-md-4">
                         <div class="card-body">
                             <div class="row">
+                                @if(count($mySingleProduct) > 0)
                                 <div class="col-md-6 col-lg-5">
                                     <div class="owl-carousel thumb-product-slider" data-slider-id="1">
                                         <div>
                                             <div class="single-product-gallery-item">
                                                 <a href="#">
-                                                    <img src="img/products/p1.jpg" class="img-fluid" alt="">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="single-product-gallery-item">
-                                                <a href="#">
-                                                    <img src="img/products/p2.jpg" class="img-fluid" alt="">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="single-product-gallery-item">
-                                                <a href="#">
-                                                    <img src="img/products/p24.jpg" class="img-fluid" alt="">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="single-product-gallery-item">
-                                                <a href="#">
-                                                    <img src="img/products/p18.jpg" class="img-fluid" alt="">
+                                                    <img src="{{ asset($mySingleProduct->product_image) }}" class="img-fluid" alt="">
                                                 </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-7">
-                                    <h3 class="mb-3">Navy Blue V Neck Tshirt for Men</h3>
+                                    <h3 class="mb-3">{{ $mySingleProduct->name }}</h3>
                                     <div class="row reviews-content">
                                         <div class="col-md-6">
                                             <ul class="list-inline d-flex mb-0">
@@ -425,9 +401,7 @@
                                     </div>
                                     
                                     <p class="product-info d-none d-md-block">
-                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                        quis nostrud exercitation.
+                                        {{ $mySingleProduct->description }}
                                     </p>
                                     <div class="color-and-size-container">
                                         <div class="row">
@@ -529,22 +503,10 @@
                                         <div class="tab-pane fade show active" id="pills-new-description" role="tabpanel" aria-labelledby="pills-new-description-tab">
                                             <div class="">
                                                 <p class="mb-2">
-                                                    <small><strong>Navy Blue V Neck Tshirt for Men (116)</strong></small>
+                                                    <small><strong>Featured Description</strong></small>
                                                 </p>
                                                 <p>
-                                                    <small>
-                                                        T-shirt, which will make to you look effortlessly stlyish and trendy. Made of cotton, this T-shirt for men ensures total comfort and maximum breathability. Featuring regular fit, this T-shirt will be a great addition to your wardrobe.
-                                                    </small>
-                                                </p>
-                                                <p> 
-                                                    <small>
-                                                        <strong>Fabric: </strong>&nbsp; &nbsp;Cotton<br>
-                                                        <strong>Sleeves:</strong> &nbsp;Short Sleeves<br>
-                                                        <strong>Neck:</strong>&nbsp; &nbsp; &nbsp; &nbsp;V Neck<br>
-                                                        <strong>Fit:</strong>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;Regular<br>
-                                                        <strong>Wash Care:</strong> Machine Wash, Do Not Bleach, Do Not Tumble Dry, Cool Iron, Dry Clean<br>
-                                                        <strong>Style: &nbsp;</strong>&nbsp; &nbsp; &nbsp;Plain
-                                                    </small>
+                                                    {!! $mySingleProduct->featured !!}
                                                 </p>
                                             </div>
                                         </div>
@@ -557,6 +519,7 @@
                                 </div>
                             </div>
                         </div>
+                                @endif
                     </article>
                     <article class="aside-left card rounded-0 border-0 mb-4">
                         <div class="card-header bg-white">

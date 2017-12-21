@@ -28,7 +28,8 @@ class ProductsValidation extends FormRequest
             'categories_id'       =>'required',
             'price'               => 'required',
             'featured_img'        => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'product_image '       =>'image|mimes:jpeg,png,jpg,gif,svg|max:2548'
+            'product_image '       =>'image|mimes:jpeg,png,jpg,gif,svg|max:2548',
+            'product_slug'   => 'required|unique:products|min:4|max:60'
         ];
     }
 }

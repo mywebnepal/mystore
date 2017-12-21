@@ -4,7 +4,7 @@ namespace App\Http\Requests\admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CategoriesValidation extends FormRequest
+class subcategoryValidation extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class CategoriesValidation extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|unique:categories|min:4|max:100',
-            'slug' => 'required|unique:categories'
+            'categories_id' => 'required',
+            'name'          => 'required|min:4|max:50',
+            'slug'           => 'required'
         ];
     }
 }

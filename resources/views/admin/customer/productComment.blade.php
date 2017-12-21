@@ -5,7 +5,6 @@
           <div class="panel">
           	  <div class="panel-heading">
           	  	 <h5>Product Comment</h5>
-
           	  </div>
           	  <div class="panel-body">
           	  	<table class="table table-striped table-responsive">
@@ -30,9 +29,8 @@
                       <td>{{ $comment->products->name }}</td>
                       <td>{{ $comment->comment }}</td>
           	  		 		<td>
-                        <span></span>  
                         <span>
-                            <a href="" class="txt-color-red deleteMe" 
+                            <a href="#" class="txt-color-red deleteMe" 
                                    data-url="{!! route('sisadmin.comment.delete', $comment->id ) !!}" title="delete Product" data-name="{{ $comment->products->name }}">
                                     <i class="fa fa-fw fa-lg fa-trash-o deletable"> </i> </a>
                         </span>  

@@ -1,15 +1,31 @@
 <?php
-Route::get('/', 'HomeController@home')->name('/');
+
+Route::get('/single', function(){
+  return view('client.single');
+});
+Route::get('/checkout', function(){
+  return view('client.checkout');
+});
+Route::get('/page', function(){
+   return redirect()->route('/');
+});
+
+/*Route::get('/', 'HomeController@home')->name('/');
 Route::get('/book', 'HomeController@book')->name('book');
 Route::get('/electronic', 'HomeController@electronic')->name('electronic');
-Route::get('/gemstone', 'HomeController@gemStone')->name('gemstone');
+Route::get('/gem_stone', 'HomeController@gemStone')->name('gemstone');
 Route::get('/menMrt', 'HomeController@menMrt')->name('menMrt');
 Route::get('/womenMrt', 'HomeController@womenMrt')->name('womenMrt');
-Route::get('/website', 'HomeController@website')->name('website');
+Route::get('/website', 'HomeController@website')->name('website');*/
+Route::get('/', 'HomeController@home')->name('/');
 Route::get('/user/product/search', 'HomeController@getProductSearchData')->name('user.product.search');
 Route::post('/supportForm', 'HomeController@supportForm')->name('supportForm');
 Route::post('/subscribe', 'HomeController@userSubscribe')->name('systemSubscribe');
 /*login route*/
+
+Route::get('/page/{slug}', 'HomeController@myPage')->name('page_slug');
+Route::get('/product/{slug}', 'HomeController@singleProduct')->name('product.single');
+
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
@@ -36,6 +52,15 @@ Route::prefix('sisadmin')->group(function(){
    Route::post('categories/{id}/update', 'admin\CategoriesController@update')->name('sisadmin.categories.update');
 
    Route::POST('/categories/{id}', 'admin\CategoriesController@delete')->name('sisadmin.categories.delete');
+
+   /*subcategories*/
+   Route::get('/sub_categories/index', 'admin\SubcategoryController@index')->name('sisadmin.subcategory.index');
+
+   Route::post('/sub_categories/store', 'admin\SubcategoryController@store')->name('sisadmin.subcategory.store');
+
+   Route::get('/sub_categories/delete', 'admin\SubcategoryController@destroy')->name('sisadmin.subcategory.delete');
+
+   Route::get('/sub_categories/getSubCategory/{id}', 'admin\SubcategoryController@getSubCategory')->name('sisadmin.sub_categories.getSubCategory');
 
    /*product*/
     Route::get('/products/index', 'admin\ProductsController@index')->name('sisadmin.products.index');

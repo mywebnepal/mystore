@@ -364,6 +364,7 @@ class ComposerStaticInit52440045976de7f0ddb0555b48bbe8c1
         'App\\models\\Brand' => __DIR__ . '/../..' . '/app/models/Brand.php',
         'App\\models\\Comment' => __DIR__ . '/../..' . '/app/models/Comment.php',
         'App\\models\\Product' => __DIR__ . '/../..' . '/app/models/Product.php',
+        'App\\models\\SubCategory' => __DIR__ . '/../..' . '/app/models/SubCategory.php',
         'App\\models\\category' => __DIR__ . '/../..' . '/app/models/category.php',
         'App\\models\\subscribe' => __DIR__ . '/../..' . '/app/models/subscribe.php',
         'App\\models\\supportForm' => __DIR__ . '/../..' . '/app/models/supportForm.php',

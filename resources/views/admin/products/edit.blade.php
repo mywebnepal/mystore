@@ -15,14 +15,15 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 				{!! Form::model($products, ['method' => 'POST','route' => ['sisadmin.products.update', $products->id]]) !!}
 				    @include('admin.products._form')
-				    <footer>
-						{!! Form::submit('update Product', ['class'=>'btn btn-success']) !!}
+
+				    <div class="col-sm-12">
+				    	<p class="pull-right">{!! Form::submit('update Product', ['class'=>'btn btn-success']) !!}
 						<button type="button" class="btn btn-default" onclick="window.history.back();">
 							Back
 						</button>
-				   </footer>
+						</p>
+				    </div>
 				{!! Form::close() !!}
-			   
 			</div>
 		</div>
 	</div>

@@ -19,7 +19,7 @@
 							</li>
 
 							<li>
-								{{ HTML::link('/schClass', 'Tags', array('title' => 'Create Tags'))}}
+								{{ HTML::link('sisadmin/sub_categories/index', 'SubCategories', array('title' => 'Create subcategory'))}}
 							</li>
 							<!--  -->
 							<li class="">

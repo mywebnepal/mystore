@@ -38,6 +38,7 @@ return array(
     'App\\models\\Brand' => $baseDir . '/app/models/Brand.php',
     'App\\models\\Comment' => $baseDir . '/app/models/Comment.php',
     'App\\models\\Product' => $baseDir . '/app/models/Product.php',
+    'App\\models\\SubCategory' => $baseDir . '/app/models/SubCategory.php',
     'App\\models\\category' => $baseDir . '/app/models/category.php',
     'App\\models\\subscribe' => $baseDir . '/app/models/subscribe.php',
     'App\\models\\supportForm' => $baseDir . '/app/models/supportForm.php',

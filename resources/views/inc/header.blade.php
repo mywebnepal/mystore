@@ -9,33 +9,23 @@
                         </div>
                         <div class="col-md-11">
                             <div class="login-detail float-sm-right">
-                                <!-- <li class="breadcrumb-item">
-                                   <a href="{!! route('/') !!}">Home</a>
-                                </li> -->
+                                <?php
+                                    use App\models\category;
+                                    $catViewData = category::select('id', 'name', 'slug')->orderBy('name', 'asc')->get();
 
-                                <li class="breadcrumb-item">
-                                   <a href="{!! route('book') !!}">Books</a>
-                                </li>
-                                <li class="breadcrumb-item">
-                                   <a href="{!! route('electronic') !!}">Electronics</a>
-                                </li>
-                                <li class="breadcrumb-item">
-                                   <a href="{!! route('gemstone') !!}">Gems Stone</a>
-                                </li>
-                                <li class="breadcrumb-item">
-                                   <a href="{!! route('menMrt') !!}">Men Mrt</a>
-                                </li>
-                                <li class="breadcrumb-item">
-                                   <a href="{!! route('womenMrt') !!}">Women Mrt</a>
-                                </li>
+                                    foreach ($catViewData as $myCat) {?>
+                                      <li class="breadcrumb-item">
+                                           <a href="{!! route('page_slug', $myCat->slug) !!}">
+                                           <?php echo $myCat->name;   ?>
+                                             
+                                           </a>
+                                       </li>
+                                    <?php
+                                   }
 
-                                <li class="breadcrumb-item">
-                                  <a href="{!! route('website') !!}">Nepal Handicraft</a>
-                                </li>
+                                ?>
 
-                                <li class="breadcrumb-item">
-                                  <a href="{!! route('website') !!}">website/software</a>
-                                </li>
+                               
 
                                      <li class="breadcrumb-item">
                                      <a href="#" class="btn btn-outline-light btn-sm" data-toggle="modal" data-target="#customerForm">
