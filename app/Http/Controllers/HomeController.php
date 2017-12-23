@@ -20,7 +20,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('home', 'book', 'electronic', 'gemStone', 'menMrt', 'womenMrt', 'website', 'getProductSearchData', 'supportForm', 'userSubscribe', 'myPage', 'singleProduct');
+        $this->middleware('auth')->except('home', 'book', 'electronic', 'gemStone', 'menMrt', 'womenMrt', 'website', 'getProductSearchData', 'supportForm', 'userSubscribe', 'myPage', 'singleProduct', 'productComment');
     }
 
     /**
@@ -28,57 +28,19 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    /*public function index()
+    /*admin dashboard function*/
+    public function index()
     {
         return view('clientDashboard.index');
-    }*/
+    }
 
     public function home(){
        $page['page_title']       = 'mywebnepal';
        $page['page_description'] = '';
       /* $catData = category::select('name', 'slug', 'id')->get();*/
-       return view('client/home', compact(['page'])); 
-    }
-
-    public function book(){
-        $page['page_title']       = 'Books';
-        $page['page_description'] = 'all book course, novel, programming, hacking in nepal kathmandu';
-
-        $productData = $this->productDetails();
-        return view('client/book', compact(['page', 'productData']));
-    }
-
-    public function electronic(){
-      $page['page_title']       = 'Electronic';
-      $page['page_description'] = 'all electronic devices mobile, camera, laptop in nepal kathmandu';
-      $productData = $this->productDetails();
-
-      return view('client/electronic', compact(['page', 'productData']));
-    }
-
-    public function gemStone(){
-      $page['page_title']       = 'Astrology Hub';
-      $page['page_description'] = 'all astorlogy goods like as stone in kathmandu nepal';
-      $productData = $this->productDetails();
-      return view('client/gemstone', compact(['page', 'productData']));
-    }
-    public function menMrt(){
-     $page['page_title']       = 'Men Market';
-     $page['page_description'] = 'all man related goods like as paint shirt jacket in kathmandu nepal';
-     $productData = $this->productDetails();
-     return view('client/menmrt', compact(['page', 'productData']));
-    }
-    public function womenMrt(){
-     $page['page_title']       = 'Women Market';
-     $page['page_description'] = 'all women related good are found like as paint shirt, sari in kathmandu nepal';
-     $productData = $this->productDetails();
-     return view('client/women', compact(['page', 'productData']));
-    }
-    public function website(){
-     $page['page_title']       = 'Website';
-     $page['page_description'] = 'cheap website domain registration website like hotel, tour and travel in kathmandu nepal';
-     $productData = $this->productDetails();
-     return view('client/website', compact(['page', 'productData']));
+       $featuredPrd = $this->getFeaturedProduct();
+       $myfeaturedPrd = $featuredPrd ? $featuredPrd : '';
+       return view('client/home', compact(['page', 'myfeaturedPrd'])); 
     }
 
     public function getProductSearchData(Request $request){ 
@@ -91,7 +53,7 @@ class HomeController extends Controller
        $userEmail = '';
        $userPhone ='';
         if ($request->usr_id) {
-            $usrData = User::select('email', 'phone')->where('id', $request->usr_id)->first();
+            $usrDat = $this->getUserDetails($request->usr_id);
             $userEmail = $usrData['email'];
             $userPhone = $usrData['phone'];
         }
@@ -112,6 +74,11 @@ class HomeController extends Controller
             'message' => 'Oops sorry try it again!'
         ], 401);
 
+    }
+
+    private function getUserDetails($usr_id){
+      $usrData = User::select('email', 'phone', 'name')->where('id', $usr_id)->first();
+      return $usrData;
     }
 
     public function userSubscribe(Request $request){
@@ -142,7 +109,7 @@ class HomeController extends Controller
     }
 
     private function getProductByCategory($id){
-        $product = Product::select('id', 'product_slug', 'name', 'featured_img_sm', 'discount', 'price')->where('categories_id', $id)->where('status', '=', 1)->orderBy('created_at', 'desc')->get();
+        $product = Product::select('id', 'product_slug', 'name', 'featured_img_sm', 'discount', 'price', 'sub_categories_id')->where('categories_id', $id)->where('status', '=', 1)->orderBy('created_at', 'desc')->get();
         return $product;
     }
 
@@ -173,7 +140,49 @@ class HomeController extends Controller
     }
 
     private function getProductComment($id){
-     $getProductComment = Comment::where('products_id', $id)->orderBy('created_at', 'desc')->get();
+     $getProductComment = Comment::where('products_id', $id)->where('status', '=', 0)->orderBy('created_at', 'desc')->get();
      return $getProductComment;
+    }
+
+    /*featured product*/
+    private function getFeaturedProduct(){
+        $featuredProduct = Product::select('id', 'product_slug', 'name', 'featured_img_sm', 'discount', 'price', 'sub_categories_id', 'featured_product')->where('featured_product','=', 1)->where('status', '=', 1)->orderBy('created_at', 'desc')->get(15);
+        return $featuredProduct;
+    }
+
+    public function productComment(Request $request){
+        if (isset($request->product_id)) {
+            $saveComment = new Comment;
+            if (isset($request->usr_id)) {
+               $usrData = $this->getUserDetails($request->usr_id);
+               $saveComment->email = $usrData['email'];
+            }else{
+                $saveComment->email = $request->user_email;
+            }
+
+            $saveComment->products_id = $request->product_id;
+            $saveComment->comment    = $request->comment;
+            $saveComment->status     = 0;
+
+            $saveData = $saveComment->save();
+
+            if ($saveData) {
+               return response()->json([
+                'success' => true,
+                'message' => 'your comment has been post successfully'
+                ], 200);
+            }else{
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Oops try it again you comment has not post'
+                    ], 401);
+            }
+        }else{
+            return response()->json([
+                 'success' => false,
+                 'message' => 'Oops sorry try it again'
+                ], 401);
+        }
+     
     }
 }

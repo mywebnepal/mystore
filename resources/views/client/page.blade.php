@@ -318,9 +318,11 @@
                                                      </fieldset>
                                                  </div>
                                                  <div class="cstm-btn">
-                                                     <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Add to Cart">
+                                                     <a href="#" data-url="{{ route('addCart', $product->id) }}" type="button" class="btn btn-primary btn-sm btnAddToCart" data-toggle="tooltip" data-placement="top" title="Add to Cart" data-original-title="Add to Cart">
                                                          <i class="fa fa-shopping-cart"></i>
-                                                     </button>
+                                                     </a>
+
+
                                                      <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="" data-original-title="Wishlist">
                                                          <i class="fa fa-heart"></i>
                                                      </button>

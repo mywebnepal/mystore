@@ -1188,6 +1188,12 @@ footer .copy-right-content {
   color: #FFF;
   padding: 1em 0.5em;
   display: none;
-
 }
+.booking-heading{
+  list-style: none;
+  padding-top: 0.5em;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+/*left sidbar*/
 

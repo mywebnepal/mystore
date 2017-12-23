@@ -1,26 +1,18 @@
 <?php
-
-Route::get('/single', function(){
-  return view('client.single');
-});
-Route::get('/checkout', function(){
-  return view('client.checkout');
-});
 Route::get('/page', function(){
    return redirect()->route('/');
 });
 
-/*Route::get('/', 'HomeController@home')->name('/');
-Route::get('/book', 'HomeController@book')->name('book');
-Route::get('/electronic', 'HomeController@electronic')->name('electronic');
-Route::get('/gem_stone', 'HomeController@gemStone')->name('gemstone');
-Route::get('/menMrt', 'HomeController@menMrt')->name('menMrt');
-Route::get('/womenMrt', 'HomeController@womenMrt')->name('womenMrt');
-Route::get('/website', 'HomeController@website')->name('website');*/
 Route::get('/', 'HomeController@home')->name('/');
 Route::get('/user/product/search', 'HomeController@getProductSearchData')->name('user.product.search');
 Route::post('/supportForm', 'HomeController@supportForm')->name('supportForm');
 Route::post('/subscribe', 'HomeController@userSubscribe')->name('systemSubscribe');
+Route::post('/product/comment', 'HomeController@productComment')->name('product.comment');
+
+
+/*cart*/
+Route::get('/cart/{id}', 'cartController@addCart')->name('addCart');
+Route::get('/myshopping', 'cartController@getCartPage')->name('cart.myshopping');
 /*login route*/
 
 Route::get('/page/{slug}', 'HomeController@myPage')->name('page_slug');
@@ -29,6 +21,7 @@ Route::get('/product/{slug}', 'HomeController@singleProduct')->name('product.sin
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/booking/mybooking', 'bookingController@getBooking')->name('booking');
 
 /*Route::get('/admin', 'Auth\SisadminController@showLoginForm');*/
 // Route::get('/home', 'Auth\LoginController@userDashborad')->name('home');

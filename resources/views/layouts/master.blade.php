@@ -74,14 +74,9 @@
        <div class="siteInfoMsg"></div>
        @yield('content')  
     </div>
-<!-- <div class="sociallink">
-     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-    <div class="fb">fabce</div>
-    <div class="tw">twitter</div>
-    <div class="linkin">link</div>
-</div> -->
     @include('inc.footer')
 </div>
+    @yield('custom_script')
     @include('inc.script')
 </body>
 </html>

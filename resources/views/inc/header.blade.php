@@ -24,14 +24,12 @@
                                    }
 
                                 ?>
-
-                               
-
-                                     <li class="breadcrumb-item">
-                                     <a href="#" class="btn btn-outline-light btn-sm" data-toggle="modal" data-target="#customerForm">
-                                         <i class="fa fa-key mr-1"></i> Support Form
-                                     </a>
-                                     </li>
+                                <!-- booking -->
+                                <li class="breadcrumb-item">
+                                <a href="{{ route('booking') }}" class="btn btn-outline-light btn-sm" title="Booking hotel event vanue sport">
+                                    <i class="fa fa-key mr-1"></i> Booking
+                                </a>
+                                </li>
                                 <!-- login system -->
                                  @guest
                                      <li class="breadcrumb-item">
@@ -98,26 +96,28 @@
                                                 Certainty listening no no behaviour existence assurance situation is. Because add why not esteems amiable him. Interested the unaffected mrs law friendship add principles. Indeed on people do merits to. Court heard which up above hoped grave do. Answer living law things either sir bed length. Looked before we an on merely. These no death he at share alone. Yet outward the him compass hearted are tedious. 
                                             </div>
                                         </div>
-                                
                             </div>
                         </div>
                         <div class="d-none d-lg-block col-lg-4">
                             <div class="row align-items-center">
                                 <div class="col text-right">
-                                   <!--  <a href="#" class="btn theme-bg-dark text-white btn-sm mt-2 mt-sm-0">
-                                        <i class="fa fa-heart-o"></i>
-                                    </a> -->
-                                    <a href="{!! url('cart') !!}" class="btn theme-bg-dark text-white btn-sm mt-2 mt-sm-0">
-                                        <i class="fa fa-shopping-cart mr-1"></i> Cart <span class="badge badge-secondary">4</span>
-                                    </a>
-                                   
-                                    <a href="{!! url('/checkout') !!}" class="btn theme-bg-dark text-white btn-sm mt-2 mt-sm-0">
-                                         <i class="fa fa-credit-card mr-1"></i> CheckOut <span class="badge badge-secondary"></span>
+                                    <a href="{!! route('cart.myshopping') !!}" class="btn theme-bg-dark text-white btn-sm mt-2 mt-sm-0">
+                                        <i class="fa fa-shopping-cart mr-1"></i> Cart 
+                                        <span class="badge badge-secondary myCartCount">
+                                          {{ Session::has('cart') ? Session::get('cart')->totalQty : '0' }}
+                                        </span>
+                                        
                                     </a>
 
                                      <a href="{!! url('/checkout') !!}" class="btn theme-bg-dark text-white btn-sm mt-2 mt-sm-0">
                                          <i class="fa fa-credit-card mr-1"></i>Track Order<span class="badge badge-secondary"></span>
                                     </a>
+
+
+                                     <a href="#" class="btn theme-bg-dark text-white btn-sm mt-2 mt-sm-0" data-toggle="modal" data-target="#customerForm">
+                                         <i class="fa fa-key mr-1"></i> Support Form
+                                     </a>
+                                  
                                 </div>
                             </div>
                         </div>

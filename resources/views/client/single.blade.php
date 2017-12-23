@@ -495,7 +495,13 @@
                                         </li>
                                         <li class="nav-item nav-justified">
                                             <a class="nav-link" id="pills-offers-items-tab" data-toggle="pill" href="#pills-offers-items" role="tab" aria-controls="pills-offers-items" aria-expanded="true">
-                                                reviews
+                                                Comment
+                                            </a>
+                                        </li>
+
+                                        <li class="nav-item nav-justified">
+                                            <a class="nav-link" id="product-vedio" data-toggle="pill" href="#product-vedio" role="tab" aria-controls="pills-offers-items" aria-expanded="true">
+                                                Product Vedio
                                             </a>
                                         </li>
                                     </ul>
@@ -510,11 +516,65 @@
                                                 </p>
                                             </div>
                                         </div>
+
                                         <div class="tab-pane fade" id="pills-offers-items" role="tabpanel" aria-labelledby="pills-offers-items-tab">
+                                           @if(count($myProductComment) > 0)
+                                               @foreach($myProductComment as $comment)
+                                                   <dl>
+                                                     <dt>
+                                                     <span>
+                                                         <i class="fa fa-user-o" aria-hidden="true"></i>
+
+                                                     </span>{{ $comment->email }}</dt>
+                                                     <dd>{{ $comment->comment }}</dd>
+                                                   </dl>
+                                               @endforeach
+                                           @endif
+                                           
                                             <div class="">
-                                                No comments
+                                                {!! Form::open(['url'=>route('product.comment'), 'id'=>'prdComment']) !!}
+                                                    {!! Form::hidden('product_id',$mySingleProduct->id , ['class'=>'commentForm']) !!}
+                                                     @if (Auth::check())
+                                                        <div class="form-group float-label-control">
+                                                             <h4>Hai, {{ Auth::user()->name }} 
+                                                             <small>Please comment this product</small>
+                                                             </h4>
+                                                        </div>
+                                                        {!! Form::hidden('usr_id', Auth::user()->id, ['class'=>'form-control']) !!}
+
+                                                     @else
+                                                          <div class="form-group float-label-control">
+                                                           {!! Form::text('user_email', null, ['class'=>'form-control', 'placeholder'=>'Your email address']) !!}
+                                                        </div>          
+                                                     @endif
+                                                     
+
+                                                
+                                                    
+                                                     <div class="form-group float-label-control">
+                                                      {!! Form::textarea('comment', null, ['class'=>'form-control', 'placeholder'=>'Your comment', 'rows'=>'3']) !!}
+                                                      </div>
+
+                                                      <div class="form-group float-label-control">
+                                                         <p class="pull-right">
+                                                             {!! Form::submit('submit', ['class'=>'btn btn-info btn-sm']) !!}
+                                                         </p>
+                                                      </div>
+                                                {!! Form::close() !!}
                                             </div>
                                         </div>
+
+                                        <div class="tab-pane fade" id="product-vedio" role="tabpanel" aria-labelledby="product-vedio">
+                                            <div class="">
+                                            @if($mySingleProduct->vedio_link)
+                                                {!! $mySingleProduct->vedio_link !!}
+                                                @else
+                                                <h4>Oops there is no vedio related to this product</h4>
+                                            @endif
+                                                {!! $mySingleProduct->vedio_link !!}
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>

@@ -9,6 +9,12 @@
                         <div class="card-body pt-4">
                             <div class="cart-content">
                                   <!--Shopping cart items-->
+                                  <?php
+                                        /*echo '<pre>';
+                                               print_r($products);
+                                        echo '</pre>';*/
+                                  ?>
+                                  @if(Session::has('cart'))
                                   <table class="table table-responsive mb-0 cart-table">
                                     <thead>
                                       <tr>
@@ -22,82 +28,38 @@
                                     </thead>
                                     <tbody>
                                       <!-- Cart item 1 -->
+                                      @if(count($products) > 0)
+                                      @foreach($products as $product)
+
                                       <tr>
                                         <td class="text-center align-middle">
                                           <a href="#" class="close cart-remove"> <i class="fa fa-times"></i> </a>
                                         </td>
                                         <td class="text-center">
                                           <a href="#">
-                                            <img class="cart-img img-fluid" src="img/products/p1.jpg" alt="Product 1">
+                                            <img class="cart-img img-fluid" src="{{ asset($product['item']['featured_img_sm']) }}" alt="Product 1">
                                           </a>
                                         </td>
-                                        <td> <span class="font-weight-bold">Gloves</span> </td>
-                                        <td>$18.99</td>
+                                        <td> <span class="font-weight-bold">{{ $product['item']['name'] }}</span> </td>
+                                        <td>{{ $product['item']['price'] }}</td>
                                         <td>
                                           <div class="input-group input-group-quantity" data-toggle="quantity">
                                             <span class="input-group-btn">
                                               <input type="button" value="-" class="btn btn-secondary quantity-down" field="quantity">
                                             </span>
-                                            <input type="text" name="quantity" value="2" class="quantity form-control">
+                                            <input type="text" name="quantity" value="{{ $product['qty'] }}" class="quantity form-control">
                                             <span class="input-group-btn">
                                               <input type="button" value="+" class="btn btn-secondary quantity-up" field="quantity">
                                             </span>
                                           </div>
                                         </td>
-                                        <td class="text-md-right"><span class="font-weight-bold">$37.98</span></td>
+                                        <td class="text-md-right"><span class="font-weight-bold">Rs.{{ $product['price'] }}</span></td>
                                       </tr>
-                                      <!-- Cart item 2 -->
-                                      <tr>
-                                        <td class="text-center align-middle">
-                                          <a href="#" class="close cart-remove"> <i class="fa fa-times"></i> </a>
-                                        </td>
-                                        <td class="text-center">
-                                          <a href="#">
-                                            <img class="cart-img img-fluid" src="img/products/p18.jpg" alt="Product 1">
-                                          </a>
-                                        </td>
-                                        <td> <span class="font-weight-bold">Shoes</span> </td>
-                                        <td>$12.99</td>
-                                        <td>
-                                          <div class="input-group input-group-quantity" data-toggle="quantity">
-                                            <span class="input-group-btn">
-                                              <input type="button" value="-" class="btn btn-secondary quantity-down" field="quantity">
-                                            </span>
-                                            <input type="text" name="quantity" value="1" class="quantity form-control">
-                                            <span class="input-group-btn">
-                                              <input type="button" value="+" class="btn btn-secondary quantity-up" field="quantity">
-                                            </span>
-                                          </div>
-                                        </td>
-                                        <td class="text-md-right"><span class="font-weight-bold">$12.99</span></td>
-                                      </tr>
-                                      <!-- Cart item 3 -->
-                                      <tr>
-                                        <td class="text-center align-middle">
-                                          <a href="#" class="close cart-remove"> <i class="fa fa-times"></i> </a>
-                                        </td>
-                                        <td class="text-center">
-                                          <a href="#">
-                                            <img class="cart-img img-fluid" src="img/products/p1.jpg" alt="Product 1">
-                                          </a>
-                                        </td>
-                                        <td> <span class="font-weight-bold">Gloves</span> </td>
-                                        <td>$18.99</td>
-                                        <td>
-                                          <div class="input-group input-group-quantity" data-toggle="quantity">
-                                            <span class="input-group-btn">
-                                              <input type="button" value="-" class="btn btn-secondary quantity-down" field="quantity">
-                                            </span>
-                                            <input type="text" name="quantity" value="2" class="quantity form-control">
-                                            <span class="input-group-btn">
-                                              <input type="button" value="+" class="btn btn-secondary quantity-up" field="quantity">
-                                            </span>
-                                          </div>
-                                        </td>
-                                        <td class="text-md-right"><span class="font-weight-bold">$37.98</span></td>
-                                      </tr>
+                                      @endforeach
+                                      @endif
                                     </tbody>
                                   </table>
+
                                   <!--End of Shopping cart items-->
                                   <hr class="my-4 hr-lg">
                                   <div class="cart-content-footer">
@@ -136,6 +98,15 @@
                                       </div>
                                     </div>
                                   </div>
+
+                                  @else
+                                     <p>
+                                        <h3>There is no Product in your cart</h3>
+                                         <a href="{{ route('/') }}" class="btn btn-primary ">
+                                          Continue my shopping....
+                                         </a>
+                                     </p>
+                                  @endif
                                 </div>
                         </div>
                     </div>
