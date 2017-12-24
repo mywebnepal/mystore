@@ -82,18 +82,20 @@
                         <div class="col-md-12 col-lg-6">
                             <div class="search-product-container">
                                 <div class="input-group">
-                                    <input type="text" class="form-control searchProductDetails" placeholder="Search for..." aria-label="Search for..." data-url="{!! route('user.product.search') !!}">
+                               
+                                    <input type="text" class="form-control searchProductDetails" placeholder="Search for..." aria-label="Search for..." data-url="{!! route('user.product.search') !!}" name="qry">
 
                                     <span class="input-group-btn">
                                         <button class="btn btn-light" type="button">
                                             <i class="fa fa-search"></i>
                                         </button>
                                     </span>
+                               
                                 </div>
                                    <div class="clearfix"></div>
                                         <div class="row">
                                             <div class="col-sm-12 searchResultData" style="background: #FFF; margin: 0em 1em; display: none;">
-                                                Certainty listening no no behaviour existence assurance situation is. Because add why not esteems amiable him. Interested the unaffected mrs law friendship add principles. Indeed on people do merits to. Court heard which up above hoped grave do. Answer living law things either sir bed length. Looked before we an on merely. These no death he at share alone. Yet outward the him compass hearted are tedious. 
+                                               <!-- search result goes here -->
                                             </div>
                                         </div>
                             </div>

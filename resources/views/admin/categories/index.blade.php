@@ -21,7 +21,7 @@
                        <div role="content" class="categoryForm">
                             {{ Form::open(['route'=>'sisadmin.categories.store', 'method' => 'post', 'class'=>'form-inline']) }}
                             @include('admin.categories._form')
-                            <div class="form-group col-sm-4">
+                            <div class="form-group col-sm-12">
                                <p class="pull-right">
                                     <button type="submit" class="btn btn-primary">
                                     Ssve category

@@ -161,25 +161,30 @@ $(function () {
   });
 
   /*search form*/
-
   var searchProductDetails = $('.searchProductDetails');
   var searchResultData     = $('.searchResultData');
   searchProductDetails.on('keyup', function(e){
     var text = searchProductDetails.val();
     var url  = $(this).data('url');
+    var data = $(this).serialize();
     if (text.length >=4) {
+        var item = '';
         $.ajax({
-          'type' : 'GET',
-          'url'  : url,
-          'data'    : text,
+          'type'    :'GET',
+          'url'     : url,
+          'data'    : {qry : text},
             success: function(response){
-                // console.log(response);
                 searchResultData.css('display', 'block');
+               for(var i =1; i < response.length; i++)
+               {
+                 item = response[i];
+                 searchResultData.append('<ul><li>'+item.name+'<span><img src=""></span></li></ul>');
+               }
             }
-
         });
     }else{
         searchResultData.fadeOut();
+        item = '';
     }
   });
 

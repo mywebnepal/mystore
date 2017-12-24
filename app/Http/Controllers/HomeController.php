@@ -10,6 +10,7 @@ use App\User;
 use App\models\supportForm;
 use App\models\subscribe;
 use App\models\Comment;
+use App\models\SubCategory;
 
 class HomeController extends Controller
 {
@@ -20,7 +21,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('home', 'book', 'electronic', 'gemStone', 'menMrt', 'womenMrt', 'website', 'getProductSearchData', 'supportForm', 'userSubscribe', 'myPage', 'singleProduct', 'productComment');
+        $this->middleware('auth')->except('home', 'book', 'electronic', 'gemStone', 'menMrt', 'womenMrt', 'website', 'getProductSearchData', 'supportForm', 'userSubscribe', 'myPage', 'singleProduct', 'productComment', 'myBookingPage');
     }
 
     /**
@@ -40,11 +41,24 @@ class HomeController extends Controller
       /* $catData = category::select('name', 'slug', 'id')->get();*/
        $featuredPrd = $this->getFeaturedProduct();
        $myfeaturedPrd = $featuredPrd ? $featuredPrd : '';
-       return view('client/home', compact(['page', 'myfeaturedPrd'])); 
+
+       $latestProduct = $this->latestProduct();
+       $myLatestProduct = $latestProduct ? $latestProduct :'';
+
+       $discountProduct = $this->getDiscountProduct();
+       $mydiscountProduct = $discountProduct ? $discountProduct : '';
+
+       $category  = $this->getCategories();
+       $myCat       = $category ? $category : '';
+
+
+       return view('client/home', compact(['page', 'myfeaturedPrd', 'myLatestProduct', 'mydiscountProduct', 'myCat'])); 
     }
 
     public function getProductSearchData(Request $request){ 
-      $data = Product::select('id', 'name', 'categories_id', 'featured_img_sm')->where('status', '1')->where('name', 'LIKE', '%'.$request.'%')->get();
+      $key = $request->qry;
+      $data = Product::select('id', 'name', 'categories_id', 'featured_img_sm', 'status', 'product_slug', 'author_manufactural_name')->where('status', '=', 1)->where('name', 'like', 
+         '%'.$key.'%')->orWhere('author_manufactural_name', 'like', '%'.$key.'%')->get();
       return $data;
     }
 
@@ -105,7 +119,13 @@ class HomeController extends Controller
      $page['page_title']       = $getCatId->name;
      $page['page_description'] = $getCatId->description;
 
-     return view('client/page', compact(['page', 'myProduct']));
+     $latestProduct = $this->latestProduct();
+    $myLatestProduct = $latestProduct ? $latestProduct : '';
+
+    $brandName = $this->getBrandName();
+    $myBrandName = $brandName ? $brandName : '';
+
+     return view('client/page', compact(['page', 'myProduct', 'myLatestProduct', 'myBrandName']));
     }
 
     private function getProductByCategory($id){
@@ -129,9 +149,15 @@ class HomeController extends Controller
     $productByCategory = $this->getProductByCategory($singleProduct->categories_id);
     $myProductByCategory = $productByCategory ? $productByCategory : '';
 
+    $latestProduct = $this->latestProduct();
+    $myLatestProduct = $latestProduct ? $latestProduct : '';
+
+    $brandName = $this->getBrandName();
+    $myBrandName = $brandName ? $brandName : '';
+
     $page['page_title']       = $singleProduct->name;
     $page['page_description'] = $singleProduct->description;
-    return view('client.single', compact(['mySingleProduct', 'myProductComment', 'myProductByCategory', 'page']));
+    return view('client.single', compact(['mySingleProduct', 'myProductComment', 'myProductByCategory', 'page', 'myLatestProduct', 'myBrandName']));
     }
 
     private function getSingleProductDetails($slug){
@@ -184,5 +210,35 @@ class HomeController extends Controller
                 ], 401);
         }
      
+    }
+    public function myBookingPage(){
+        dd('iam workign here');
+        $page['page_title']       = 'Booking';
+        $page['page_description'] = 'Booking hotel and event vanue/ in kathmandu nepal';
+            return view('client.booking', compact(['page']));
+    }
+   
+    /*getting discount product only*/
+    private function getDiscountProduct(){
+        $discountProduct = Product::select('name', 'product_slug', 'author_manufactural_name', 'discount', 'featured_img_sm')->where('status', '=', 1)->whereNotNull('discount')->get();
+        return $discountProduct;
+    }
+    
+    /*getting latest product*/
+    private function latestProduct(){
+        $latestProduct = Product::select('name', 'product_slug', 'author_manufactural_name', 'discount', 'featured_img_sm','price', 'created_at')->where('status', '=', 1)->latest()->take(5)->get();
+        return $latestProduct;
+    }
+
+    /*brand band*/
+    private function getBrandName(){
+        $brandName = Brand::select('name', 'slug')->latest()->take(8)->get();
+        return $brandName;
+    }
+
+    /*getting sub categories*/
+    private function getCategories(){
+        $subCat = category::select('name', 'slug', 'id')->get();
+        return $subCat;
     }
 }

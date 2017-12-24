@@ -78,6 +78,9 @@ class ProductsController extends Controller
         $save->status         = $request->status;
         $save->featured_product = 0;
         $save->vedio_link     = $request->vedio_link;
+        $save->address        = $request->address ? $request->address  : 'N/A';
+        $save->phone          = $request->phone ? $request->phone  : 'N/A';
+        $save->email          = $request->email ? $request->email  : 'N/A';
 
         if ($request->hasFile('featured_img')) {
            $imgFile = $request->file('featured_img');
@@ -164,10 +167,12 @@ class ProductsController extends Controller
      * @param  \App\products  $products
      * @return \Illuminate\Http\Response
      */
-    public function update(ProductsValidation $request, $id)
+    public function update(Request $request, $id)
     {
+        $this->validate($request, [
+               'categories_id' => 'required'
+           ]);
         $product = Product::findOrFail($id);
-
         if ($product) {
             $time = date('Y-m-d h:i:s');
             $product->name = $request->name;
@@ -181,9 +186,13 @@ class ProductsController extends Controller
             $product->price          = $request->price;
             $product->discount       = $request->discount;
             $product->featured       = $request->featured;
-            $product->brands_id     = $request->brands_id;
+            $product->brands_id      = $request->brands_id;
             $product->status         = $request->status;
             $product->vedio_link     = $request->vedio_link;
+
+            $product->address        = $request->address ? $request->address  : 'N/A';
+            $product->phone          = $request->phone ? $request->phone  : 'N/A';
+            $product->email          = $request->email ? $request->email  : 'N/A';
 
 
 

@@ -89,6 +89,19 @@
         </div>
 
         <div class="form-group col-sm-12">
+            {{ Form::text('address', null, array('placeholder'=>'address', 'class'=>'form-control', 'title'=>'address')) }}
+        </div>
+
+     <div class="form-group col-sm-12">
+           {{ Form::text('phone', null, array('placeholder'=>'Phone number', 'class'=>'form-control', 'title'=>'phone number')) }}
+      </div>
+
+      <div class="form-group col-sm-12">
+           {{ Form::text('email', null, array('placeholder'=>'Email', 'class'=>'form-control', 'title'=>'email')) }}
+      </div>
+
+
+        <div class="form-group col-sm-12">
         {{ Form::text('sku', null, array('placeholder'=>'SKU number', 'class'=>'form-control', 'id'=>'sku_number', 'title'=>'Sku number')) }}
    </div>
 
@@ -106,10 +119,12 @@
 
           <div class="form-group col-sm-12">
           <select class="form-control" name="brands_id" title="brand name">
-             <option value="<?php echo isset($products) ? $products->brand_id : '0';    ?>">
-                   <?php  echo isset($products) ? $products->brands->name : 'select brand name';   ?>
+             <option value="<?php echo isset($products) ? $products->brands_id : 'Select brand name';    ?>">
+                   <?php  
+                       echo isset($products) ? $products->brands->name : 'select brand name';   
+                    ?>
              </option>
-             @if($brand)
+             @if(isset($brand))
                  @foreach($brand as $brands)
                      <option value="{{ $brands->id }}">{{ $brands->name }}</option>
                  @endforeach
@@ -118,7 +133,6 @@
                  <h4>Oops there is no band name</h4>
              @endif
           </select>
-               <!-- {{ Form::text('brand_name', null, array('placeholder'=>'Brand Name', 'class'=>'form-control')) }} -->
           </div>
 	    	<div class="form-group col-sm-12">
             {{ Form::textarea('featured', null, array('placeholder'=>'enter product featured', 'class'=>'form-control summernote', 'rows'=>'7', 'cols'=>'35')) }}
