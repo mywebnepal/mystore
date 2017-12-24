@@ -167,6 +167,7 @@ $(function () {
     var text = searchProductDetails.val();
     var url  = $(this).data('url');
     var data = $(this).serialize();
+    // alert(url);
     if (text.length >=4) {
         var item = '';
         $.ajax({
@@ -175,11 +176,14 @@ $(function () {
           'data'    : {qry : text},
             success: function(response){
                 searchResultData.css('display', 'block');
-               for(var i =1; i < response.length; i++)
-               {
-                 item = response[i];
-                 searchResultData.append('<ul><li>'+item.name+'<span><img src=""></span></li></ul>');
-               }
+                    var serachResult = "<ul>"
+                   for(var i =1; i < response.length; i++)
+                   {
+                     item = response[i];
+                     serachResult +='<li>'+item.name+'<span><img src=""></span></li>';
+                   }
+                   serachResult += "</ul>";
+                   searchResultData.html(serachResult);
             }
         });
     }else{
@@ -249,12 +253,14 @@ $.ajax({
     'url' : url,
     success:function(response){
     console.log(response);
-    siteInfoMsg.css('display', 'block').fadeOut(5000);
-      siteInfoMsg.append(response.message);
+        siteInfoMsg.css('display', 'block').fadeOut(5000);
+          siteInfoMsg.append(response.message);
+          $('.myCartCount').text(response.productQty);
     },
     complete : function(response){
-     location.reload();
+     // location.reload();
      // $('#myCartCount').append(response.message);
+     
     }
 });
 });

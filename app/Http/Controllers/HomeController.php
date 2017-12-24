@@ -51,7 +51,13 @@ class HomeController extends Controller
        $category  = $this->getCategories();
        $myCat       = $category ? $category : '';
 
-
+       if ($myCat) {
+                   foreach ($myCat as $cat) {
+                       $cat->subcats = SubCategory::select('name', 'slug')->where('categories_id', $cat->id)->get();
+                       
+                   }
+               }
+               // return $myCat;
        return view('client/home', compact(['page', 'myfeaturedPrd', 'myLatestProduct', 'mydiscountProduct', 'myCat'])); 
     }
 
