@@ -133,7 +133,26 @@ class HomeController extends Controller
      $myProduct = $productDetails ? $productDetails : '';
      $page['page_title']       = $getCatId->name;
      $page['page_description'] = $getCatId->description;
-    
+
+     $products = collect([]);
+    if ($myProduct) {
+        $products = $myProduct->groupBy('sub_categories_id');
+    }
+    // return $products;
+    $newProductListBySubCategory = [];
+    if ($products->isNotEmpty()) {
+        foreach($products as $key => $productCollection) {
+            $tempArr = [];
+            if (!$key) {
+                $tempArr['subcat'] = null;
+            } else {
+                $tempArr['subcat'] = SubCategory::find($key);
+            }
+            $tempArr['products'] = $productCollection;    
+            array_push($newProductListBySubCategory, $tempArr);        
+        }
+    }
+    // dd($newProductListBySubCategory);
     /*for sidebar*/
      $latestProduct = $this->latestProduct();
     $myLatestProduct = $latestProduct ? $latestProduct : '';
@@ -141,7 +160,7 @@ class HomeController extends Controller
     $brandName = $this->getBrandName();
     $myBrandName = $brandName ? $brandName : '';
 
-     return view('client/page', compact(['page', 'myProduct', 'myLatestProduct', 'myBrandName', 'mySubCatName']));
+     return view('client/page', compact(['page', 'myProduct', 'myLatestProduct', 'myBrandName', 'mySubCatName', 'newProductListBySubCategory']));
     }
 
     private function getProductByCategory($id){

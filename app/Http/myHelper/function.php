@@ -30,7 +30,6 @@ function getGetSideBarMenu(){
 	 if ($myCat) {
            foreach ($myCat as $cat) {
                $cat->subcats = SubCategory::select('name', 'slug')->where('categories_id', $cat->id)->get();
-               
            }
        }
        return $myCat;

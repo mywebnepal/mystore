@@ -47,12 +47,17 @@
                      </div>
                      <div class="card-body">
                          <div class="row">
-                             @foreach($myProduct as $product)
+                             @foreach($newProductListBySubCategory as $cat)
                              <div class="row col-md-12 col-lg-12" style="background: red">
-                             {{ $product->subcategories->name }}
-
+                             @if(isset($cat['subcat'])) 
+                                {{ $cat['subcat']->name}}
+                             @else
+                                Others
+                            @endif
                              </div>
-                                 <div class="col-md-6 col-lg-4">
+                             @if($cat['products'])
+                             @foreach($cat['products'] as $product)
+                             <div class="col-md-6 col-lg-4">
                                       <div class="product-item">
                                           <div class="img-wrap">
                                               <a href="#">
@@ -118,7 +123,8 @@
                                           </div>
                                       </div>
                                   </div>
-                             
+                                  @endforeach
+                             @endif
                              @endforeach
                          </div>
                      </div>
