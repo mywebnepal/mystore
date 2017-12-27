@@ -30,8 +30,14 @@
                                                  <p><a href="#">{{ $lastPrd->name }}</a></p>
                                                  <div class="d-flex justify-content-between align-items-end">
                                                      <div class="">
+                                                         @if($lastPrd->discount)
                                                          <div class="item-price">Rs.{{ $lastPrd->price }}</div>
-                                                         <div class="item-price-before-discount">Rs. 1550</div>
+
+                                                         <div class="item-price-before-discount">Rs. {{ getDiscountPrice($lastPrd->price, $lastPrd->discount) }}</div>
+                                                            @else
+                                                            <div class="item-price">Rs.{{ $lastPrd->price }}</div>
+                                                         @endif
+                                                        
                                                          <!-- <span class="item-offer">Rs. 1550</span> -->
                                                      </div>
                                                      <div class="">

@@ -9,9 +9,15 @@ Route::post('/supportForm', 'HomeController@supportForm')->name('supportForm');
 Route::post('/subscribe', 'HomeController@userSubscribe')->name('systemSubscribe');
 Route::post('/product/comment', 'HomeController@productComment')->name('product.comment');
 
+/*viewed producted*/
+Route::post('/viewProduct/{id}', 'HomeController@viewedProduct')->name('mostViewProduct');
+
 
 /*cart*/
 Route::get('/cart/{id}', 'cartController@addCart')->name('addCart');
+Route::get('/removeCart/{id}', 'cartController@removeCart')->name('removeCart');
+Route::get('/removeMyCart/{id}', 'cartController@removeByAllCart')->name('removeAll');
+
 Route::get('/myshopping', 'cartController@getCartPage')->name('cart.myshopping');
 /*login route*/
 
@@ -90,5 +96,19 @@ Route::prefix('sisadmin')->group(function(){
 
     Route::get('brand/{brand}/edit', 'admin\brandController@edit')->name('sisadmin.brand.edit');
     Route::post('brand/{id}/update', 'admin\brandController@update')->name('sisadmin.brand.update');
+
+
+    /*notice board*/
+     Route::get('noticeBoard/index', 'admin\NoticeBoardController@index')->name('sisadmin.notice.index');
+
+     Route::post('noticeBoard/store', 'admin\NoticeBoardController@store')->name('sisadmin.notice.store');
+
+     Route::get('noticeBoard/delete/{id}', 'admin\NoticeBoardController@destroy')->name('sisadmin.notice.delete');
+
+     Route::get('noticeBoard/{id}/edit', 'admin\NoticeBoardController@edit')->name('sisadmin.noticeBoard.edit');
+
+     Route::post('noticeBoard/{id}/update', 'admin\NoticeBoardController@update')->name('sisadmin.noticeBoard.update');
+
+
 
 });

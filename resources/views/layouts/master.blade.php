@@ -77,7 +77,7 @@
     </div>
     @include('inc.footer')
 </div>
-    @yield('custom_script')
     @include('inc.script')
+    @yield('custom_script')
 </body>
 </html>

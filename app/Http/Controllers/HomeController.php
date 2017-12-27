@@ -11,6 +11,8 @@ use App\models\supportForm;
 use App\models\subscribe;
 use App\models\Comment;
 use App\models\SubCategory;
+use App\models\NoticeBoard;
+use App\models\viewedProduct;
 
 class HomeController extends Controller
 {
@@ -19,9 +21,12 @@ class HomeController extends Controller
      *
      * @return void
      */
+    public $nowDate;
     public function __construct()
     {
-        $this->middleware('auth')->except('home', 'book', 'electronic', 'gemStone', 'menMrt', 'womenMrt', 'website', 'getProductSearchData', 'supportForm', 'userSubscribe', 'myPage', 'singleProduct', 'productComment', 'myBookingPage');
+        $this->middleware('auth')->except('home', 'getProductSearchData', 'supportForm', 'userSubscribe', 'myPage', 'singleProduct', 'productComment', 'myBookingPage');
+
+        $this->nowDate = date('Y-m-d');
     }
 
     /**
@@ -39,6 +44,9 @@ class HomeController extends Controller
        $page['page_title']       = 'mywebnepal';
        $page['page_description'] = '';
       /* $catData = category::select('name', 'slug', 'id')->get();*/
+       $notice = $this->getNoticeBoard();
+       $myNotice = $notice ? $notice : '';
+
        $featuredPrd = $this->getFeaturedProduct();
        $myfeaturedPrd = $featuredPrd ? $featuredPrd : '';
 
@@ -51,14 +59,9 @@ class HomeController extends Controller
        $category  = $this->getCategories();
        $myCat       = $category ? $category : '';
 
-       if ($myCat) {
-                   foreach ($myCat as $cat) {
-                       $cat->subcats = SubCategory::select('name', 'slug')->where('categories_id', $cat->id)->get();
-                       
-                   }
-               }
+      
                // return $myCat;
-       return view('client/home', compact(['page', 'myfeaturedPrd', 'myLatestProduct', 'mydiscountProduct', 'myCat'])); 
+       return view('client/home', compact(['page', 'myfeaturedPrd', 'myLatestProduct', 'mydiscountProduct', 'myNotice'])); 
     }
 
     public function getProductSearchData(Request $request){ 
@@ -66,6 +69,11 @@ class HomeController extends Controller
       $data = Product::select('id', 'name', 'categories_id', 'featured_img_sm', 'status', 'product_slug', 'author_manufactural_name')->where('status', '=', 1)->where('name', 'like', 
          '%'.$key.'%')->orWhere('author_manufactural_name', 'like', '%'.$key.'%')->get();
       return $data;
+    }
+
+    /*view product*/
+    public function viewedProduct($id){
+    
     }
 
     public function supportForm(Request $request){
@@ -121,17 +129,19 @@ class HomeController extends Controller
     public function myPage($slug){
      $getCatId = $this->getCategoryId($slug);
      $productDetails = $this->getProductByCategory($getCatId->id);
+
      $myProduct = $productDetails ? $productDetails : '';
      $page['page_title']       = $getCatId->name;
      $page['page_description'] = $getCatId->description;
-
+    
+    /*for sidebar*/
      $latestProduct = $this->latestProduct();
     $myLatestProduct = $latestProduct ? $latestProduct : '';
 
     $brandName = $this->getBrandName();
     $myBrandName = $brandName ? $brandName : '';
 
-     return view('client/page', compact(['page', 'myProduct', 'myLatestProduct', 'myBrandName']));
+     return view('client/page', compact(['page', 'myProduct', 'myLatestProduct', 'myBrandName', 'mySubCatName']));
     }
 
     private function getProductByCategory($id){
@@ -226,13 +236,13 @@ class HomeController extends Controller
    
     /*getting discount product only*/
     private function getDiscountProduct(){
-        $discountProduct = Product::select('name', 'product_slug', 'author_manufactural_name', 'discount', 'featured_img_sm')->where('status', '=', 1)->whereNotNull('discount')->get();
+        $discountProduct = Product::select('id', 'name', 'product_slug', 'author_manufactural_name', 'discount', 'featured_img_sm', 'price')->where('status', '=', 1)->whereNotNull('discount')->get();
         return $discountProduct;
     }
     
     /*getting latest product*/
     private function latestProduct(){
-        $latestProduct = Product::select('name', 'product_slug', 'author_manufactural_name', 'discount', 'featured_img_sm','price', 'created_at')->where('status', '=', 1)->latest()->take(5)->get();
+        $latestProduct = Product::select('id', 'name', 'product_slug', 'author_manufactural_name', 'discount', 'featured_img_sm','price', 'created_at')->where('status', '=', 1)->latest()->take(5)->get();
         return $latestProduct;
     }
 
@@ -247,4 +257,19 @@ class HomeController extends Controller
         $subCat = category::select('name', 'slug', 'id')->get();
         return $subCat;
     }
+    /*brand name*/
+    private function getProductByBrandName($slug){
+    
+    }
+    /*by subcategories*/
+    private function getByProductBySubCategories($slug){
+
+    }
+    /*notice Board*/
+    private function getNoticeBoard(){
+        $noticeData = NoticeBoard::where('end_date','>=', $this->nowDate)->get();
+        return $noticeData;
+    }
+
+
 }

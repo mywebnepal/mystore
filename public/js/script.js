@@ -256,13 +256,15 @@ $.ajax({
         siteInfoMsg.css('display', 'block').fadeOut(5000);
           siteInfoMsg.append(response.message);
           $('.myCartCount').text(response.productQty);
-    },
-    complete : function(response){
-     // location.reload();
-     // $('#myCartCount').append(response.message);
-     
     }
 });
+});
+
+var addViewProduct = $('.addViewProduct');
+addViewProduct.on('click', function(){
+  var url    = $(this).data('url');
+  var viewId = $(this).data('id');
+  
 });
 
 });

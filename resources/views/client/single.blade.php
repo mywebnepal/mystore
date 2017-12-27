@@ -10,15 +10,6 @@
                     <div class="card border-0 rounded-0 mb-3 mb-md-4">
                         <div class="card-body">
                             <div class="row">
-                            <?php  
-                                /* echo '<pre>';
-                                      print_r($mySingleProduct);
-                                 echo '</pre>';*/
-
-                                 // dump($myLatestProduct);
-
-
-                           ?>
                                 @if(count($mySingleProduct) > 0)
                                 <div class="col-md-6 col-lg-5">
                                     <div class="owl-carousel thumb-product-slider" data-slider-id="1">
@@ -27,6 +18,12 @@
                                                 <a href="#">
                                                     <img src="{{ asset($mySingleProduct->product_image) }}" class="img-fluid" alt="">
                                                 </a>
+
+                                                @if($mySingleProduct->discount)
+                                                <div class="sale-offer-tag">
+                                                    <span>{{ $mySingleProduct->discount }}%<br>OFF</span>
+                                                </div>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -36,32 +33,6 @@
                                     <div class="row reviews-content">
                                         <div class="col-md-6">
                                             <ul class="list-inline d-flex mb-0">
-                                                <li class="list-inline-item">
-                                                    <div class="">
-                                                        <fieldset class="rating">
-                                                            <input type="radio" id="star5" name="rating" value="5">
-                                                            <label class="full" for="star5" title="Awesome - 5 stars"></label>
-                                                            <input type="radio" id="star4half" name="rating" value="4 and a half">
-                                                            <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-                                                            <input type="radio" id="star4" name="rating" value="4">
-                                                            <label class="full" for="star4" title="Pretty good - 4 stars"></label>
-                                                            <input type="radio" id="star3half" name="rating" value="3 and a half">
-                                                            <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-                                                            <input type="radio" id="star3" name="rating" value="3">
-                                                            <label class="full" for="star3" title="Meh - 3 stars"></label>
-                                                            <input type="radio" id="star2half" name="rating" value="2 and a half">
-                                                            <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                                                            <input type="radio" id="star2" name="rating" value="2">
-                                                            <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-                                                            <input type="radio" id="star1half" name="rating" value="1 and a half">
-                                                            <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-                                                            <input type="radio" id="star1" name="rating" value="1">
-                                                            <label class="full" for="star1" title="Sucks big time - 1 star"></label>
-                                                            <input type="radio" id="starhalf" name="rating" value="half">
-                                                            <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-                                                        </fieldset>
-                                                    </div>
-                                                </li>
                                                 <li class="list-inline-item">
                                                     <div class="">
                                                         <a href="#">(11 reviews)</a>
@@ -81,24 +52,9 @@
                                     </p>
                                     <div class="color-and-size-container">
                                         <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="exampleFormControlInput1">Color</label>
-                                                    <ul class="list-inline mb-0">
-                                                        <li class="list-inline-item">
-                                                            <div class="card card-body bg-secondary p-3"></div>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <div class="card card-body bg-dark p-3"></div>
-                                                        </li>
-                                                        <li class="list-inline-item">
-                                                            <div class="card card-body bg-white p-3"></div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group float-md-right">
+                                           
+                                            <div class="col-md-12">
+                                                <div class="form-group float-md-left">
                                                     <label for="exampleFormControlInput1 d-block">Size</label>
                                                     <div>
                                                         <button type="button" class="btn btn-outline-secondary btn-sm rounded-0">S</button>
@@ -113,20 +69,29 @@
                                     <div class="card card-body px-0 rounded-0 border-left-0 border-right-0 mb-3 price-box">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <div class="">
-                                                    <span class="item-price h2 theme-color">Rs. 1550</span>
-                                                    <span class="item-price-before-discount">Rs. 1550</span>
-                                                </div>
+                                            @if($mySingleProduct->discount)
+                                                  <span class="item-price h2 theme-color">Rs.
+                                                  {{ getDiscountPrice($mySingleProduct->price, $mySingleProduct->discount) }}
+                                                  </span>
+
+                                                  <div class="item-price-before-discount">
+                                                  Rs. {{ $mySingleProduct->price }}
+                                                  </div> 
+                                               @else
+                                                  <span class="item-price h2 theme-color">Rs. {{ $mySingleProduct->price }}</span>
+                                            @endif
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="cstm-btn text-md-right mt-2 mt-md-0">
                                                         <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Wishlist">
                                                             <i class="fa fa-heart"></i>
                                                         </button>
-                                                        <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Compare">
-                                                            <i class="fa fa-signal"></i>
-                                                        </button>
-                                                         <button type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Email">
+
+                                                        <a href="tel:18475555555" type="button" class="btn btn-primary" data-toggle="tooltip" data-placement="top" title="" data-original-title="Call us now">
+                                                            <i class="fa fa-phone"></i>
+                                                        </a>
+
+                                                         <button type="button" class="btn btn-primary"  data-placement="top" title="" data-original-title="Email" data-toggle="modal" data-target="#customerForm">
                                                             <i class="fa fa-envelope"></i>
                                                         </button>
                                                 </div>
@@ -329,4 +294,12 @@
             </div>
         </div>
     </section>
+@endsection
+@section('custom_script')
+<script type="text/javascript">
+   var showSupportForm = $('.showSupportForm');
+   showSupportForm.on('click', function(){
+    
+   });
+</script>
 @endsection

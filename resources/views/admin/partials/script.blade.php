@@ -1,6 +1,7 @@
 <script type="text/javascript">
 	    $(".deleteMe").click(function(e) {
 	        var url = $(this).data('url');
+          alert(url);
 	        var name = $(this).data('name');
           var infoDiv   = $('.infoDiv');
 	        if (confirm("Are you sure your want to  delete  " + name +'?')) {

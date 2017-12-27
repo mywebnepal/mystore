@@ -21,4 +21,9 @@ class Product extends Model
     public function comments(){
     	return $this->belongsTo(Comment::class);
     }
+
+    /*subcategories*/
+    public function subcategories(){
+        return $this->belongsTo(SubCategory::class, 'sub_categories_id');
+    }
 }

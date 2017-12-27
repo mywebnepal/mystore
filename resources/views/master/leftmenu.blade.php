@@ -242,10 +242,11 @@
 						</ul>
 					</li>	
 					<li>
-						<a href="#"><i class="fa fa-lg fa-fw fa-puzzle-piece"></i> <span class="menu-item-parent">Student Card</span></a>
+						<a href="#"><i class="fa fa-lg fa-fw fa-puzzle-piece"></i> <span class="menu-item-parent">Notice Board</span></a>
 						<ul>
 							<li>
-								<a href="projects.html"><i class="fa fa-file-text-o"></i> Projects</a>
+								<a href="{{ route('sisadmin.notice.index') }}">
+								<i class="fa fa-file-text-o"></i>Notice</a>
 							</li>	
 							<li>
 								<a href="blog.html"><i class="fa fa-paragraph"></i> Blog</a>

@@ -41,9 +41,24 @@ class cartController extends Controller
      $cart->removeSingleCart($id);
 
      Session::put('cart', $cart);
-     return back();
+     return response()->json([
+         'success'    => true,
+         'message'    => 'one item remove successfully',
+         'productQty' => Session::get('cart')->totalQty
+        ], 200);
     }
-    public function removeAllCart(){
 
+
+    public function removeByAllCart($id){
+    $oldCart = Session::has('cart') ? Session::get('cart') : null;
+    $cart    = new cart($oldCart);
+    $cart->removeAllCart($id);
+
+    Session::put('cart', $cart);
+    return response()->json([
+        'success'    => true,
+        'message'    => 'one item remove successfully',
+        'productQty' => Session::get('cart')->totalQty
+       ], 200);
     }
 }

@@ -43,9 +43,9 @@
     <div class="form-group col-sm-12">
         <select name="discount" class="form-control" title="product discount">
             <option value="0">Discount 0%</option>
-            <option value="5%">Discount 5%</option>
-            <option value="10%">Discount 10</option>
-            <option value="15%">Discount 15%</option>
+            <option value="5">Discount 5%</option>
+            <option value="10">Discount 10%</option>
+            <option value="15">Discount 15%</option>
         </select>
    </div>
 
