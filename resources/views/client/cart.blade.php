@@ -1,6 +1,27 @@
 @extends('layouts.master')
    @section('content')
+   <!-- Modal -->
+   <div id="myShoppingCart" class="modal fade" role="dialog">
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h4 class="modal-title">Login/SignUp</h4>
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+         <div class="modal-body">
+         @if(!Auth::check())
+           @include('client.client_login')
+         @endif
+         </div>
+         <div class="modal-footer">
+           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+         </div>
+       </div>
+
+     </div>
+   </div>
        <section class="py-5">
+
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -8,12 +29,6 @@
                         <!-- <h4 class="card-header bg-transparent text-center">LOGO HERE</h4> -->
                         <div class="card-body pt-4">
                             <div class="cart-content">
-                                  <!--Shopping cart items-->
-                                  <?php
-                                        echo '<pre>';
-                                               // print_r($products);
-                                        echo '</pre>';
-                                  ?>
                                   @if(Session::has('cart'))
                                   <table class="table table-responsive mb-0 cart-table">
                                     <thead>
@@ -32,7 +47,7 @@
                                       <!-- Cart item 1 -->
                                       @if(count($products) > 0)
                                       @foreach($products as $product)
-
+                                    
                                       <tr>
                                         <td class="text-center align-middle">
                                           <a href="javascript:void(0)" class="close cart_remove_all" title="remove all my cart" data-url="{{ route('removeAll', $product['item']['id']) }}"> <i class="fa fa-times""></i> </a>
@@ -64,11 +79,11 @@
                                         <span class="font-weight-bold">
                                         {{ $product['price'] }}</span></td>
 
-                                        <td class="text-md-left"><span class="font-weight-bold">{{ $product['item']['discount'] * $product['qty'] }}%</span></td>
+                                        <td class="text-md-left"><span class="font-weight-bold">{{ $product['item']['discount'] }}%</span></td>
 
                                          <td class="grandSum">
                                          @if($product['item']['discount'])
-                                            {{ getCalCartDiscount($product['item']['discount'] * $product['qty'], $product['price']) }}
+                                            {{ getDiscountPrice($product['price'], $product['item']['discount']) }}
                                             @else
                                            {{ $product['price'] }}
                                          @endif
@@ -84,22 +99,8 @@
                                   <hr class="my-4 hr-lg">
                                   <div class="cart-content-footer">
                                     <div class="row">
-                                      <div class="col-md-4">
-                                        <h6 class="text-muted mb-3">
-                                          All prices are including VAT
-                                        </h6>
-                                        <!-- Discount form -->
-                                        <form action="#" role="form" class="disabled">
-                                          <div class="input-group">
-                                            <label class="sr-only" for="discount">Discount code</label>
-                                            <input type="tel" class="form-control" id="discount" placeholder="Discount code">
-                                            <span class="input-group-btn">
-                                              <button class="btn btn-inverse" type="button">Go</button>
-                                            </span>
-                                          </div>
-                                        </form>
-                                      </div>
-                                      <div class="col-md-8 text-md-right mt-3 mt-md-0">
+                                      
+                                      <div class="col-md-12 text-md-right mt-3 mt-md-0">
                                         <div class="cart-content-totals">
                                           <h3>
                                             Total: <span class="text-primary grandTotal"></span>
@@ -107,7 +108,50 @@
                                           <hr class="my-3 w-50 ml-0 ml-md-auto mr-md-0">
                                         </div>
                                         <!-- Proceed to checkout -->
-                                        <a href="shop.html" class="btn btn-outline-primary btn-rounded btn-lg">Continue Shopping</a> <a href="shop-checkout.html" class="btn btn-primary btn-rounded btn-lg">Proceed To Checkout</a> 
+                                        <a href="{{ route('/') }}" class="btn btn-outline-sucess btn-rounded btn-sm">Continue Shopping</a>
+                                        @if(Auth::check())
+                                           @if(count($products) > 0)
+                                           <div class="col-md-4">
+                                             <h5 class="text-muted mb-3 text-md-left">
+                                              Place your order now
+                                              <span id="billing_amt"></span>
+                                              <?php  $myCode = getMyOrderCode();    ?>
+                                              <small><?php echo $myCode;    ?></small>
+                                             </h5>
+                                             <!-- Discount form -->
+                                             
+                                             {!! Form::open(['url'=>route('myOrder')]) !!}
+                                             <input type="hidden" name="myOrderCode" value="<?php echo   $myCode; ?>">
+
+                                             <input type="hidden" name="billing" class="myBill">
+
+                                            
+                                               <div class="form-group">
+                                                
+                                                 <input name="fname" type="text" class="form-control"  placeholder="full name" title="your full name">
+                                               </div>
+
+                                               <div class="form-group">
+                                                 
+                                                 <input type="text" class="form-control"  placeholder="address" title="address place to delivery" name="address">
+                                               </div>
+
+                                               <div class="form-group">
+                                                
+                                                 <input type="number" class="form-control" id="discount" placeholder="Phone number" title="your correct full phone number" name="phoneNumber">
+                                               </div>
+
+                                               <div class="form-group">
+                                                <button class="btn btn-success btn-sm" type="submit">Order now..</button>
+                                               </div>
+
+                                             {!! Form::close() !!}
+                                           </div>
+                                            @endif
+                                           @else
+                                           <a href="javascript:void(0)" class="btn btn-success btn-rounded btn-sm" data-toggle="modal" data-target="#myShoppingCart">Login for checkOut</a>
+                                        @endif
+                                        
                                       </div>
                                     </div>
                                   </div>
@@ -125,7 +169,9 @@
                     </div>
                 </div>
             </div>
+
         </div>
+
     </section>
    @endsection
    @section('custom_script')
@@ -208,6 +254,8 @@
                  sum += parseFloat(value);
              }
              $('.grandTotal').text(sum);
+             $('#billing_amt').text('Rs.' +sum);
+             $('.myBill').val(sum);
          });
       });
     </script>

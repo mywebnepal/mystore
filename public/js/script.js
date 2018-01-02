@@ -18,10 +18,6 @@ $('.nav.nav-pills a').on('click', function() {
 $(function () {
   $('[data-toggle="tooltip"]').tooltip();
 });
-// end tooltip
-
-
-
 
 $('.owl-carousel.hot-deals').owlCarousel({
     animateOut: 'slideOutDown',
@@ -160,6 +156,9 @@ $(function () {
     });
   });
 
+  /*text slider*/
+
+
   /*search form*/
   var searchProductDetails = $('.searchProductDetails');
   var searchResultData     = $('.searchResultData');
@@ -174,16 +173,14 @@ $(function () {
           'type'    :'GET',
           'url'     : url,
           'data'    : {qry : text},
+          setTimeout : 3000,
+          beforeSend : function(){
+           searchResultData.css('display', 'block');
+           searchResultData.text('searching....');
+
+          },
             success: function(response){
-                searchResultData.css('display', 'block');
-                    var serachResult = "<ul>"
-                   for(var i =1; i < response.length; i++)
-                   {
-                     item = response[i];
-                     serachResult +='<li>'+item.name+'<span><img src=""></span></li>';
-                   }
-                   serachResult += "</ul>";
-                   searchResultData.html(serachResult);
+                searchResultData.html(response);
             }
         });
     }else{
@@ -222,14 +219,12 @@ prdComment.on('submit', function(e){
 e.preventDefault();
 var url  = $(this).attr('action');
 var data = $(this).serialize();
-alert(data);
 
 $.ajax({
    'type' : 'POST',
    'url'  : url,
    'data' : data,
-   success: function(response){
-    console.log(response);
+   success: function(response){;
      if (response.success == true) {
         siteInfoMsg.css('display', 'block').fadeOut(5000);
         siteInfoMsg.append(response.message);
@@ -252,19 +247,11 @@ var url = $(this).data('url');
 $.ajax({
     'url' : url,
     success:function(response){
-    console.log(response);
         siteInfoMsg.css('display', 'block').fadeOut(5000);
           siteInfoMsg.append(response.message);
           $('.myCartCount').text(response.productQty);
     }
 });
-});
-
-var addViewProduct = $('.addViewProduct');
-addViewProduct.on('click', function(){
-  var url    = $(this).data('url');
-  var viewId = $(this).data('id');
-  
 });
 
 });

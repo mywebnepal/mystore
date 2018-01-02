@@ -40,8 +40,11 @@
             <div class="py-2  py-lg-3 middle-header theme-bg-light">
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class="d-none d-lg-block col-lg-2">
-                            <a class="navbar-brand p-0" href="{!! url('/') !!}" style="color: #e1dcef;">SHOPNOW</a>
+                        <div class="col-lg-2">
+                            <a class="navbar-brand p-0" href="{!! url('/') !!}" style="color: #e1dcef;">
+                                <!-- <img src="{{ asset('img/logo/mywebnepal.png') }}" height="100"> -->
+                                myWebNepal
+                            </a>
                         </div>
                         <div class="col-md-12 col-lg-6">
                             <div class="search-product-container">
@@ -190,11 +193,11 @@
                                      @if(count($cat->subcats) > 0)
                                      <div class="dropdown-menu dropdown-menu-left p-0" aria-labelledby="dropdownMenuLink">
                                          <div class="row no-gutters">
-                                             <div class="col-sm-6 col-md-2 bg-light">
+                                             <div class="col-sm-3 col-md-2 bg-light">
                                                  <div class="p-3">
                                                      <ul class="list-unstyled products-item-list">
                                                          @foreach($cat->subcats as $subcat)
-                                                         <li><a href="#"> {{ $subcat->name }}</a></li>
+                                                         <li><a href="{{ route('client.subcategory',$subcat->slug ) }}"> {{ $subcat->name }}</a></li>
                                                          @endforeach
                                                      </ul>
                                                  </div>
@@ -288,6 +291,7 @@
                              <div class="col-12 col-lg-3" style="background: #3eb143;">
                                  <div class="discounted-items  mb-3">
                                      <div class="col-sm-12 p-3" style="background: #FFF;">
+                                     
                                          <div class="sp-container">
                                              <div class="sp-content">
                                                  <div class="sp-globe"></div>

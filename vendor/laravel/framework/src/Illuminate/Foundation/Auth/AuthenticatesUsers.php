@@ -5,6 +5,7 @@ namespace Illuminate\Foundation\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
+use Session;
 
 trait AuthenticatesUsers
 {
@@ -29,6 +30,11 @@ trait AuthenticatesUsers
     public function login(Request $request)
     {
         $this->validateLogin($request);
+
+        // dd($request->hiddenUrl);
+
+        $redirectTo = $request->hiddenUrl;
+
 
         // If the class is using the ThrottlesLogins trait, we can automatically throttle
         // the login attempts for this application. We'll key this by the username and
@@ -114,7 +120,10 @@ trait AuthenticatesUsers
      */
     protected function authenticated(Request $request, $user)
     {
-        //
+        /*make changes for login check*/
+        if ($request->hiddenUrl) {
+          $this->redirectTo = $request->hiddenUrl;
+        }
     }
 
     /**

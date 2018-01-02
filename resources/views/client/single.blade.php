@@ -15,15 +15,17 @@
                                     <div class="owl-carousel thumb-product-slider" data-slider-id="1">
                                         <div>
                                             <div class="single-product-gallery-item">
-                                                <a href="#">
-                                                    <img src="{{ asset($mySingleProduct->product_image) }}" class="img-fluid" alt="">
-                                                </a>
-
+                                               <div class="img-wrap">
                                                 @if($mySingleProduct->discount)
                                                 <div class="sale-offer-tag">
-                                                    <span>{{ $mySingleProduct->discount }}%<br>OFF</span>
+                                                          <span>{{ $mySingleProduct->discount }}<br>OFF</span>
                                                 </div>
                                                 @endif
+                                                <a href="#">
+                                                    <img src="{{ asset($mySingleProduct->product_image) }}" class="img-fluid" alt="{{ $mySingleProduct->name }}">
+                                                </a>
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -100,23 +102,12 @@
                                     </div>
                                     <div class="quantity-container cstm-btn">
                                         <form class="form-inline justify-content-between justify-content-md-start">
+                                            
                                             <div class="form-group">
-                                                <label for="">QTY: </label>
-                                            </div>
-                                            <div class="form-group mx-sm-3">
-                                                <select class="form-control">
-                                                  <option>1</option>
-                                                  <option>2</option>
-                                                  <option>3</option>
-                                                  <option>4</option>
-                                                  <option>5</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <button type="submit" class="btn btn-primary">
+                                                <a href="javascript:void(0)" data-url="{{ route('addCart', $mySingleProduct->id) }}" type="button" class="btn btn-primary btnAddToCart" class="btn btn-primary">
                                                   <i class="fa fa-shopping-cart mr-2"></i>
                                                   ADD TO CART
-                                              </button>
+                                              </a>
                                             </div>
                                         </form>
                                     </div>

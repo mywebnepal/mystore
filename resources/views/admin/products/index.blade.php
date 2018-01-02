@@ -110,6 +110,16 @@
 										</a>
 										</span>
 
+                    <span>
+                    <a href="javascript:void(0)" data-url="{!! route('sisadmin.product.appreance') !!}"  data-status = "{{ $datas->appreance }}" data-id = "{{ $datas->id }}" class="makeAppreance">
+                                             <button class="<?php echo $datas->appreance==1 ? 'btn btn-success btn-sm': 'btn btn-info btn-sm'; ?>">
+                                              <?php 
+                                              echo  $datas->appreance==1 ? 'hide appr' : 'display appr';     
+                                              ?>
+                                             </button>
+                    </a>
+                    </span>
+
 										
 
 									</td>
@@ -182,6 +192,27 @@
           }
     });
 	});
+
+  var makeAppreance = $('.makeAppreance');
+  makeAppreance.on('click', function(e){
+    e.preventDefault();
+    var url    = $(this).data('url');
+    var id = $(this).data('id');
+    var status = $(this).data('status');
+    var data   = {id : id, status:status};
+    alert(url);
+    $.ajax({
+          'type'  : 'GET',
+          'url'   : url,
+          'data'  : data,
+          success:function(response){
+           alert(response.message);
+          },
+          complete:function(){
+           window.location.reload();
+          }
+    });
+  });
   
   $('.summernote').summernote({focus: true});
 </script>

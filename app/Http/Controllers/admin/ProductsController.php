@@ -77,6 +77,7 @@ class ProductsController extends Controller
         $save->brands_id     = $request->brands_id;
         $save->status         = $request->status;
         $save->featured_product = 0;
+        $save->appreance      = 0;
         $save->vedio_link     = $request->vedio_link;
         $save->address        = $request->address ? $request->address  : 'N/A';
         $save->phone          = $request->phone ? $request->phone  : 'N/A';
@@ -309,6 +310,26 @@ class ProductsController extends Controller
             'message' => 'Oops sorry this try it again'
         ], 401);
       }
+    }
+
+    public function makeAppreanceProduct(Request $request){
+          $id  = $request->id;
+        $status = $request->status==1 ? 0 : 1;
+
+        $product  = Product::findOrFail($id);
+        if ($product) {
+           $product->appreance = $status;
+            $product->update();
+            return response()->json([
+               'success' => true,
+               'message' => 'this product became featured product'
+              ], 200);
+        }else{
+          return response()->json([
+            'success' => false,
+              'message' => 'Oops sorry this try it again'
+          ], 401);
+        }
     }
 
     public function supportForm(){

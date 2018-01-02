@@ -4,7 +4,7 @@ Route::get('/page', function(){
 });
 
 Route::get('/', 'HomeController@home')->name('/');
-Route::get('/user/product/search', 'HomeController@getProductSearchData')->name('user.product.search');
+Route::get('/user/product/search', 'bookingController@getProductSearchData')->name('user.product.search');
 Route::post('/supportForm', 'HomeController@supportForm')->name('supportForm');
 Route::post('/subscribe', 'HomeController@userSubscribe')->name('systemSubscribe');
 Route::post('/product/comment', 'HomeController@productComment')->name('product.comment');
@@ -12,11 +12,13 @@ Route::post('/product/comment', 'HomeController@productComment')->name('product.
 /*viewed producted*/
 Route::post('/viewProduct/{id}', 'HomeController@viewedProduct')->name('mostViewProduct');
 
-
 /*cart*/
 Route::get('/cart/{id}', 'cartController@addCart')->name('addCart');
 Route::get('/removeCart/{id}', 'cartController@removeCart')->name('removeCart');
 Route::get('/removeMyCart/{id}', 'cartController@removeByAllCart')->name('removeAll');
+Route::post('/cart/myOrder', 'cartController@myOrder')->name('myOrder');
+Route::get('/orders', 'cartController@getMyOrder')->name('myOrderList');
+
 
 Route::get('/myshopping', 'cartController@getCartPage')->name('cart.myshopping');
 /*login route*/
@@ -27,8 +29,23 @@ Route::get('/product/{slug}', 'HomeController@singleProduct')->name('product.sin
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/booking/mybooking', 'bookingController@getBooking')->name('booking');
+Route::get('/booking/hotelBooking', 'bookingController@getHotelBooking')->name('booking');
+/*hotel search*/
+Route::get('/booking/search', 'bookingController@getHotel')->name('searchHotel');
 
+
+/*client route*/
+Route::get('/home/order', 'HomeController@clientOrder')->name('client.order');
+Route::get('/home/wallet', 'HomeController@wallet')->name('client.wallet');
+Route::get('/home/shopping', 'HomeController@clientShopping')->name('client.shopping');
+Route::get('/home/mywishlist', 'HomeController@getMyWishlist')->name('client.myWishlist');
+
+/*get product by slug*/
+Route::get('/myproduct/{slug}', 'HomeController@getProductBySubCategories')->name('client.subcategory');
+
+Route::get('/wishlist/{id}', 'HomeController@clientWishList')->name('client.wishList');
+
+/*client route*/
 /*Route::get('/admin', 'Auth\SisadminController@showLoginForm');*/
 // Route::get('/home', 'Auth\LoginController@userDashborad')->name('home');
 Route::post('user/logout', 'Auth\LoginController@userLogout')->name('user.logout');
@@ -78,6 +95,9 @@ Route::prefix('sisadmin')->group(function(){
     Route::get('product/changeProductStatus', 'admin\ProductsController@changeProductStatus')->name('sisadmin.product.changeProductStatus');
 
     Route::get('product/makeFeaturedProduct', 'admin\ProductsController@makeFeaturedProduct')->name('sisadmin.product.makeFeaturedProduct');
+
+
+    Route::get('product/appreance', 'admin\ProductsController@makeAppreanceProduct')->name('sisadmin.product.appreance');
     
     /*--------------subscribe comment --------------------------------*/
     Route::get('product/admin/supportForm', 'admin\ProductsController@supportForm')->name('sisadmin.product.adminSupportForm');
@@ -110,5 +130,33 @@ Route::prefix('sisadmin')->group(function(){
      Route::post('noticeBoard/{id}/update', 'admin\NoticeBoardController@update')->name('sisadmin.noticeBoard.update');
 
 
+     /*route hotel*/
 
+     Route::get('/hotel/index', 'admin\HotelController@index')->name('sisadmin.hotel.index');
+
+     Route::post('/hotel/save', 'admin\HotelController@store')->name('sisadmin.hotel.save');
+
+     Route::get('/hotel/{id}/edit/', 'admin\HotelController@edit')->name('sisadmin.hotel.edit');
+
+      Route::post('hotel/{id}/update', 'admin\HotelController@update')->name('sisadmin.hotel.update');
+
+     Route::get('/hotel/delete/{id}', 'admin\HotelController@destroy')->name('sisadmin.hotel.delete');
+
+    Route::get('hotel/makeFeaturedHotel', 'admin\HotelController@makeFeaturedHotel')->name('sisadmin.hotel.makeFeaturedHotel');
+
+    /*city*/
+    Route::get('/city/index', 'admin\cityController@index')->name('sisadmin.city.index');
+    Route::post('/city/save', 'admin\cityController@store')->name('sisadmin.city.save');
+    Route::get('/city/{id}/edit/', 'admin\cityController@edit')->name('sisadmin.city.edit');
+     Route::post('city/{id}/update', 'admin\cityController@update')->name('sisadmin.city.update');
+    Route::get('/city/delete/{id}', 'admin\cityController@destroy')->name('sisadmin.city.delete');
+
+
+    /*room*/
+    Route::get('/room/index', 'admin\roomController@index')->name('sisadmin.room.index');
+    Route::post('/room/save', 'admin\roomController@store')->name('sisadmin.room.save');
+
+    Route::get('/room/{id}/edit/', 'admin\roomController@edit')->name('sisadmin.room.edit');
+     Route::post('room/{id}/update', 'admin\roomController@update')->name('sisadmin.room.update');
+    Route::get('/room/delete/{id}', 'admin\roomController@destroy')->name('sisadmin.room.delete');
 });

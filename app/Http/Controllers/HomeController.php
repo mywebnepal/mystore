@@ -13,6 +13,9 @@ use App\models\Comment;
 use App\models\SubCategory;
 use App\models\NoticeBoard;
 use App\models\viewedProduct;
+use App\models\myOrder;
+use Auth;
+use App\models\wishList;
 
 class HomeController extends Controller
 {
@@ -21,10 +24,9 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public $nowDate;
     public function __construct()
     {
-        $this->middleware('auth')->except('home', 'getProductSearchData', 'supportForm', 'userSubscribe', 'myPage', 'singleProduct', 'productComment', 'myBookingPage');
+        $this->middleware('auth')->except('home', 'getProductSearchData', 'supportForm', 'userSubscribe', 'myPage', 'singleProduct', 'productComment', 'myBookingPage', 'client.subcategory', 'getProductBySubCategories');
 
         $this->nowDate = date('Y-m-d');
     }
@@ -37,7 +39,11 @@ class HomeController extends Controller
     /*admin dashboard function*/
     public function index()
     {
-        return view('clientDashboard.index');
+        $page['page_title']       = 'mywebnepal';
+        $page['page_description'] = 'Client Dashboard';
+       
+
+        return view('clientDashboard.index', compact(['page']));
     }
 
     public function home(){
@@ -59,9 +65,13 @@ class HomeController extends Controller
        $category  = $this->getCategories();
        $myCat       = $category ? $category : '';
 
+       /*appreance data*/
+       $appr = $this->getAppreanceProduct();
+        $myAppr = $appr ? $appr : '';
+        
       
                // return $myCat;
-       return view('client/home', compact(['page', 'myfeaturedPrd', 'myLatestProduct', 'mydiscountProduct', 'myNotice'])); 
+       return view('client/home', compact(['page', 'myfeaturedPrd', 'myLatestProduct', 'mydiscountProduct', 'myNotice', 'myAppr'])); 
     }
 
     public function getProductSearchData(Request $request){ 
@@ -265,6 +275,11 @@ class HomeController extends Controller
         return $latestProduct;
     }
 
+    private function getAppreanceProduct(){
+        $latestProduct = Product::select('id', 'name', 'product_slug', 'discount', 'featured_img_sm','price','categories_id','product_image', 'created_at')->where('status', '=', 1)->where('appreance', '==', 1)->latest()->take(4)->get();
+        return $latestProduct;
+    }
+
     /*brand band*/
     private function getBrandName(){
         $brandName = Brand::select('name', 'slug')->latest()->take(8)->get();
@@ -281,13 +296,77 @@ class HomeController extends Controller
     
     }
     /*by subcategories*/
-    private function getByProductBySubCategories($slug){
+
+    public function getProductBySubCategories($slug){
+     $subCatId = $this->getSubCategoriesId($slug);
+     $page['page_title']       = $subCatId->name;
+     $page['page_description'] = 'mywebnepal a pure ecommerce site in nepal kathmandu';
+     $subCatPrd = Product::where('sub_categories_id', $subCatId->id)->where('status', 1)->get();
+
+     $mySubCatData = $subCatPrd ? $subCatPrd : '';
+     return view('client.page-subcategories', compact(['page', 'mySubCatData']));
 
     }
+
+    
     /*notice Board*/
     private function getNoticeBoard(){
         $noticeData = NoticeBoard::where('end_date','>=', $this->nowDate)->get();
         return $noticeData;
+    }
+    /*order */
+
+    /*client dahsboar*/
+    public function clientOrder(){
+
+    }
+    public function wallet(){
+
+    }
+    public function clientShopping(){
+
+    }
+    public function clientWishList($id){
+        $userId = Auth::user()->id;
+        $chkWishList = wishList::where('users_id', '=',  $userId)->where('products_id', '=', $id)->get();
+
+        if (count($chkWishList) > 0) {
+           return back()->withMessage('you have already selected this products');
+        }else{
+            if ($userId) {
+                $product = $this->getProductById($id);
+               $save = new wishList;
+               $save->users_id    = $userId;
+               $save->products_id = $id;
+               $save->slug        = $product['product_slug'];
+               $save->img_path    = $product['featured_img_sm'];
+               $save->save();
+               return back()->withMessage('successfully added your wishlist');
+            }else{
+               return back()->withMessage('please login first to add wishList');
+            }
+        }
+        
+    }
+
+    public function getMyWishlist(){
+        $page['page_title']       = 'mywebnepal';
+        $page['page_description'] = 'my wishList';
+
+        $wishList = wishList::all();
+        $myWishList = $wishList ? $wishList : '';
+        return view('clientDashboard.wishlist', compact(['page', 'myWishList']));
+    }
+
+    /*get product by id*/
+    private function getProductById($id){
+     $products = Product::where('id', $id)->first();
+     return $products;
+    }
+
+    private function getSubCategoriesId($slug){
+    $slug = SubCategory::select('id', 'name')->where('slug', $slug)->first();
+    return $slug;
     }
 
 

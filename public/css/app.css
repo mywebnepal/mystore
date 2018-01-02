@@ -1440,4 +1440,70 @@ footer .copy-right-content {
   color: #333;
 }
 
+/*shorpping cart table responsive*/
+    @media only screen and (max-width: 760px),
+    (min-device-width: 768px) and (max-device-width: 1024px)  {
+
+      /* Force table to not be like tables anymore */
+      .cart-table table, thead, tbody, th, td, tr { 
+        display: block; 
+      }
+      
+      /* Hide table headers (but not display: none;, for accessibility) */
+      .cart-table thead tr { 
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+      
+      cart-table tr { border: 1px solid #ccc; }
+      
+      cart-table td { 
+        /* Behave  like a "row" */
+        border: none;
+        border-bottom: 1px solid #eee; 
+        position: relative;
+        padding-left: 50%; 
+      }
+      
+      cart-table td:before { 
+        /* Now like a table header */
+        position: absolute;
+        /* Top/left values mimic padding */
+        top: 6px;
+        left: 6px;
+        width: 45%; 
+        padding-right: 10px; 
+        white-space: nowrap;
+      }
+      
+      /*
+      Label the data
+      */
+      .cart-table td:nth-of-type(1):before { content: "Delete Cart"; }
+      .cart-table td:nth-of-type(2):before { content: "Image"; }
+      .cart-table td:nth-of-type(3):before { content: "Name"; }
+      .cart-table td:nth-of-type(4):before { content: "Unit Price"; }
+      .cart-table td:nth-of-type(5):before { content: "Quantity"; }
+      .cart-table td:nth-of-type(6):before { content: "price"; }
+      .cart-table td:nth-of-type(7):before { content: "Discount"; }
+      .cart-table td:nth-of-type(8):before { content: "Amount"; }
+    }
+
+    /*product tilte*/
+    .product-title{
+      color: #880000 !important;
+      font-weight: 600;
+      text-align: center !important;
+      cursor: pointer;
+      font-size: 18px;
+    }
+    .product-title:hover{
+      text-decoration: none;
+      color: #333 !important;
+    }
+
+    /*text slider*/
+    
+
 

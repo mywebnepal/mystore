@@ -24,9 +24,7 @@
                                     <li>
                                         <a href="#">Investor Relations</a>
                                     </li>
-                                    <li class="last">
-                                        <a href="#">Advanced Search</a>
-                                    </li>
+                                   
                                 </ul>
                             </div>
                         </div>
@@ -69,7 +67,7 @@
                                             <i class="fa fa-map-marker"></i>
                                         </span>
                                         <div class="media-body">
-                                            <p>Themesstock, 789 Main rd,<br> Anytown, CA 12345 USA</p>
+                                            <p>Lainchour kathmandu Nepal</p>
                                         </div>
                                     </li>
                                     <li class="media align-items-center">
@@ -78,7 +76,7 @@
                                         </span>
                                         <div class="media-body">
                                             <p>
-                                                9801212345 <br> 9801212345
+                                                9807573751 <br> 9808897040
                                             </p>
                                         </div>
                                     </li>
@@ -88,7 +86,7 @@
                                         </span>
                                         <div class="media-body">
                                             <p>
-                                                abcdef@gmail.com
+                                               dipeshbanjade@gmail.com
                                             </p>
                                         </div>
                                     </li>
@@ -115,17 +113,17 @@
                                 {!! Form::close() !!}
                                 <ul class="list-inline mb-0 social-icons">
                                     <li class="list-inline-item">
-                                        <a href="#" class="icon-container">
+                                        <a href="https://www.facebook.com/mywebnepal/" class="icon-container" class="icon-container" target="_blank">
                                             <i class="fa fa-facebook"></i>
                                         </a>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a href="#" class="icon-container">
+                                        <a href="https://twitter.com/mywebnepal" target="_blank">
                                             <i class="fa fa-twitter"></i>
                                         </a>
                                     </li>
                                     <li class="list-inline-item">
-                                        <a href="#" class="icon-container">
+                                        <a href="https://www.linkedin.com/in/mywebnepal-nepal-b15493154/" class="icon-container" target="_blank">
                                             <i class="fa fa-linkedin"></i>
                                         </a>
                                     </li>

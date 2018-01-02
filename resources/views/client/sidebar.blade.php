@@ -9,6 +9,7 @@
                      <div class="clearfix"></div>
                      <div class="card-body">
                          <div class="owl-carousel hot-deals owl-theme custom-control-top">
+                         <?php    $myLatestProduct = latestProduct();   ?>
                              @if(count($myLatestProduct) > 0)
                                 @foreach($myLatestProduct as $lastPrd)
                                      <div class="item">
@@ -91,6 +92,7 @@
                              </p>
                              <div class="manufacture-content">
                                  <div class="custom-controls-stacked">
+                                 <?php $myBrandName =  getBrandName();    ?>
                                  @if(count($myBrandName) > 0)
                                     @foreach($myBrandName as $brand)
                                          <label class="custom-control custom-checkbox">

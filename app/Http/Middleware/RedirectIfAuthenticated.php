@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Session;
 
 class RedirectIfAuthenticated
 {
@@ -25,8 +26,8 @@ class RedirectIfAuthenticated
                 break;
             
             default:
-                if (Auth::guard($guard)->check()) {
-                    return redirect('/home');
+                if (Auth::guard($guard)->check()) {                  
+                  return redirect('/home');
                 }
                 break;
         }

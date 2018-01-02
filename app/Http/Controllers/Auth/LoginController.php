@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Auth;
+use Request;
+use Session;
 
 class LoginController extends Controller
 {
@@ -21,18 +23,9 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = '/home';
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
+    
+     protected $redirectTo = '/home';
+  
     public function __construct()
     {
         $this->middleware('guest')->except('userLogout');
@@ -42,9 +35,4 @@ class LoginController extends Controller
         Auth::guard('web')->logout();
         return redirect('/');
     }
-   /* public function userDashborad(){
-        $page['page_title'] = 'User Dashborad';
-        $page['page_description'] = 'all information of user';
-       return view('clientDashboard.index', compact(['page']));
-    }*/
 }

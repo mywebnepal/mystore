@@ -21,22 +21,16 @@
 							<li>
 								{{ HTML::link('sisadmin/sub_categories/index', 'SubCategories', array('title' => 'Create subcategory'))}}
 							</li>
-							<!--  -->
-							<li class="">
-								<a href="#"><i class="fa fa-comments"></i>Fee</a>
-								<ul>
-									<li><a href="forum.html">Fee Type</a></li>
-									<li><a href="forum-topic.html">Scholarship</a></li>
-									<li><a href="forum-post.html">---</a></li>
-								</ul>
+
+							<li>
+								{{ HTML::link('sisadmin/room/index', 'Room', array('title' => 'Create Room'))}}
+							</li>
+
+							<li>
+								{{ HTML::link('sisadmin/city/index', 'City', array('title' => 'Create city'))}}
 							</li>
 							<!--  -->
-							<li class="">
-								<a href="#"><i class="fa fa-comments"></i>Staff</a>
-								<ul>
-									<li><a href="forum.html">Staff Type</a></li>
-								</ul>
-							</li>
+					
 						</ul>	
 					</li>
 					<li class="top-menu-invisible">
@@ -58,7 +52,7 @@
 						<a href="#"><i class="fa fa-lg fa-fw fa-bar-chart-o"></i> <span class="menu-item-parent"></span>Page</a>
 						<ul>
 							<li>
-								<a href="flot.html">Flot Chart</a>
+								<a href="{{ route('sisadmin.hotel.index') }}">Hotel</a>
 							</li>
 							<li>
 								<a href="morris.html">Morris Charts</a>
