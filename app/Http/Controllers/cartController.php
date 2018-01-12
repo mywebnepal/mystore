@@ -13,10 +13,11 @@ use App\models\wishList;
 class cartController extends Controller
 {
     public function addCart(Request $request, $id){
-     $product   = Product::findOrFail($id);
+        $size = 28;
+     $product   = Product::select('id', 'name', 'product_slug', 'categories_id', 'size', 'sku', 'price', 'discount', 'featured_img_sm')->where('id', $id)->first();
      $oldCart = Session::has('cart') ? Session::get('cart') : '';
      $cart = new cart($oldCart);
-     $cart->addToCart($product, $product->id);
+     $cart->addToCart($product, $size);
      $request->session()->put('cart', $cart);
 
      return response()->json([
@@ -33,6 +34,7 @@ class cartController extends Controller
     	}else{
     		$oldCart = Session::get('cart');
     		$cart    = new cart($oldCart);
+            // return $cart->items;
     		return view('client.cart', ['products'=> $cart->items,
     		                            'totalPrice'=>$cart->totalPrice]);
     	}

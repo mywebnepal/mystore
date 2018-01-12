@@ -126,6 +126,7 @@
 									
                            </tr>
                                    @endforeach
+                                   {{ $data->links() }}
                                    @endif
 							</tbody>
 						</table>

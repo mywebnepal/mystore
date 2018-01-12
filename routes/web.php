@@ -67,7 +67,7 @@ Route::prefix('sisadmin')->group(function(){
    Route::get('/categories/show', 'admin\CategoriesController@show')->name('sisadmin.categories.show');
    Route::post('categories/{id}/update', 'admin\CategoriesController@update')->name('sisadmin.categories.update');
 
-   Route::POST('/categories/{id}', 'admin\CategoriesController@delete')->name('sisadmin.categories.delete');
+   Route::get('/categories/{id}', 'admin\CategoriesController@destroy')->name('sisadmin.categories.delete');
 
    /*subcategories*/
    Route::get('/sub_categories/index', 'admin\SubcategoryController@index')->name('sisadmin.subcategory.index');
@@ -159,4 +159,12 @@ Route::prefix('sisadmin')->group(function(){
     Route::get('/room/{id}/edit/', 'admin\roomController@edit')->name('sisadmin.room.edit');
      Route::post('room/{id}/update', 'admin\roomController@update')->name('sisadmin.room.update');
     Route::get('/room/delete/{id}', 'admin\roomController@destroy')->name('sisadmin.room.delete');
+
+    /*slider*/
+    Route::get('/slider/index', 'admin\sliderController@index')->name('sisadmin.slider.index');
+    Route::post('/slider/save', 'admin\sliderController@store')->name('sisadmin.slider.save');
+
+    Route::get('/slider/{id}/edit/', 'admin\sliderController@edit')->name('sisadmin.slider.edit');
+     Route::post('slider/{id}/update', 'admin\sliderController@update')->name('sisadmin.slider.update');
+    Route::get('/slider/delete/{id}', 'admin\sliderController@destroy')->name('sisadmin.slider.delete');
 });

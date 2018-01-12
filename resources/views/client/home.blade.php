@@ -1,4 +1,6 @@
    @extends('layouts.master')
+   @section('page_title', $page['page_title'])
+@section('page_description', $page['page_description'])
    @section('content')
     <section id="second-section">
         <div class="container">
@@ -16,11 +18,6 @@
                                    Discount Item
                                 </a>
                             </li>
-                           <!--  <li class="nav-item nav-justified">
-                                <a class="nav-link" id="pills-offers-items-tab" data-toggle="pill" href="#pills-offers-items" role="tab" aria-controls="pills-offers-items" aria-expanded="true">
-                                   Offer Iteam
-                                </a>
-                            </li> -->
                         </ul>
                         @if(Session::has('message'))
                              <div class="row siteInfo">
@@ -40,8 +37,8 @@
                                                       <div class="item">
                                                 <div class="product-item">
                                                     <div class="img-wrap">
-                                                        <a href="#">
-                                                            <img src="{{ asset($latest->featured_img_sm) }}" class="img-fluid" alt="">
+                                                        <a href="{{ route('product.single', $latest->product_slug) }}">
+                                                            <img src="{{ asset($latest->featured_img_sm) }}" class="img-fluid" alt="{{ $latest->name }}">
                                                         </a>
                                                         <div class="tag new">
                                                             new
@@ -49,6 +46,9 @@
                                                     </div>
                                                     <div class="product-prices-info">
                                                         <p><a href="{{ route('product.single', $latest->product_slug) }}" class="product-title">{{ $latest->name }}</a></p>
+                                                        <p class="text-right text-muted">
+                                                            <small>Product Code: {{ $latest->sku }}</small>
+                                                        </p>
                                                         <div class="d-flex justify-content-between align-items-end">
                                                             <div class="">
                                                                @if($latest->discount)
@@ -60,24 +60,10 @@
                                                                    @else
                                                                    <div class="item-price">Rs. {{ $latest->price }}</div>
                                                                @endif
-                                                            
-                                                                <!-- <span class="item-offer">Rs. 1550</span> -->
                                                             </div>
                                                             <div class="">
-                                                                
                                                                 <div class="cstm-btn">
-                                                                    <a href="javascript:void(0)" data-url="{{ route('addCart', $latest->id) }}" type="button" class="btn btn-primary btn-sm btnAddToCart" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-                                                                        <i class="fa fa-shopping-cart"></i>
-                                                                    </a>
-                                                                    
-                                                                    <a href="{{ route('client.wishList', $latest->id) }}" type="button" class="btn btn-primary btn-sm addWishList" data-toggle="add your wishList" data-placement="top" title="Wishlist">
-                                                                        <i class="fa fa-heart"></i>
-                                                                    </a>
-                                                                    
-
-                                                                    <a href="tel:9807573751" type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Compare">
-                                                                        <i class="fa fa-phone"></i>
-                                                                    </a>
+                                                                   <a href="{{ route('product.single', $latest->product_slug) }}" class="btn btn-success btn-sm">View Details</a>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -93,308 +79,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="pills-offers-items" role="tabpanel" aria-labelledby="pills-offers-items-tab">
-                                <div class="">
-                                    <div class="owl-carousel owl-theme second-sec-main-banner">
-                                        <div class="item">
-                                            <div class="product-item">
-                                                <div class="img-wrap">
-                                                    <a href="#">
-                                                        <img src="img/08.jpg" class="img-fluid" alt="">
-                                                    </a>
-                                                    <div class="tag new">
-                                                        new
-                                                    </div>
-                                                </div>
-                                                <div class="product-prices-info">
-                                                    <p><a href="#">Lorem ipsum dolor sit amet.</a></p>
-                                                    <div class="d-flex justify-content-between align-items-end">
-                                                        <div class="">
-                                                            <div class="item-price">Rs. 1550</div>
-                                                            <div class="item-price-before-discount">Rs. 1550</div>
-                                                            <!-- <span class="item-offer">Rs. 1550</span> -->
-                                                        </div>
-                                                        <div class="">
-                                                            <div>
-                                                                <fieldset class="rating">
-                                                                    <input type="radio" id="star5" name="rating" value="5" />
-                                                                    <label class="full" for="star5" title="Awesome - 5 stars"></label>
-                                                                    <input type="radio" id="star4half" name="rating" value="4 and a half" />
-                                                                    <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-                                                                    <input type="radio" id="star4" name="rating" value="4" />
-                                                                    <label class="full" for="star4" title="Pretty good - 4 stars"></label>
-                                                                    <input type="radio" id="star3half" name="rating" value="3 and a half" />
-                                                                    <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-                                                                    <input type="radio" id="star3" name="rating" value="3" />
-                                                                    <label class="full" for="star3" title="Meh - 3 stars"></label>
-                                                                    <input type="radio" id="star2half" name="rating" value="2 and a half" />
-                                                                    <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                                                                    <input type="radio" id="star2" name="rating" value="2" />
-                                                                    <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-                                                                    <input type="radio" id="star1half" name="rating" value="1 and a half" />
-                                                                    <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-                                                                    <input type="radio" id="star1" name="rating" value="1" />
-                                                                    <label class="full" for="star1" title="Sucks big time - 1 star"></label>
-                                                                    <input type="radio" id="starhalf" name="rating" value="half" />
-                                                                    <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-                                                                </fieldset>
-                                                            </div>
-                                                            <div class="cstm-btn">
-                                                                
-                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-                                                                    <i class="fa fa-shopping-cart"></i>
-                                                                </button>
-                                                                <a  type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Wishlist">
-                                                                    <i class="fa fa-heart"></i>
-                                                                </button>
-                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Compare">
-                                                                    <i class="fa fa-signal"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <div class="product-item">
-                                                <div class="img-wrap">
-                                                    <a href="#">
-                                                        <img src="img/01.jpg" class="img-fluid" alt="">
-                                                    </a>
-                                                    <div class="tag hot">
-                                                        new
-                                                    </div>
-                                                </div>
-                                                <div class="product-prices-info">
-                                                    <p><a href="#">Lorem ipsum dolor sit amet.</a></p>
-                                                    <div class="d-flex justify-content-between align-items-end">
-                                                        <div class="">
-                                                            <div class="item-price">Rs. 1550</div>
-                                                            <div class="item-price-before-discount">Rs. 1550</div>
-                                                            <!-- <span class="item-offer">Rs. 1550</span> -->
-                                                        </div>
-                                                        <div class="">
-                                                            <div>
-                                                                <fieldset class="rating">
-                                                                    <input type="radio" id="star5" name="rating" value="5" />
-                                                                    <label class="full" for="star5" title="Awesome - 5 stars"></label>
-                                                                    <input type="radio" id="star4half" name="rating" value="4 and a half" />
-                                                                    <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-                                                                    <input type="radio" id="star4" name="rating" value="4" />
-                                                                    <label class="full" for="star4" title="Pretty good - 4 stars"></label>
-                                                                    <input type="radio" id="star3half" name="rating" value="3 and a half" />
-                                                                    <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-                                                                    <input type="radio" id="star3" name="rating" value="3" />
-                                                                    <label class="full" for="star3" title="Meh - 3 stars"></label>
-                                                                    <input type="radio" id="star2half" name="rating" value="2 and a half" />
-                                                                    <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                                                                    <input type="radio" id="star2" name="rating" value="2" />
-                                                                    <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-                                                                    <input type="radio" id="star1half" name="rating" value="1 and a half" />
-                                                                    <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-                                                                    <input type="radio" id="star1" name="rating" value="1" />
-                                                                    <label class="full" for="star1" title="Sucks big time - 1 star"></label>
-                                                                    <input type="radio" id="starhalf" name="rating" value="half" />
-                                                                    <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-                                                                </fieldset>
-                                                            </div>
-                                                            <div class="cstm-btn">
-                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-                                                                    <i class="fa fa-shopping-cart"></i>
-                                                                </button>
-                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Wishlist">
-                                                                    <i class="fa fa-heart"></i>
-                                                                </button>
-                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Compare">
-                                                                    <i class="fa fa-signal"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <div class="product-item">
-                                                <div class="img-wrap">
-                                                    <a href="#">
-                                                        <img src="img/04.jpg" class="img-fluid" alt="">
-                                                    </a>
-                                                    <div class="tag sale">
-                                                        new
-                                                    </div>
-                                                </div>
-                                                <div class="product-prices-info">
-                                                    <p><a href="#">Lorem ipsum dolor sit amet.</a></p>
-                                                    <div class="d-flex justify-content-between align-items-end">
-                                                        <div class="">
-                                                            <div class="item-price">Rs. 1550</div>
-                                                            <div class="item-price-before-discount">Rs. 1550</div>
-                                                            <!-- <span class="item-offer">Rs. 1550</span> -->
-                                                        </div>
-                                                        <div class="">
-                                                            <div>
-                                                                <fieldset class="rating">
-                                                                    <input type="radio" id="star5" name="rating" value="5" />
-                                                                    <label class="full" for="star5" title="Awesome - 5 stars"></label>
-                                                                    <input type="radio" id="star4half" name="rating" value="4 and a half" />
-                                                                    <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-                                                                    <input type="radio" id="star4" name="rating" value="4" />
-                                                                    <label class="full" for="star4" title="Pretty good - 4 stars"></label>
-                                                                    <input type="radio" id="star3half" name="rating" value="3 and a half" />
-                                                                    <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-                                                                    <input type="radio" id="star3" name="rating" value="3" />
-                                                                    <label class="full" for="star3" title="Meh - 3 stars"></label>
-                                                                    <input type="radio" id="star2half" name="rating" value="2 and a half" />
-                                                                    <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                                                                    <input type="radio" id="star2" name="rating" value="2" />
-                                                                    <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-                                                                    <input type="radio" id="star1half" name="rating" value="1 and a half" />
-                                                                    <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-                                                                    <input type="radio" id="star1" name="rating" value="1" />
-                                                                    <label class="full" for="star1" title="Sucks big time - 1 star"></label>
-                                                                    <input type="radio" id="starhalf" name="rating" value="half" />
-                                                                    <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-                                                                </fieldset>
-                                                            </div>
-                                                            <div class="cstm-btn">
-                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-                                                                    <i class="fa fa-shopping-cart"></i>
-                                                                </button>
-                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Wishlist">
-                                                                    <i class="fa fa-heart"></i>
-                                                                </button>
-                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Compare">
-                                                                    <i class="fa fa-signal"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <div class="product-item">
-                                                <div class="img-wrap">
-                                                    <a href="#">
-                                                        <img src="img/05.jpg" class="img-fluid" alt="">
-                                                    </a>
-                                                    <div class="tag hot">
-                                                        new
-                                                    </div>
-                                                </div>
-                                                <div class="product-prices-info">
-                                                    <p><a href="#">Lorem ipsum dolor sit amet.</a></p>
-                                                    <div class="d-flex justify-content-between align-items-end">
-                                                        <div class="">
-                                                            <div class="item-price">Rs. 1550</div>
-                                                            <div class="item-price-before-discount">Rs. 1550</div>
-                                                            <!-- <span class="item-offer">Rs. 1550</span> -->
-                                                        </div>
-                                                        <div class="">
-                                                            <div>
-                                                                <fieldset class="rating">
-                                                                    <input type="radio" id="star5" name="rating" value="5" />
-                                                                    <label class="full" for="star5" title="Awesome - 5 stars"></label>
-                                                                    <input type="radio" id="star4half" name="rating" value="4 and a half" />
-                                                                    <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-                                                                    <input type="radio" id="star4" name="rating" value="4" />
-                                                                    <label class="full" for="star4" title="Pretty good - 4 stars"></label>
-                                                                    <input type="radio" id="star3half" name="rating" value="3 and a half" />
-                                                                    <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-                                                                    <input type="radio" id="star3" name="rating" value="3" />
-                                                                    <label class="full" for="star3" title="Meh - 3 stars"></label>
-                                                                    <input type="radio" id="star2half" name="rating" value="2 and a half" />
-                                                                    <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                                                                    <input type="radio" id="star2" name="rating" value="2" />
-                                                                    <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-                                                                    <input type="radio" id="star1half" name="rating" value="1 and a half" />
-                                                                    <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-                                                                    <input type="radio" id="star1" name="rating" value="1" />
-                                                                    <label class="full" for="star1" title="Sucks big time - 1 star"></label>
-                                                                    <input type="radio" id="starhalf" name="rating" value="half" />
-                                                                    <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-                                                                </fieldset>
-                                                            </div>
-                                                            <div class="cstm-btn">
-                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-                                                                    <i class="fa fa-shopping-cart"></i>
-                                                                </button>
-                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Wishlist">
-                                                                    <i class="fa fa-heart"></i>
-                                                                </button>
-                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Compare">
-                                                                    <i class="fa fa-signal"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item">
-                                            <div class="product-item">
-                                                <div class="img-wrap">
-                                                    <a href="#">
-                                                        <img src="http://via.placeholder.com/700x700" class="img-fluid" alt="">
-                                                    </a>
-                                                    <div class="tag hot">
-                                                        new
-                                                    </div>
-                                                </div>
-                                                <div class="product-prices-info">
-                                                    <p><a href="#">Lorem ipsum dolor sit amet.</a></p>
-                                                    <div class="d-flex justify-content-between align-items-end">
-                                                        <div class="">
-                                                            <div class="item-price">Rs. 1550</div>
-                                                            <div class="item-price-before-discount">Rs. 1550</div>
-                                                            <!-- <span class="item-offer">Rs. 1550</span> -->
-                                                        </div>
-                                                        <div class="">
-                                                            <div>
-                                                                <fieldset class="rating">
-                                                                    <input type="radio" id="star5" name="rating" value="5" />
-                                                                    <label class="full" for="star5" title="Awesome - 5 stars"></label>
-                                                                    <input type="radio" id="star4half" name="rating" value="4 and a half" />
-                                                                    <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-                                                                    <input type="radio" id="star4" name="rating" value="4" />
-                                                                    <label class="full" for="star4" title="Pretty good - 4 stars"></label>
-                                                                    <input type="radio" id="star3half" name="rating" value="3 and a half" />
-                                                                    <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-                                                                    <input type="radio" id="star3" name="rating" value="3" />
-                                                                    <label class="full" for="star3" title="Meh - 3 stars"></label>
-                                                                    <input type="radio" id="star2half" name="rating" value="2 and a half" />
-                                                                    <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                                                                    <input type="radio" id="star2" name="rating" value="2" />
-                                                                    <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-                                                                    <input type="radio" id="star1half" name="rating" value="1 and a half" />
-                                                                    <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-                                                                    <input type="radio" id="star1" name="rating" value="1" />
-                                                                    <label class="full" for="star1" title="Sucks big time - 1 star"></label>
-                                                                    <input type="radio" id="starhalf" name="rating" value="half" />
-                                                                    <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-                                                                </fieldset>
-                                                            </div>
-                                                            <div class="cstm-btn">
-                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-                                                                    <i class="fa fa-shopping-cart"></i>
-                                                                </button>
-                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Wishlist">
-                                                                    <i class="fa fa-heart"></i>
-                                                                </button>
-                                                                <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Compare">
-                                                                    <i class="fa fa-signal"></i>
-                                                                </button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                           
                             <!-- product discount -->
                             <div class="tab-pane fade" id="pills-discount-items" role="tabpanel" aria-labelledby="pills-discount-items-tab">
                                 <div class="">
@@ -405,16 +90,19 @@
                                             <div class="product-item">
                                                 <div class="img-wrap">
                                                     <a href="{{ route('product.single', $discountPrd->product_slug) }}" class="product-title">
-                                                        <img src="{{ asset($discountPrd->featured_img_sm) }}" class="img-fluid" alt="">
+                                                        <img src="{{ asset($discountPrd->featured_img_sm) }}" class="img-fluid" alt="{{ $discountPrd->name }}">
                                                     </a>
                                                     @if($discountPrd->discount)
                                                     <div class="sale-offer-tag">
-                                                        <span>{{ $discountPrd->discount }}<br>OFF</span>
+                                                        <span>{{ $discountPrd->discount }}%<br>OFF</span>
                                                     </div>
                                                     @endif
                                                 </div>
                                                 <div class="product-prices-info">
                                                     <p><a href="{{ route('product.single', $discountPrd->product_slug) }}" class="product-title" data-url="{{ route('mostViewProduct', $discountPrd->id) }}" data-id="{{ $discountPrd->id }}">{{ $discountPrd->name  }}</a></p>
+                                                    <p class="text-right text-muted">
+                                                        <small>Product Code: {{ $discountPrd->sku }}</small>
+                                                    </p>
                                                     <div class="d-flex justify-content-between align-items-end">
                                                         <div class="">
                                                            @if($discountPrd->discount)
@@ -433,17 +121,7 @@
                                                         </div>
                                                         <div class="">
                                                             <div class="cstm-btn">
-                                                                <a href="{{ route('client.wishList', $discountPrd->id) }}" data-url="{{ route('addCart', $discountPrd->id) }}" type="button" class="btn btn-primary btn-sm btnAddToCart" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-                                                                    <i class="fa fa-shopping-cart"></i>
-                                                                </a>
-                                                                <!--  -->
-                                                                <a  href="{{ route('client.wishList', $latest->id) }}" type="button" class="btn btn-primary btn-sm addWishList" data-toggle="tooltip" data-placement="top" title="Wishlist">
-                                                                    <i class="fa fa-heart"></i>
-                                                                </button>
-
-                                                                <a href="tel:9807573751" type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="call us now">
-                                                                    <i class="fa fa-phone"></i>
-                                                                </a>
+                                                                <a href="{{ route('product.single', $discountPrd->product_slug) }}" class="btn btn-success btn-sm">View Details</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -461,18 +139,8 @@
             </div>
         </div>
     </section>
-    <!-- =============================================================
-         END SECOND SECTION
-     ==============================================================-->
-    <!-- =============================================================
-         Third SECTION
-     ==============================================================-->
     <section id="third-section">
         <div class="container">
-            <?php 
-
-                // var_dump($myfeaturedPrd);
-            ?>
             <aside class="aside-left card rounded-0 border-0 mb-4">
                 <div class="card-header bg-white">
                     <div class="card-title mb-0">
@@ -486,19 +154,27 @@
                            <div class="item">
                             <div class="product-item">
                                 <div class="img-wrap">
-                                    <a href="#">
+                                    <a href="{{ route('product.single', $featured->product_slug) }}">
                                         <img src="{{ asset($featured->featured_img_sm) }}" class="img-fluid" alt="{{ $featured->name }}">
                                     </a>
+                                    @if($featured->discount)
+                                      <div class="sale-offer-tag">
+                                          <span>{{ $featured->discount }}%<br>OFF</span>
+                                      </div>
+                                      @endif
                                 </div>
                                 <div class="product-prices-info">
                                     <p><a href="{{ route('product.single', $featured->product_slug) }}" class="product-title"><h5>{{ $featured->name }}</h5></a></p>
+                                    <p class="text-right text-muted">
+                                        <small>Product Code: {{ $featured->sku }}</small>
+                                    </p>
                                     <div class="d-flex justify-content-between align-items-end">
                                         <div class="">
                                         @if(isset($featured->discount))
                                             <div class="item-price">
                                                 <?php  
                                                      $price = getDiscountPrice($featured->price, $featured->discount); 
-                                                     echo 'RS'. $price  
+                                                     echo 'Rs '. $price  
                                                 ?>
                                             </div>
                                             <div class="item-price-before-discount">Rs. {{ $featured->price }}</div>
@@ -508,21 +184,9 @@
                                             </div>
                                         @endif
                                         </div>
-
                                         <div class="">
-                                           
                                             <div class="cstm-btn">
-                                                <a href="javascript:void(0)" data-url="{{ route('addCart', $featured->id) }}" type="button" class="btn btn-primary btn-sm btnAddToCart" data-toggle="tooltip" data-placement="top" title="Add to Cart">
-                                                    <i class="fa fa-shopping-cart"></i>
-                                                </a>
-                                                <a type="button" href="{{ route('client.wishList', $featured->id) }}" 
-                                                class="btn btn-primary btn-sm" data-toggle="Wishlist" data-placement="top" 
-                                                title="Wishlist">
-                                                    <i class="fa fa-heart"></i>
-                                                </a>
-                                                <a href="tel:9807573751" type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="call us now">
-                                                    <i class="fa fa-phone"></i>
-                                                </a>
+                                                <a href="{{ route('product.single', $featured->product_slug) }}" class="btn btn-success btn-sm">View Details</a>
                                             </div>
                                         </div>
                                     </div>
@@ -552,13 +216,14 @@
                                    @foreach($myAppr as $app)
                                       <div class="col-md-6">
                                           <div class="card rounded-0 border-0 mb-4">
-                                              <a href="#">
                                               <div class="product-item">
                                                   <div class="img-wrap">
+                                                  <a href="{{ route('product.single', $app->product_slug) }}">
                                                       <img src="{!! asset($app->product_image) !!}" alt="{{ $app->name }}" class="card-img">
+                                                      </a>
                                                       @if($app->discount)
                                                       <div class="sale-offer-tag">
-                                                          <span>{{ $app->discount }}<br>OFF</span>
+                                                          <span>{{ $app->discount }}%<br>OFF</span>
                                                       </div>
                                                       @endif
                                                       <div>{{ $app->categories->name }}</div>
@@ -570,7 +235,6 @@
                                                       </a>
                                                   </div>
                                               </div>
-                                              </a>
                                           </div>
                                       </div> 
                                    @endforeach
@@ -601,7 +265,7 @@
             </div>
         </div>
     </section>
-    <section id="fourth-section" class="brands-slider-inner my-5 pt-3">
+    <!-- <section id="fourth-section" class="brands-slider-inner my-5 pt-3">
         <div class="container">
             <div class="owl-carousel owl-theme brands-slider custom-control-center">
                 <div class="item">
@@ -655,7 +319,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> -->
  @endsection
  @section('custom_script')
 <script type="text/javascript">

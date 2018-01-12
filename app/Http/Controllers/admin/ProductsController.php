@@ -32,7 +32,7 @@ class ProductsController extends Controller
         $page['page_description'] = 'List of all product';
 
         $catId = category::select('id', 'name')->get();
-        $data = Product::paginate(10);
+        $data = Product::orderBy('created_at', 'desc')->paginate(10);
         $brand = Brand::select('id', 'name')->get();
         if ($data) {
             return view('admin.products.index', compact(['page', 'data', 'catId', 'brand']));
@@ -60,16 +60,18 @@ class ProductsController extends Controller
      */
     public function store(ProductsValidation $request)
     {
+        $sku = getProductUniqueId();
+        $slug = getProductSlug($request->name);
         $time = date('Y-m-d h:i:s');
         $save = new Product;
         $save->name = $request->name;
-        $save->product_slug = $request->product_slug;
+        $save->product_slug = $slug;
         $save->author_manufactural_name = $request->author_manufactural_name ? $request->author_manufactural_name : 'N/A';
         $save->categories_id = $request->categories_id;
         $save->sub_categories_id  = $request->sub_categories_id ? $request->sub_categories_id  : 'N/A';
         $save->description   = $request->description;
         $save->size           = $request->size;
-        $save->sku            = $request->sku;
+        $save->sku            = $sku;
         $save->quantity       = $request->quantity;
         $save->price          = $request->price;
         $save->discount       = $request->discount;
@@ -90,11 +92,19 @@ class ProductsController extends Controller
 
            $this->resizeImageAndUpload($imgFile, 400, 400, 'product/featured_image_sm/',$filename);
 
+           $save->featured_img_sm = 'product/featured_image_sm/'.$filename;
+        }
+        /*featured image lg*/
+        if ($request->hasFile('featured_img_lg')) {
+           $imgFile = $request->file('featured_img_lg');
+
+           $filename = str_replace(' ', '', $request->name).$time. '.' . $imgFile->getClientOriginalExtension();
+
            $this->resizeImageAndUpload($imgFile, 400, 400, 'product/featured_image_lg/', $filename);
 
-           $save->featured_img_sm = 'product/featured_image_sm/'.$filename;
            $save->featured_img_lg = 'product/featured_image_lg/' .$filename;
         }
+
         if ($request->hasFile('product_image')) {
            $imgFile = $request->file('product_image');
            $filename = str_replace(' ', '', $request->name).$time . '.' . $imgFile->getClientOriginalExtension();
@@ -177,12 +187,10 @@ class ProductsController extends Controller
         if ($product) {
             $time = date('Y-m-d h:i:s');
             $product->name = $request->name;
-            $product->product_slug = $request->product_slug;
             $product->author_manufactural_name = $request->author_manufactural_name ? $request->author_manufactural_name : 'N/A';
             $product->categories_id = $request->categories_id;
             $product->description   = $request->description;
             $product->size           = $request->size;
-            $product->sku            = $request->sku;
             $product->quantity       = $request->quantity;
             $product->price          = $request->price;
             $product->discount       = $request->discount;
@@ -199,21 +207,33 @@ class ProductsController extends Controller
 
             if ($request->hasFile('featured_img')) {
 
-                if ($product->featured_img) {
+                if ($product->featured_img_sm) {
                     File::delete($product->featured_img_sm);
                 }
-                if ($request->$product->featured_img_lg) {
-                   File::delete($product->featured_img_lg);
-                }
+               
                $imgFile = $request->file('featured_img');
                $filename = str_replace(' ', '', $request->name).$time. '.' . $imgFile->getClientOriginalExtension();
 
                $this->resizeImageAndUpload($imgFile, 400, 400, 'product/featured_image_sm/',$filename);
 
-               $this->resizeImageAndUpload($imgFile, 400, 400, 'product/featured_image_lg/', $filename);
-
                $product->featured_img_sm = 'product/featured_image_sm/'.$filename;
-               $product->featured_img_lg = 'product/featured_image_lg/' .$filename;
+               
+            }
+
+            /*large*/
+            if ($request->hasFile('featured_img_lg')) {
+
+                if ($product->featured_img_lg) {
+                    File::delete($product->featured_img_lg);
+                }
+            
+               $imgFile = $request->file('featured_img_lg');
+               $filename = str_replace(' ', '', $request->name).$time. '.' . $imgFile->getClientOriginalExtension();
+
+               $this->resizeImageAndUpload($imgFile, 400, 400, 'product/featured_image_lg/',$filename);
+
+               $product->featured_img_lg = 'product/featured_image_lg/'.$filename;
+               
             }
             if ($request->hasFile('product_image')) {
                 if ($product->product_image) {

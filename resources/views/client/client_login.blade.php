@@ -69,6 +69,7 @@
                     <fieldset>
                         <legend>Register</legend>
                         {{ csrf_field() }}
+                        {{ Form::hidden('register_hiddenUrl', url()->current()) }}
 
                         <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                             <div class="col-md-12">
@@ -86,7 +87,7 @@
                             
 
                             <div class="col-md-12">
-                                <input id="phone" type="text" class="form-control" name="email" value="{{ old('phone') }}" placeholder="Enter your phone number with 10 digit" required>
+                                <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" placeholder="Enter your phone number with 10 digit" required>
 
                                 @if ($errors->has('phone'))
                                     <span class="help-block">

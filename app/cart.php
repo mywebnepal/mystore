@@ -9,33 +9,29 @@ class cart
     public $items       = null;
     public $totalQty    = 0;
     public $totalPrice  = 0;
-    public $discount    = 0;
-    public $grandTotal  = 0;
+    public $sizes       = [];
 
     public function __construct($oldCart){
     	if ($oldCart) {
     		$this->items      = $oldCart->items;
     		$this->totalQty   = $oldCart->totalQty;
     		$this->totalPrice = $oldCart->totalPrice;
-            $this->discount   = $oldCart->discount;
-            $this->grandTotal = $oldCart->grandTotal;
+            $this->sizes      = $oldCart->sizes;
     	}
     }
 
-    public function addToCart($item, $id){
-    	$storeItem = ['qty'=>0, 'price'=>$item->price, 'item' => $item, 'discount'=>$item->discount,'grandTotal'=>0];
+    public function addToCart($item, $size){
+    	$storeItem = ['qty'=>0, 'price'=>$item->price, 'item' => $item];
     	if ($this->items) {
-    		if (array_key_exists($id, $this->items)) {
-    			$storeItem = $this->items[$id];
+    		if (array_key_exists($item->id, $this->items)) {
+    			$storeItem = $this->items[$item->id];
     		}
     	}
+        $storeItem['sizes'][] = $size;
     	$storeItem['qty'] ++;
     	$storeItem['price'] = $item->price * $storeItem['qty'];
-        $storeItem['discount'] = $item->discount * $storeItem['discount'];
-    	$this->items[$id] = $storeItem;
+    	$this->items[$item->id] = $storeItem;
     	$this->totalQty ++;
-    	$this->totalPrice += $item->price;
-        $this->grandTotal += $item->price;
     }
 
     public function removeSingleCart($id){

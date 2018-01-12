@@ -29,7 +29,7 @@ class ProductsValidation extends FormRequest
             // 'price'               => 'interger',
             'featured_img'        => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'product_image '       =>'image|mimes:jpeg,png,jpg,gif,svg|max:2548',
-            'product_slug'         => 'min:4|max:60'
+            'quantity'             => 'required'
         ];
     }
 }

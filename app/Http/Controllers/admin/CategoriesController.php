@@ -5,7 +5,10 @@ namespace App\Http\Controllers\admin;
 use App\Http\Requests\admin\CategoriesValidation;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\models\Product;
+use App\models\SubCategory;
 use App\models\category;
+use File;
 
 class CategoriesController extends Controller
 {
@@ -147,10 +150,42 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-        dd('ia ma sdf');
-        if ($id) {
-            category::findOrFail($id)->delete();
-            return back()->withMessage('successfully delete data');
+       $cat = category::findOrFail($id)->first();
+        if ($cat) {
+            $product = Product::where('categories_id', $cat->id)->first();
+             
+             if ($product) {
+                 if (file_exists($product->featured_img_sm)) {
+                     File::delete($product->featured_img_sm);
+                    // unlink(asset($product->featured_img_sm));
+                 }
+                 if (file_exists($product->featured_img_lg)) {
+                     File::delete($product->featured_img_lg);
+                     // unlink(asset($product->featured_img_lg));
+                 }
+                 if (file_exists($product->product_image)) {
+                     File::delete($product->product_image);
+                     // unlink(asset($product->product_image));
+                 }
+
+                 $subCat = SubCategory::where('id', $product->sub_categories_id)->first();
+                 if ($subCat) {
+                    $subCat->delete();
+                 }
+
+                $product->delete(); 
+             }
+             $cat->delete();
+             return response()->json([
+                  'success' => true,
+                  'message' => 'Category deleted...'
+                 ], 200);
+            // return back()->withMessage('successfully delete data');
+        }else{
+            return response()->json([
+                 'success' => false,
+                 'message' => 'Sorry Id not found'
+                ], 404);
         }
     }
 }

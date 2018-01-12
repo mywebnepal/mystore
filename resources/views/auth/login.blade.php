@@ -88,7 +88,7 @@
                             
 
                             <div class="col-md-12">
-                                <input id="phone" type="text" class="form-control" name="email" value="{{ old('phone') }}" placeholder="Enter your phone number with 10 digit" required>
+                                <input id="phone" type="text" class="form-control" name="phone" value="{{ old('phone') }}" placeholder="Enter your phone number with 10 digit" required>
 
                                 @if ($errors->has('phone'))
                                     <span class="help-block">

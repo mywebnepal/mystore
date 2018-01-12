@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\models\category;
 use App\models\SubCategory;
+use File;
 
 class SubcategoryController extends Controller
 {
@@ -112,6 +113,23 @@ class SubcategoryController extends Controller
     public function destroy($id)
     {
         $del = SubCategory::findOrFail($id);
+        $delProduct = Product::where('sub_categories_id', $id)->first();
+
+        if ($delProduct) {
+            if (file_exists($delProduct->featured_img_sm)) {
+                File::delete($delProduct->featured_img_sm);
+               // unlink(asset($$delProduct->featured_img_sm));
+            }
+            if (file_exists($delProduct->featured_img_lg)) {
+                File::delete($delProduct->featured_img_lg);
+                // unlink(asset($$delProduct->featured_img_lg));
+            }
+            if (file_exists($delProduct->$delProduct_image)) {
+                File::delete($delProduct->$delProduct_image);
+                // unlink(asset($$delProduct->product_image));
+            }
+            
+        }
         if ($del) {
             $del->delete();
             return response()->json([

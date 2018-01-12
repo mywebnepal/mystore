@@ -1,6 +1,5 @@
 <div class="col-md-4 col-lg-3">
                  <div class="card rounded-0 border-0 mb-4 left-side-bar">
-                     
                      <div class="card-header bg-white" style="margin-bottom: 1em;">
                          <div class="card-title mb-0">
                              {{ $page['page_title'] }}
@@ -15,8 +14,8 @@
                                      <div class="item">
                                          <div class="product-item">
                                              <div class="img-wrap">
-                                                 <a href="#">
-                                                     <img src="{{ asset($lastPrd->featured_img_sm) }}" alt="">
+                                                 <a href="{{ route('product.single', $lastPrd->product_slug) }}">
+                                                     <img src="{{ asset($lastPrd->featured_img_sm) }}" alt="{{ $lastPrd->name }}">
                                                  </a>
 
                                                  @if($lastPrd->discount)
@@ -29,6 +28,9 @@
                                              </div>
                                              <div class="product-prices-info">
                                                  <p><a href="#">{{ $lastPrd->name }}</a></p>
+                                                 <p class="text-right text-muted">
+                                                  <small>Product Code: {{ $lastPrd->sku }}</small>
+                                                 </p>
                                                  <div class="d-flex justify-content-between align-items-end">
                                                      <div class="">
                                                          @if($lastPrd->discount)
@@ -42,41 +44,11 @@
                                                          <!-- <span class="item-offer">Rs. 1550</span> -->
                                                      </div>
                                                      <div class="">
-                                                         <div>
-                                                             <fieldset class="rating">
-                                                                 <input type="radio" id="star5" name="rating" value="5" />
-                                                                 <label class="full" for="star5" title="Awesome - 5 stars"></label>
-                                                                 <input type="radio" id="star4half" name="rating" value="4 and a half" />
-                                                                 <label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-                                                                 <input type="radio" id="star4" name="rating" value="4" />
-                                                                 <label class="full" for="star4" title="Pretty good - 4 stars"></label>
-                                                                 <input type="radio" id="star3half" name="rating" value="3 and a half" />
-                                                                 <label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-                                                                 <input type="radio" id="star3" name="rating" value="3" />
-                                                                 <label class="full" for="star3" title="Meh - 3 stars"></label>
-                                                                 <input type="radio" id="star2half" name="rating" value="2 and a half" />
-                                                                 <label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-                                                                 <input type="radio" id="star2" name="rating" value="2" />
-                                                                 <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-                                                                 <input type="radio" id="star1half" name="rating" value="1 and a half" />
-                                                                 <label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-                                                                 <input type="radio" id="star1" name="rating" value="1" />
-                                                                 <label class="full" for="star1" title="Sucks big time - 1 star"></label>
-                                                                 <input type="radio" id="starhalf" name="rating" value="half" />
-                                                                 <label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
-                                                             </fieldset>
-                                                         </div>
                                                          <div class="cstm-btn">
-                                                            <button type="button" class="btn btn-primary btn-sm"   data-toggle="tooltip" data-placement="top" title="Add Cart">
-                                                                 <i class="fa fa-shopping-cart"></i>
-                                                             </button>
-                                                             <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Wishlist">
-                                                                 <i class="fa fa-heart"></i>
-                                                             </button>
-                                                              <button type="button" class="btn btn-primary btn-sm" data-toggle="tooltip" data-placement="top" title="Compare">
-                                                                 <i class="fa fa-signal"></i>
-                                                             </button>
-                                                         </div>
+                                                            
+                                                             <a href="{{ route('product.single', $lastPrd->product_slug) }}" class="btn btn-success btn-sm">View Details</a>
+
+                                                          </div>
                                                      </div>
                                                  </div>
                                              </div>

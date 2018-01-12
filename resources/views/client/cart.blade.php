@@ -9,7 +9,7 @@
            <button type="button" class="close" data-dismiss="modal">&times;</button>
          </div>
          <div class="modal-body">
-         @if(!Auth::check())
+         @if(!Auth::user())
            @include('client.client_login')
          @endif
          </div>
@@ -27,6 +27,12 @@
                 <div class="col-md-12">
                     <div class="card rounded-0 border-0">
                         <!-- <h4 class="card-header bg-transparent text-center">LOGO HERE</h4> -->
+                        @if(Auth::check())
+                             <div class="alert alert-success alert-dismissable">
+                               <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                               Please fill up checkout form below first to processed.
+                             </div>
+                        @endif
                         <div class="card-body pt-4">
                             <div class="cart-content">
                                   @if(Session::has('cart'))
@@ -46,6 +52,9 @@
                                     <tbody>
                                       <!-- Cart item 1 -->
                                       @if(count($products) > 0)
+                                      <?php  /*echo '<pre>';
+                                                print_r($products) ;
+                                                echo '</pre>' */;  ?>
                                       @foreach($products as $product)
                                     
                                       <tr>
@@ -111,7 +120,7 @@
                                         <a href="{{ route('/') }}" class="btn btn-outline-sucess btn-rounded btn-sm">Continue Shopping</a>
                                         @if(Auth::check())
                                            @if(count($products) > 0)
-                                           <div class="col-md-4">
+                                           <div class="col-md-4 alert alert-info pull-right">
                                              <h5 class="text-muted mb-3 text-md-left">
                                               Place your order now
                                               <span id="billing_amt"></span>

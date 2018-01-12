@@ -13,7 +13,7 @@
         @endif
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-				{!! Form::model($products, ['method' => 'POST','route' => ['sisadmin.products.update', $products->id]]) !!}
+				{!! Form::model($products, ['method' => 'POST','route' => ['sisadmin.products.update', $products->id], 'files'=>true]) !!}
 				    @include('admin.products._form')
 
 				    <div class="col-sm-12">

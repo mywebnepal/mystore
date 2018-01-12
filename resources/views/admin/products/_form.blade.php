@@ -4,14 +4,14 @@
         {{ Form::text('name', null, array('placeholder'=>'Product name', 'class'=>'form-control', 'title'=>'product name')) }}
    </div>
 
-   <div class="form-group col-sm-12">
+   <!-- <div class="form-group col-sm-12">
         {{ Form::text('product_slug', null, array('placeholder'=>'Product slug', 'class'=>'form-control', 'title'=>'product slug')) }}
-   </div>
+   </div> -->
 
    <div class="form-group col-sm-12">
         <select class="form-control catVal" name="categories_id" title="category name">
-            <option value="<?php echo isset($products) ? $products->id : '0'   ?>">
-              <?php  echo isset($products) ? $products->categories->name : 'Select product category'   ?>
+            <option value="">
+              select product Category
             </option>
             @if(isset($catId))
             @foreach($catId as $cat)
@@ -55,10 +55,18 @@
 
   <div class="form-group col-sm-12">
       @if(isset($products))
-         <img src="{{ asset($products->featured_img_lg) }}" width="200" height="150">
+         <img src="{{ asset($products->featured_img_sm) }}" width="200" height="150">
       @endif
           {{ Form::label('featured_img', 'Select Featured Image') }}
           {{ Form::file('featured_img', null, array( 'class'=>'form-control')) }}
+  </div>
+
+  <div class="form-group col-sm-12">
+      @if(isset($products))
+         <img src="{{ asset($products->featured_img_lg) }}" width="200" height="150">
+      @endif
+          {{ Form::label('featured_img_lg', 'Select Featured Second') }}
+          {{ Form::file('featured_img_lg', null, array( 'class'=>'form-control')) }}
   </div>
 
   <div class="form-group col-sm-12">
@@ -99,11 +107,6 @@
       <div class="form-group col-sm-12">
            {{ Form::text('email', null, array('placeholder'=>'Email', 'class'=>'form-control', 'title'=>'email')) }}
       </div>
-
-
-        <div class="form-group col-sm-12">
-        {{ Form::text('sku', null, array('placeholder'=>'SKU number', 'class'=>'form-control', 'id'=>'sku_number', 'title'=>'Sku number')) }}
-   </div>
 
         <div class="form-group col-sm-12">
             @if(isset($products))

@@ -62,8 +62,8 @@
                                 <i class="fa fa-fw fa-lg fa-pencil-square-o btnUpdateCategory" data-url="{!! route('sisadmin.categories.edit', $cat->id) !!}"></i>
                         </span>
                         <span>
-                            <a href="#" class="txt-color-red deleteMe" data-user="{{ json_encode( $cat) }}"
-                                      data-url="{!! route('sisadmin.categories.delete', $cat->id) !!}" title="{{ 'delete category' }}">
+                            <a href="#" class="txt-color-red deleteMe" 
+                                      data-url="{!! route('sisadmin.categories.delete', $cat->id) !!}" title="{{ 'delete category' }}" data-name="{!! $cat->name !!}" data-id="{!! $cat->id !!}">
                                        <i class="fa fa-fw fa-lg fa-trash-o deletebutton"> </i> </a>
                         </span>
                            

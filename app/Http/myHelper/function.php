@@ -6,7 +6,7 @@
    use App\models\City;
    use App\models\roomType;
    use App\models\Brand;
-
+   use App\models\HomeSlider;
     
 
 function getDiscountPrice($prdAmt, $per){
@@ -44,7 +44,7 @@ function getMyOrderCode(){
 }
 
 function latestProduct(){
-  $myLatestProduct = Product::select('id', 'name', 'product_slug', 'author_manufactural_name', 'discount', 'featured_img_sm','price', 'created_at')->where('status', '=', 1)->latest()->take(5)->get();
+  $myLatestProduct = Product::select('id', 'name','sku', 'product_slug', 'author_manufactural_name', 'discount', 'featured_img_sm','price', 'created_at')->where('status', '=', 1)->latest()->take(5)->get();
   return $myLatestProduct;
 }
 
@@ -61,5 +61,24 @@ function getCity(){
 function getRoomType(){
   $room = roomType::select('id', 'name')->get();
   return $room;
+}
+
+function getProductUniqueId(){
+  $rand = rand ( 10000, 99999);
+  $productId = $rand;
+  return $productId;
+}
+
+function getProductSlug($productname){
+  $rand = rand ( 10000, 99999);
+  $product = str_replace(' ', '_', $productname);
+  $slug = $product.$rand;
+  return $slug;
+}
+
+function getHomeSlider(){
+  $slider = HomeSlider::select('img_path', 'img_caption', 'call_action')->orderBy('created_at', 'desc')->get();
+  return $slider;
+
 }
 

@@ -39,16 +39,22 @@ class HomeController extends Controller
     /*admin dashboard function*/
     public function index()
     {
-        $page['page_title']       = 'mywebnepal';
+        $page['page_title']       = 'mywebnepal : Admin';
         $page['page_description'] = 'Client Dashboard';
-       
-
-        return view('clientDashboard.index', compact(['page']));
+        
+        $usr_id = Auth::user()->id;
+        $ordr = myOrder::where('users_id', $usr_id)->orderBy('created_at', 'desc')->get();
+        $ordr->transform(function($order, $key){
+         $order->cart = unserialize($order->cart);
+         return $order;
+        });
+        $myOrder = $ordr ? $ordr : '';
+        return view('clientDashboard.index', compact(['page', 'myOrder']));
     }
 
     public function home(){
-       $page['page_title']       = 'mywebnepal';
-       $page['page_description'] = '';
+       $page['page_title']       = 'mywebnepal : Shop';
+       $page['page_description'] = 'books novel, academy, loksewa, electonic laptop, acer hp, dell, mobile samsung, color gionee, nepal handcript, woolean clothers, pashmina, pure cotton, website, manpower website, school website, hotels website, consultancy website, tour and travel website gems stone radraksha, hotel booking tour and travel in nepal kathmandu';
       /* $catData = category::select('name', 'slug', 'id')->get();*/
        $notice = $this->getNoticeBoard();
        $myNotice = $notice ? $notice : '';
@@ -68,7 +74,6 @@ class HomeController extends Controller
        /*appreance data*/
        $appr = $this->getAppreanceProduct();
         $myAppr = $appr ? $appr : '';
-        
       
                // return $myCat;
        return view('client/home', compact(['page', 'myfeaturedPrd', 'myLatestProduct', 'mydiscountProduct', 'myNotice', 'myAppr'])); 
@@ -162,7 +167,10 @@ class HomeController extends Controller
             array_push($newProductListBySubCategory, $tempArr);        
         }
     }
-    // dd($newProductListBySubCategory);
+    usort($newProductListBySubCategory, function($a, $b) {
+        return strcmp($a["subcat"]->name, $b["subcat"]->name);
+    });
+    // return ($newProductListBySubCategory);
     /*for sidebar*/
      $latestProduct = $this->latestProduct();
     $myLatestProduct = $latestProduct ? $latestProduct : '';
@@ -173,8 +181,12 @@ class HomeController extends Controller
      return view('client/page', compact(['page', 'myProduct', 'myLatestProduct', 'myBrandName', 'mySubCatName', 'newProductListBySubCategory']));
     }
 
+    function compareByName($a, $b) {
+        return strcmp($a["subcat"]->name, $b["subcat"]->name);
+    } 
+
     private function getProductByCategory($id){
-        $product = Product::select('id', 'product_slug', 'name', 'featured_img_sm', 'discount', 'price', 'sub_categories_id')->where('categories_id', $id)->where('status', '=', 1)->orderBy('created_at', 'desc')->get();
+        $product = Product::select('id','sku', 'product_slug', 'name', 'featured_img_sm', 'discount', 'price', 'sub_categories_id')->where('categories_id', $id)->where('status', '=', 1)->orderBy('created_at', 'desc')->get();
         return $product;
     }
 
@@ -217,7 +229,7 @@ class HomeController extends Controller
 
     /*featured product*/
     private function getFeaturedProduct(){
-        $featuredProduct = Product::select('id', 'product_slug', 'name', 'featured_img_sm', 'discount', 'price', 'sub_categories_id', 'featured_product')->where('featured_product','=', 1)->where('status', '=', 1)->orderBy('created_at', 'desc')->get(15);
+        $featuredProduct = Product::select('id','sku', 'product_slug', 'name', 'featured_img_sm', 'discount', 'price', 'sub_categories_id', 'featured_product')->where('featured_product','=', 1)->where('status', '=', 1)->orderBy('created_at', 'desc')->get(15);
         return $featuredProduct;
     }
 
@@ -265,18 +277,18 @@ class HomeController extends Controller
    
     /*getting discount product only*/
     private function getDiscountProduct(){
-        $discountProduct = Product::select('id', 'name', 'product_slug', 'author_manufactural_name', 'discount', 'featured_img_sm', 'price')->where('status', '=', 1)->whereNotNull('discount')->get();
+        $discountProduct = Product::select('id','sku', 'name', 'product_slug', 'author_manufactural_name', 'discount', 'featured_img_sm', 'price')->where('status', '=', 1)->whereNotNull('discount', '<>', 0)->get();
         return $discountProduct;
     }
     
     /*getting latest product*/
     private function latestProduct(){
-        $latestProduct = Product::select('id', 'name', 'product_slug', 'author_manufactural_name', 'discount', 'featured_img_sm','price', 'created_at')->where('status', '=', 1)->latest()->take(5)->get();
+        $latestProduct = Product::select('id','sku', 'name', 'product_slug', 'author_manufactural_name', 'discount', 'featured_img_sm','price', 'created_at')->where('status', '=', 1)->latest()->take(5)->get();
         return $latestProduct;
     }
 
     private function getAppreanceProduct(){
-        $latestProduct = Product::select('id', 'name', 'product_slug', 'discount', 'featured_img_sm','price','categories_id','product_image', 'created_at')->where('status', '=', 1)->where('appreance', '==', 1)->latest()->take(4)->get();
+        $latestProduct = Product::select('id', 'name', 'product_slug', 'discount', 'featured_img_sm','price','categories_id','product_image', 'created_at')->where('status', '=', 1)->where('appreance', '=', 1)->latest()->take(4)->get();
         return $latestProduct;
     }
 
@@ -318,6 +330,9 @@ class HomeController extends Controller
 
     /*client dahsboar*/
     public function clientOrder(){
+        $page['page_title'] = 'mywebnepal : order';
+        $page['page_description'] = 'List of my order';
+        return view('clientDashboard.order', compact(['page']));
 
     }
     public function wallet(){

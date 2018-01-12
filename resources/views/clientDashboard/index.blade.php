@@ -1,28 +1,39 @@
 @extends('layouts.master')
+@section('page_title', $page['page_title'])
+@section('page_description', $page['page_description'])
 @section('content')
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-default">
-                <div class="panel-heading" style="background: #DDDDDD;">Hai , {{ Auth::user()->name }} <br>Welcome to our Dashboard panel</div>
-             
-                @if(Session::has('message'))
-                   <div class="alert alert-info">
-                     {{ Session::get('message') }}
-                   </div>
-                @endif
-                <div class="panel-body">
-                   <div class="row">
-                       @include('clientDashboard.sidebar')
-                       <div class="col-sm-10">
-                         @yield('profileDeshboard')
-                         <?php 
-                             
+   <div class="container">
+       <div class="row">
+           @if(Session::has('message'))
+              <div class="alert alert-info client-info">
+                {{ Session::get('message') }}
+              </div>
+           @endif
+           <div class="col-md-4 col-lg-3">
+               @include('clientDashboard.sidebar')
+           </div>
+           <div class="col-md-8 col-lg-9">
+               <div class="jumbotron">
+                   <p class="pull-right alert alert-info"><i>User is not varified</i></p><hr>
+                   <h3>Hello,  {{ Auth::user()->name }}</h3>
+                   <p>Do you want to sell your product. Please mail us to varify your user on dipeshbanjade@gmail.com</p>
+                   <p align="center">
+                     <button class="btn btn-success btn-sm" style="background: #880000;">Sell your product</button>
+                   </p>
+                   <!--  -->
+                   <p>Do you want to create your event please mail us or call us to varify your user </p>
 
-                         ?>
-                       </div>
-                   </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                   <p align="center">
+                     <button class="btn btn-success btn-sm" style="background: #880000;">Create your event</button>
+                   </p>
+               </div>
+
+           </div>
+       </div>
+   </div>
+@endsection
+@section('custom_script')
+<script type="text/javascript">
+  $('.client-info').fadeOut(5000);
+</script>
 @endsection
