@@ -16,14 +16,12 @@
     <link rel="stylesheet" href="{{ asset('css/offcanvas.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ 'css/jquery.datetimepicker.css' }}"> -->
 
      <script src="{{ asset('js/jquery.min.js') }}"></script>
      <link rel="stylesheet" type="text/css" href="{{ asset('css/xzoom.css') }}" media="all" />
 
      <script type="text/javascript" src="{{ asset('js/xzoom.js') }}"></script>
-
-     <!-- <script type="text/javascript" src="{{ asset('js/hammer.min.js') }}"></script>   -->
-     <!--[if lt IE 9]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
      <link type="text/css" rel="stylesheet" media="all" href="{{ asset('fancybox/source/jquery.fancybox.css') }}" />
      <link type="text/css" rel="stylesheet" media="all" href="{{ asset('magnific-popup/css/magnific-popup.css') }}" />
      <script type="text/javascript" src="{{ asset('fancybox/source/jquery.fancybox.js') }}"></script>

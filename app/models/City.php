@@ -12,4 +12,8 @@ class City extends Model
     public function hotels(){
     	return $this->belongsTo(Hotel::class);
     }
+
+    public function events(){
+    	return $this->belongsTo(Event::class);
+    }
 }

@@ -61,7 +61,7 @@ class ProductsController extends Controller
     public function store(ProductsValidation $request)
     {
         $sku = getProductUniqueId();
-        $slug = getProductSlug($request->name);
+        $slug = getSlug($request->name);
         $time = date('Y-m-d h:i:s');
         $save = new Product;
         $save->name = $request->name;

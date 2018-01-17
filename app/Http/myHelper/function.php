@@ -82,3 +82,10 @@ function getHomeSlider(){
 
 }
 
+function getSlug($name){
+  $rand = rand ( 10000, 99999);
+  $name = str_replace(' ', '_', $name);
+  $slug = $name.$rand;
+  return $slug;
+}
+

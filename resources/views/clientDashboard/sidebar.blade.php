@@ -12,13 +12,13 @@
                                </a>
                            </li>
                            <li class="nav-item">
-                               <a class="nav-link" href="#">Create event</a>
+                               <a class="nav-link" href="{{ route('client.event.form') }}">Create event</a>
                            </li>
                            <li class="nav-item myOrder">
                                <a class="nav-link" href="{{ route('client.order') }}">My Order</a>
                            </li>
                            <li class="nav-item">
-                               <a class="nav-link" href="#">My wishlist</a>
+                               <a class="nav-link" href="{{ route('client.myWishlist') }}">My wishlist</a>
                            </li>
                            <li class="nav-item">
                                <a class="nav-link" href="#">my wallet</a>
@@ -27,12 +27,11 @@
                            <li class="nav-item">
                                <a class="nav-link" href="#">Trace my order</a>
                            </li>
-
                            <li class="nav-item">
                                <a class="nav-link" href="#">sells your product</a>
                            </li>
 
+                           
                        </ul>
                    </div>
-
                </div>

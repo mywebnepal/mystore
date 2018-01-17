@@ -332,7 +332,15 @@ class HomeController extends Controller
     public function clientOrder(){
         $page['page_title'] = 'mywebnepal : order';
         $page['page_description'] = 'List of my order';
-        return view('clientDashboard.order', compact(['page']));
+
+        $ordr = myOrder::where('users_id', Auth::user()->id)->orderBy('created_at', 'desc')->get();
+        $ordr->transform(function($order, $key){
+         $order->cart = unserialize($order->cart);
+         return $order;
+        });
+        $myOrder = $ordr ? $ordr : '';
+
+        return view('clientDashboard.order', compact(['page', 'myOrder']));
 
     }
     public function wallet(){
@@ -365,12 +373,18 @@ class HomeController extends Controller
     }
 
     public function getMyWishlist(){
-        $page['page_title']       = 'mywebnepal';
+        $page['page_title']       = 'mywebnepal : wishlist';
         $page['page_description'] = 'my wishList';
 
-        $wishList = wishList::all();
+        $wishList = wishList::where('users_id', Auth::user()->id)->get();
         $myWishList = $wishList ? $wishList : '';
-        return view('clientDashboard.wishlist', compact(['page', 'myWishList']));
+
+        if ($myWishList) {
+             return view('clientDashboard.wishlist', compact(['page', 'myWishList']));
+        }else{
+             return view('clientDashboard.wishlist', compact(['page']));
+        }
+       
     }
 
     /*get product by id*/

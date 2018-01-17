@@ -68,11 +68,11 @@ class cartController extends Controller
     }
 
     public function myOrder(Request $request){
-        /*$validatedData = $request->validate([
-        'fname'          => 'required||max:5',
-        'address'        => 'required|max:10',
-        'phoneNumber'    => 'required'
-       ]);*/
+        $validatedData = $request->validate([
+        'fname'          => 'required||min:4',
+        'address'        => 'required|min:10',
+        'phoneNumber'    => 'required|integer|min:10'
+       ]);
        $myOrder = new myOrder;
        $myCart  = Session::get('cart');
        if ($myCart) {
@@ -82,10 +82,12 @@ class cartController extends Controller
              $myOrder->users_id       = Auth::user()->id;
              $myOrder->address       = $request->address;
              $myOrder->phone         = $request->phoneNumber;
+             $myOrder->status        = 0;
+             $myOrder->remove        = 0;
 
              $myOrder->save();
              Session::forget('cart');
-             return redirect()->route('home')->withMessage('successfully place you order');
+             return redirect()->route('client.order')->withMessage('successfully place you order');
        }else{
         return back()->withMessage('Oops there is no product in your cart');
        }

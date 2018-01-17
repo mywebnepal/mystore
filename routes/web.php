@@ -3,11 +3,25 @@ Route::get('/page', function(){
    return redirect()->route('/');
 });
 
+
 Route::get('/', 'HomeController@home')->name('/');
 Route::get('/user/product/search', 'bookingController@getProductSearchData')->name('user.product.search');
 Route::post('/supportForm', 'HomeController@supportForm')->name('supportForm');
 Route::post('/subscribe', 'HomeController@userSubscribe')->name('systemSubscribe');
 Route::post('/product/comment', 'HomeController@productComment')->name('product.comment');
+
+/*event route*/
+Route::get('/event-list', 'eventController@getEventDetail')->name('client.event.details');
+Route::get('/create-event', 'eventController@getEventForm')->name('client.event.form');
+Route::post('/create-event-user', 'eventController@createOrganizerName')->name('client.create.organizer');
+Route::post('/create-event', 'eventController@store')->name('client.event.create');
+Route::get('/event-details/{slug}', 'eventController@show')->name('client.show.event.details');
+Route::get('/delete-event/{id}', 'eventController@destroy')->name('client.delete.event');
+Route::get('/event-booking-status', 'eventController@bookingChangeStatus')->name('client.event.boookingStatus');
+
+Route::get('/event/{id}/edit', 'eventController@edit')->name('client.event.edit');
+Route::post('event/{id}/update', 'eventController@update')->name('client.event.update');
+/*ending of event*/
 
 /*viewed producted*/
 Route::post('/viewProduct/{id}', 'HomeController@viewedProduct')->name('mostViewProduct');

@@ -29,7 +29,7 @@
                                 </li>
 
                                  <li class="breadcrumb-item">
-                                <a href="{{ route('booking') }}" class="btn btn-outline-light btn-sm" title="Booking hotel and tour and trevel all over the nepal" style="background: #880000">
+                                <a href="{{ route('client.event.details') }}" class="btn btn-outline-light btn-sm" title="Booking hotel and tour and trevel all over the nepal" style="background: #880000">
                                     <i class="fa-calendar-o mr-1"></i> Event
                                 </a>
                                 </li>
@@ -79,41 +79,37 @@
                                           {{ Session::has('cart') ? Session::get('cart')->totalQty : '0' }}
                                         </span>
                                     </a>
+                                    <a href="#" class="btn theme-bg-dark text-white btn-sm mt-2 mt-sm-0" data-toggle="modal" data-target="#customerForm">
+                                         <i class="fa fa-question"></i> Support
+                                     </a>
                                     <!-- login system -->
                                      @guest
                                          <a href="{{ route('login') }}" class="btn theme-bg-dark text-white btn-sm mt-2 mt-sm-0">
                                              <i class="fa fa-key mr-1"></i> Login / signup
                                          </a>
                                      @else
-                                        <div class="clearfix"></div>
-                                        <li class="dropdown">
-                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
-                                                {{ Auth::user()->name }} <span class="caret"></span>
-                                            </a>
+                                       
+                                        <!--  -->
+                                            <div class="dropdown show btn theme-bg-dark text-white btn-sm mt-2 mt-sm-0" style="cursor: pointer;">
+                                            <i class="fa fa-user"></i>
+                                              <a class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                 {{ Auth::user()->name }} <span class="caret"></span>
+                                              </a>
 
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                  <a href="{{ route('home') }}">
-                                                   Home
-                                                  </a>
-                                                </li>
-                                                <li>
-                                                    <a href="#"
-                                                        onclick="event.preventDefault();
-                                                                 document.getElementById('user-logout-form').submit();">
-                                                        Logout
-                                                    </a>
+                                              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                  <a class="dropdown-item" href="{{ route('home') }}">Home</a>
 
-                                                    <form id="user-logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
-                                                        {{ csrf_field() }}
-                                                    </form>
-                                                </li>
-                                            </ul>
-                                        </li>
+                                                  <a class="dropdown-item" href="#"
+                                                  onclick="event.preventDefault();
+                                                           document.getElementById('user-logout-form').submit();">Logout</a>
+                                                   <form id="user-logout-form" action="{{ route('user.logout') }}" method="POST" style="display: none;">
+                                                      {{ csrf_field() }}
+                                                   </form>
+                                                </div>
+                                            </div>
+                                       
                                     @endguest
-                                     <a href="#" class="btn theme-bg-dark text-white btn-sm mt-2 mt-sm-0" data-toggle="modal" data-target="#customerForm">
-                                         <i class="fa fa-question"></i> Support
-                                     </a>
+                                     
                                      </div>
                             </div>
                         </div>

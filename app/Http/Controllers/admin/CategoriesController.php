@@ -28,7 +28,7 @@ class CategoriesController extends Controller
         $page['page_title']       = 'mywebnepal | list categories';
         $page['page_description'] = 'mywebnepal | list categories';
 
-        $data = category::paginate(10);
+        $data = category::orderBy('created_at', 'desc')->paginate(15);
 
         if ($data) {
            return view('admin/categories.index', compact('page', 'data'));
@@ -150,30 +150,31 @@ class CategoriesController extends Controller
      */
     public function destroy($id)
     {
-       $cat = category::findOrFail($id)->first();
+       $cat = category::where('id', $id)->first();
         if ($cat) {
-            $product = Product::where('categories_id', $cat->id)->first();
-             
-             if ($product) {
-                 if (file_exists($product->featured_img_sm)) {
-                     File::delete($product->featured_img_sm);
-                    // unlink(asset($product->featured_img_sm));
+            $prd = Product::where('categories_id', $cat->id)->get();
+             if ($prd) {
+                foreach ($prd as $product) {
+                   if (file_exists($product->featured_img_sm)) {
+                       File::delete($product->featured_img_sm);
+                      // unlink(asset($product->featured_img_sm));
+                   }
+                   if (file_exists($product->featured_img_lg)) {
+                       File::delete($product->featured_img_lg);
+                       // unlink(asset($product->featured_img_lg));
+                   }
+                   if (file_exists($product->product_image)) {
+                       File::delete($product->product_image);
+                       // unlink(asset($product->product_image));
+                   }
+                   $product->delete();
+                }
+             }
+             $subCat = SubCategory::where('categories_id', $cat->id)->get();
+             if ($subCat) {
+                 foreach ($subCat as $myCat) {
+                    $myCat->delete();
                  }
-                 if (file_exists($product->featured_img_lg)) {
-                     File::delete($product->featured_img_lg);
-                     // unlink(asset($product->featured_img_lg));
-                 }
-                 if (file_exists($product->product_image)) {
-                     File::delete($product->product_image);
-                     // unlink(asset($product->product_image));
-                 }
-
-                 $subCat = SubCategory::where('id', $product->sub_categories_id)->first();
-                 if ($subCat) {
-                    $subCat->delete();
-                 }
-
-                $product->delete(); 
              }
              $cat->delete();
              return response()->json([

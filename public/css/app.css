@@ -1543,6 +1543,11 @@ footer .copy-right-content {
       font-weight: 800;
     }
     @media (min-width: 768px) {
+        .order-card{
+          width: 100% !important;
+          display: table;
+          
+        }
         .bootstrap-vertical-nav .collapse {
             display: block;
         }
@@ -1550,6 +1555,45 @@ footer .copy-right-content {
     #client_side_bar_menu{
       text-align: center;
       font-weight: 800px;
+    }
+    .event-class{
+      margin-bottom: 1em;
+      border-bottom: 1px solid #FFF;
+      background: #FFF;
+      padding: 1em 0em;
+    }
+    .event-class a{
+      color: #880000;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .event-class a:hover{
+      color: #333;
+      border-bottom: 1px solid #880000;
+    }
+    .event-class:hover{
+      border: 2px solid #DDD;
+    }
+    form .error {
+      color: #ff0000;
+    }
+    .page-title {
+      width: 100%;
+      height: auto;
+      padding: 0.5em 0em;
+      text-transform: uppercase;
+      font-weight: 800;
+      font-size: 18px;
+      border-bottom: 1px solid #880000;
+      color: #333;
+      margin-bottom: 7px;
+    }
+    .btn_remove{
+      z-index: 9999;
+      padding: 7px;
+      width: 35px;
+      height: 35px;
+      margin-top: 20px;
     }
   
     
