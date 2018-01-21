@@ -24,7 +24,7 @@
                                 <!-- booking -->
                                 <li class="breadcrumb-item">
                                 <a href="{{ route('booking') }}" class="btn btn-outline-light btn-sm" title="Booking hotel and tour and trevel all over the nepal" style="background: #880000">
-                                    <i class="fa fa-book mr-1"></i> Booking
+                                    <i class="fa fa-book mr-1"></i>Hotel booking
                                 </a>
                                 </li>
 
@@ -125,9 +125,12 @@
                     <a href="{{ route('/') }}" type="button" class="btn btn-primary btn-sm"><i class="fa fa-home" aria-hidden="true"></i>
                  </a>
                  @endif
+
+                 @if(!\Request::is('booking/hotelBooking', 'event-list', 'home', 'create-event'))
                  <button type="button" class="btn btn-primary btn-sm" data-toggle="offcanvas"><i class="fa fa-list" aria-hidden="true"></i>
-                     Menu
+                     Menu 
                  </button>
+                 @endif
              </p>
              <div class="row row-offcanvas row-offcanvas-left">
                  <div class="col-12 col-md-8 col-lg-3 sidebar-offcanvas left-sidebar" id="sidebar">
@@ -249,6 +252,7 @@
                                      </div>
                                  </div>
                              </div>
+                             <div class="clearfix"></div>
                              <div class="col-12 col-lg-3" style="background: #FFF;">
                                 <div class="col-sm-12 p-3 noticeBoard" style="background: #FFF;">
                                       <h3 align="center" style="padding-top: 1em;">Notice Board</h3><hr>

@@ -1572,7 +1572,7 @@ footer .copy-right-content {
       border-bottom: 1px solid #880000;
     }
     .event-class:hover{
-      border: 2px solid #DDD;
+      border: 1px solid #DDD;
     }
     form .error {
       color: #ff0000;
@@ -1595,8 +1595,20 @@ footer .copy-right-content {
       height: 35px;
       margin-top: 20px;
     }
-  
-    
-    
+    /*pagination*/
+    .nopadding{
+      padding: 0px !important;
+    }
+    .nomargin{
+      margin: 0px !important;
+    }
+    .event-title{
+      text-transform: uppercase;
+      padding-top: 10px;
+    }
+    .event-title h4{
+      font-size: 30px;
+      font-weight: 800;
+    }
 
-
+    

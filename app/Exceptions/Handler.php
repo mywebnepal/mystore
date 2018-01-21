@@ -51,6 +51,14 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        // if ($e instanceof ModelNotFoundException or $e instanceof NotFoundHttpException) {
+        //     $page['page_title']       = 'mywebnepal: page not found';
+        //     $page['page_description'] = 'mywebnepal: page not found';
+        //     if ($request->ajax()) {
+        //         return response()->json(['error' => 'Not Found'], 404);
+        //     }
+        //     return response()->view('errors.404', [], 404, compact(['page']));
+        // }
         return parent::render($request, $exception);
     }
 

@@ -21,6 +21,10 @@ Route::get('/event-booking-status', 'eventController@bookingChangeStatus')->name
 
 Route::get('/event/{id}/edit', 'eventController@edit')->name('client.event.edit');
 Route::post('event/{id}/update', 'eventController@update')->name('client.event.update');
+
+Route::get('event/{slug}', 'eventController@getSingleEventBySlug')->name('client.event.single');
+
+Route::post('event/event-booking', 'eventController@clientEventBooking')->name('client.event.booking');
 /*ending of event*/
 
 /*viewed producted*/

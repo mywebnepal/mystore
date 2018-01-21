@@ -9,189 +9,68 @@
 			   <h3> {{ $page['page_heading'] }}</h3>
 			 </div>
 	    </div>
+        
+        @if(count($myEvent) > 0)
+         @foreach($myEvent as $evnt)
+		    <div class="row event-class">
+		    	<div class="col-sm-3">
+		    		<a href="{{ route('client.event.single', $evnt->event_slug) }}">
+		    		  <img src="{{ asset($evnt->event_featured_img) }}" class="img img-responsive"  height="180" width="100%">
+		    		</a>
+		    	</div>
+		    	<div class="col-sm-9">
+		    		<a href="{{ route('client.event.single', $evnt->event_slug) }}"><h4>{{ $evnt->event_title }}
+		    		<span class="badge badge-warning badge-sm">{{ $evnt->event_ticket_type }}</span></h4></a>
+		    		<div class="row">
+		    			<div class="col-sm-6">
+		    			  <i class="fa fa-map-marker text-success">&nbsp;
+		    			  <span class="text-mute">{{ $evnt->event_vanue_addr }}</span></i><br>
+		    			  <i class="fa fa-user text-success">&nbsp;Interested:10</i>&nbsp;&nbsp;&nbsp;
+		    			  <i class="fa fa-comment text-success">&nbsp;3-</i>
+		    			</div>
 
-	    <div class="row event-class">
-	    	<div class="col-sm-3">
-	    		<a href=""><img src="{{ asset('event/event.jpeg') }}" class="img img-responsive"  height="180" width="100%"></a>
-	    	</div>
-	    	<div class="col-sm-9">
-	    		<a href=""><h4>Event name goes here
-	    		<span class="badge badge-success badge-sm">Free</span></h4></a>
-	    		<div class="row">
-	    			<div class="col-sm-6">
-	    			  <i class="fa fa-map-marker text-success">&nbsp;<small class="text-mute">Lainchour kathmandu</small></i>
-	    			</div>
+		    			<div class="col-sm-6 pull-right">
+		    				<span class="text-mute">
+			    				<i class="fa fa-calendar text-success">
+			    				   Start Date:-{{ $evnt->event_start_date }}
+			    				 </i>&nbsp;&nbsp;
+			    				<i class="fa fa-calendar text-success">
+			    				  End Date:-{{ $evnt->event_end_date }}
+			    				 </i>
+		    				</span>
+		    			</div>
+		    		</div>
+		    		<hr>
+		    		<div class="col-sm-12">
+		    		  <p>
+		    		    {{ 
+		    		       str_limit($evnt->event_desc, $limit = 100)
+		    		    }}
+	                  </p>
+		    	      </div>
 
-	    			<div class="col-sm-6 pull-right">
-	    				<small class="text-mute">
-		    				<i class="fa fa-calendar text-success">Start Date:-</i>
-		    				<i class="fa fa-calendar text-success">End Date:-</i>
-	    				</small>
-	    			</div>
-	    		</div>
-	    		<hr>
-	    		<div class="col-sm-12">
-	    		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                   tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                   quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  </p>
-	    	      <div class="col-sm-12">
-	    	         <p class="pull-right">
-	    	         	<i class="fa fa-money">&nbsp;Normal:- Rs. 500</i>&nbsp;
-	    	         	<i class="fa fa-money">&nbsp;Standard:-Rs. 500</i>&nbsp;
-	    	         	<i class="fa fa-money">&nbsp;VIP:- Rs. 500</i>&nbsp;
-	    	         </p>
-	    	      </div>
-	    	      </div>
-	    	</div><hr>
-	    </div>
-
-	    <div class="row event-class">
-	    	<div class="col-sm-3">
-	    		<img src="{{ asset('event/event.jpeg') }}" class="img img-responsive"  height="180" width="100%">
-	    	</div>
-	    	<div class="col-sm-9">
-	    		<h4>Event name goes here
-	    		<span class="badge badge-success">Free event</span></h4>
-	    		<div class="row">
-	    			<div class="col-sm-6">
-	    			  <i class="fa fa-map-marker text-success">&nbsp;<small class="text-mute">Lainchour kathmandu</small></i>
-	    			</div>
-
-	    			<div class="col-sm-6 pull-right">
-	    				<small class="text-mute">
-		    				<i class="fa fa-calendar text-success">Start Date:-</i>
-		    				<i class="fa fa-calendar text-success">End Date:-</i>
-	    				</small>
-	    			</div>
-	    		</div>
-	    		<hr>
-	    		<div class="col-sm-12">
-	    		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                   tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                   quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  </p>
-	    	      <div class="col-sm-12">
-	    	         <p class="pull-right">
-	    	         	<i class="fa fa-money">&nbsp;Normal:- Rs. 500</i>&nbsp;
-	    	         	<i class="fa fa-money">&nbsp;Standard:-Rs. 500</i>&nbsp;
-	    	         	<i class="fa fa-money">&nbsp;VIP:- Rs. 500</i>&nbsp;
-	    	         </p>
-	    	      </div>
-	    	      </div>
-	    	</div><hr>
-	    </div>
-
-	    <div class="row event-class">
-	    	<div class="col-sm-3">
-	    		<img src="{{ asset('event/event.jpeg') }}" class="img img-responsive"  height="180" width="100%">
-	    	</div>
-	    	<div class="col-sm-9">
-	    		<h4>Event name goes here
-	    		<span class="badge badge-success">Free event</span></h4>
-	    		<div class="row">
-	    			<div class="col-sm-6">
-	    			  <i class="fa fa-map-marker text-success">&nbsp;<small class="text-mute">Lainchour kathmandu</small></i>
-	    			</div>
-
-	    			<div class="col-sm-6 pull-right">
-	    				<small class="text-mute">
-		    				<i class="fa fa-calendar text-success">Start Date:-</i>
-		    				<i class="fa fa-calendar text-success">End Date:-</i>
-	    				</small>
-	    			</div>
-	    		</div>
-	    		<hr>
-	    		<div class="col-sm-12">
-	    		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                   tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                   quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  </p>
-	    	      <div class="col-sm-12">
-	    	         <p class="pull-right">
-	    	         	<i class="fa fa-money">&nbsp;Normal:- Rs. 500</i>&nbsp;
-	    	         	<i class="fa fa-money">&nbsp;Standard:-Rs. 500</i>&nbsp;
-	    	         	<i class="fa fa-money">&nbsp;VIP:- Rs. 500</i>&nbsp;
-	    	         </p>
-	    	      </div>
-	    	      </div>
-	    	</div><hr>
-	    </div>
-
-	    <div class="row event-class">
-	    	<div class="col-sm-3">
-	    		<img src="{{ asset('event/event.jpeg') }}" class="img img-responsive"  height="180" width="100%">
-	    	</div>
-	    	<div class="col-sm-9">
-	    		<h4>Event name goes here
-	    		<span class="badge badge-success">Free event</span></h4>
-	    		<div class="row">
-	    			<div class="col-sm-6">
-	    			  <i class="fa fa-map-marker text-success">&nbsp;<small class="text-mute">Lainchour kathmandu</small></i>
-	    			</div>
-
-	    			<div class="col-sm-6 pull-right">
-	    				<small class="text-mute">
-		    				<i class="fa fa-calendar text-success">Start Date:-</i>
-		    				<i class="fa fa-calendar text-success">End Date:-</i>
-	    				</small>
-	    			</div>
-	    		</div>
-	    		<hr>
-	    		<div class="col-sm-12">
-	    		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                   tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                   quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                  </p>
-	    	      <div class="col-sm-12">
-	    	         <p class="pull-right">
-	    	         	<i class="fa fa-money">&nbsp;Normal:- Rs. 500</i>&nbsp;
-	    	         	<i class="fa fa-money">&nbsp;Standard:-Rs. 500</i>&nbsp;
-	    	         	<i class="fa fa-money">&nbsp;VIP:- Rs. 500</i>&nbsp;
-	    	         </p>
-	    	      </div>
-	    	      </div>
-	    	</div><hr>
-	    </div>
-
-	    <!--  -->
-	    <div class="row event-class">
-	    	<div class="col-sm-3">
-	    		<img src="{{ asset('event/event.jpeg') }}" class="img img-responsive"  height="220" width="100%">
-	    	</div>
-	    	<div class="col-sm-9">
-	    		<h4>Event name goes here
-	    		<span class="badge badge-success">Free event</span></h4>
-	    		<div class="row">
-	    			<div class="col-sm-6">
-	    			  <i class="fa fa-map-marker text-success">&nbsp;<small class="text-mute">Lainchour kathmandu</small></i>
-	    			</div>
-
-	    			<div class="col-sm-6 pull-right">
-	    				<small class="text-mute">
-		    				<i class="fa fa-calendar text-success">Start Date:-</i>
-		    				<i class="fa fa-calendar text-success">End Date:-</i>
-	    				</small>
-	    			</div>
-	    		</div>
-	    		<hr>
-	    		<div class="col-sm-12">
-	    		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                   tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                   quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                   consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                   cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                   proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-	    	      <div class="col-sm-12">
-	    	         <p class="pull-right">
-	    	         	<i class="fa fa-money">&nbsp;Normal:- Rs. 500</i>&nbsp;
-	    	         	<i class="fa fa-money">&nbsp;Standard:-Rs. 500</i>&nbsp;
-	    	         	<i class="fa fa-money">&nbsp;VIP:- Rs. 500</i>&nbsp;
-	    	         </p>
-	    	      </div>
-	    	      </div>
-	    	</div>
-	    </div>
+		    	      <div class="col-sm-12">
+		    	      <p class="pull-right">
+		    	      	<button class="btn btn-default btn-sm">Booking...</button>
+		    	      </p>
+		    	         <p class="pull-left">
+		    	         	@if($evnt->event_ticket_name)
+		    	         	@foreach($evnt->event_ticket_name as $ticket)
+		    	         	<i class="fa fa-money">&nbsp; {{$ticket['name']}}:- Rs. {{$ticket['price']}}</i>&nbsp;
+		    	         	@endforeach
+		    	         	@endif
+		    	         </p>
+		    	      </div>
+		    	      
+		    	</div><hr>
+		    </div>
+		 @endforeach
+		 <div class="col col-12">
+		     {{ $myEvent->links() }}	  	
+		 </div>
+            @else
+            <h3 class="alert alert-info">Oops sorry there is no event</h3>
+	    @endif
    </div>
 </div>
 @endsection

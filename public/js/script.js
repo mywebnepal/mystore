@@ -6,14 +6,6 @@ $('.dropdown-nav-tabs').find('.nav-link').hover(function() {
     if (!$(this).hasClass('active'))
         $(this).removeClass('theme-color');
 });
-/*$('.nav.nav-pills a').on('click', function() {
-    $(this).tab('show');
-    $('.dropdown-nav-tabs').find('.bg-light.theme-color').removeClass('bg-light theme-color');
-    $('.dropdown-nav-tabs').find('a.active').addClass('bg-light theme-color');
-    return false;
-});*/
-// end dropdown  inside navbar dropdown menus clickable
-
 
 // tooltip
 $(function () {
@@ -70,8 +62,6 @@ tabContent.parent('div').find('.nav a').click(function() {
     tabContent.find('.active').removeClass('active');
 });
 
-
-
 $('.owl-carousel.new-arrivals-carousel').owlCarousel({
     loop:true,
     margin:15,
@@ -88,8 +78,6 @@ $('.owl-carousel.new-arrivals-carousel').owlCarousel({
         }
     }
 });
-
-
 
 $('.owl-carousel.featured-products').owlCarousel({
     loop: true,
@@ -343,4 +331,22 @@ var TxtType = function(el, toRotate, period) {
      function goBack() {
          window.history.back();
      }
+     /*facebox*/
+     $(function() {
+    //----- OPEN
+    $('[data-popup-open]').on('click', function(e)  {
+        var targeted_popup_class = jQuery(this).attr('data-popup-open');
+        $('[data-popup="' + targeted_popup_class + '"]').fadeIn(350);
+ 
+        e.preventDefault();
+    });
+ 
+    //----- CLOSE
+    $('[data-popup-close]').on('click', function(e)  {
+        var targeted_popup_class = jQuery(this).attr('data-popup-close');
+        $('[data-popup="' + targeted_popup_class + '"]').fadeOut(350);
+ 
+        e.preventDefault();
+    });
+});
              

@@ -7,6 +7,7 @@
    use App\models\roomType;
    use App\models\Brand;
    use App\models\HomeSlider;
+   use App\models\EventUser;
     
 
 function getDiscountPrice($prdAmt, $per){
@@ -85,7 +86,28 @@ function getHomeSlider(){
 function getSlug($name){
   $rand = rand ( 10000, 99999);
   $name = str_replace(' ', '_', $name);
-  $slug = $name.$rand;
+  $slug = $name.'_'.$rand;
   return $slug;
+}
+/*getting organizer name*/
+function getOrganizerName(){
+  $usr = EventUser::select('organizer_name', 'status', 'user_id')->where('user_id', Auth::user()->id)->first();
+  if (!$usr) {
+    return null;
+  }
+  return $usr;
+}
+/*get today date and time*/
+function getTodayDateTime(){
+  $my_date = date("Y-m-d"); 
+  return $my_date;
+}
+/*get code*/
+function getCode($name){
+  $my_date = date("Y-m-d"); 
+  $rand = rand ( 10000, 99999);
+  $name = str_replace(' ', '_', $name);
+  $code = $name.'_'.$my_date.'_'.$rand;
+  return $code;
 }
 

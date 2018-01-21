@@ -14,13 +14,7 @@
                <div class="row">
                	<div class="col col-12">
                		@if($singleEvent)
-               		   <?php
-                           // echo '<pre>';
-                           //       print_r($singleEvent);
-                           // echo '</pre>';
-               		   ?>
-
-                          <div class="row">
+               		    <div class="row">
                           	   <div class="col col-4">
                           	   	  <img src="{{asset($singleEvent->event_featured_img) }}" width="100%" height="250">
                           	   </div>
@@ -57,7 +51,7 @@
                           	   	  		</i>
                           	   	  	</p>
                           	   	  </li>
-                          	   	  @if($singleEvent->event_ticket_type == 'onTicket')
+                          	   	  @if($singleEvent->event_ticket_type == 'Ticket')
                                      <li class="list-group-item">
                                      	<p class="pull-right">
                                      		<span>
@@ -68,7 +62,15 @@
                                      		</span>
                                      	</p>
                                      	<p class="pull-left">
-                                     		
+                                     		<p class="pull-left">
+
+                                          @if($singleEvent->event_ticket_name)
+                                          @foreach($singleEvent->event_ticket_name as $ticket)
+                                          <i class="fa fa-money">&nbsp; {{$ticket['name']}}:- Rs. {{$ticket['price']}}</i>&nbsp;
+                                          seat {{$ticket['seat']}}</i>&nbsp;<br>
+                                          @endforeach
+                                          @endif
+                                        </p>
                                      	</p>
                                      </li>
                           	   	  @endif

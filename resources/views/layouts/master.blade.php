@@ -77,6 +77,8 @@
            </div>
          </div>
 
+        
+
        </div>
      </div>
     </div>
@@ -93,6 +95,7 @@
          </ul>
       @endif
        <div class="siteInfoMsg"></div>
+
        @yield('content')  
     </div>
     @include('inc.footer')

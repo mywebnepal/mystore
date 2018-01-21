@@ -214,7 +214,7 @@ class ProductsController extends Controller
                $imgFile = $request->file('featured_img');
                $filename = str_replace(' ', '', $request->name).$time. '.' . $imgFile->getClientOriginalExtension();
 
-               $this->resizeImageAndUpload($imgFile, 400, 400, 'product/featured_image_sm/',$filename);
+               $this->resizeImageAndUpload($imgFile, 300, 300, 'product/featured_image_sm/',$filename);
 
                $product->featured_img_sm = 'product/featured_image_sm/'.$filename;
                
