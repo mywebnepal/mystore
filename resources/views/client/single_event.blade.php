@@ -77,35 +77,30 @@
                             	</div>
                             	@if($eventBySlug->event_ticket_type =='Ticket')
                             	<div class="col col-4" style="margin-top: -5em; background: #3eb143;">
+                              @if(Session::has('errors'))
+                                     <ul>
+                                        @foreach ($errors->all() as $error)
+                                         <div class="alert alert-danger alert-dismissable" style="text-align: center">
+                                           <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                           <li>{{ $error }}</li>
+                                         </div>
+                                      @endforeach
+                                      </ul>
+                                   @endif
                             	<h4 align="center">Book now...</h4>
                     		         {!! Form::open(['route'=>'client.event.booking', 'method'=>'post', 'name'=>'client_event_booking']) !!}
                     		         <fieldset>
-                    		              <div class="row">
-                    						<section class="col col-12">
-                    						    <label class="col col-12">
-                    						    {!! Form::text('nick_name', null, ['placeholder'=>'please enter you nick name', 'class'=>'form-control nick_name', 'title'=>'your nick name that display']) !!}
-                    						    </label>
-                    						</section>
-                    					</div>
-                    					<div class="row">
-                    						<section class="col col-12">
-                    						    <label class="col col-12">
-                    						    {!! Form::text('email_addr', null, ['placeholder'=>'your email address', 'class'=>'form-control email_addr', 'title'=>'your email address']) !!}
-                    						    </label>
-                    						</section>
-                    					</div>
-                    					<div class="row">
-                    						<section class="col col-12">
-                    						    <label class="col col-12">
-                    						    {!! Form::text('phone', null, ['placeholder'=>'please enter your phone number', 'class'=>'form-control phone', 'title'=>'your mobile number']) !!}
-                    						    </label>
-                    						</section>
-                    					</div>
+                    		        @include('partial.commanField')
                     					<div class="row">
                     						<section class="col col-12">
                     						  <label class="col col-12">
-                    		                     <select name='event_ticket_first' class='event_ticket_first form-control'>
-                    		                     <option class=''>Please select ticket name</option>@foreach($eventBySlug->event_ticket_name as $ticket)<option value='{{$ticket['name']}}'>{{$ticket['name']}} &nbsp; Rs.{{$ticket['price']}}</option>@endforeach</select>
+          		                     <select name='event_ticket_first' class='event_ticket_first form-control'>
+          		                        <option class=''>Please select ticket name</option>@foreach($eventBySlug->event_ticket_name as $ticket)
+                                       <option value='{{$ticket['name']}}'>
+                                         {{$ticket['name']}} &nbsp;-- Rs.{{$ticket['price']}}
+                                       </option>
+                                     @endforeach
+                                   </select>
                     						</section>
                     					</div>
                     				    <hr class="col col-sm">
@@ -187,9 +182,8 @@
       e.preventDefault();
       if (counter <= 3) {
       	   var file = "@include('inc.ticketselect')";
-      	   var myTicket = "<div class='row'><span class='text-danger btnRemoveTicket'>X</span><div class='col col-5'><input type='text' name='event_booking_phone[]' class='form-control' placeholder='mobile number up to 10 digit'></div><div class='col col-6'>"+ file +"</div></div>";
-          $('.addTicket').append(myTicket);
-          counter ++;
+           $('.addTicket').append(file);
+           counter ++;
       }else{
       	infoDiv.append('Oops you cannot buy three ticket with same email address').add('alert alert-danger');
       }
@@ -206,12 +200,12 @@
 	$(function() {
 	  $("form[name='client_event_booking']").validate({
 	    rules: {
-	      nick_name :{
+	      nickName :{
 	      	required  : true,
 	      	minlength : 4,
 	      	maxlength  : 20,
 	      },
-	      email_addr : {
+	      email : {
 	      	required :true,
 	      	email    : true
 	      },
@@ -224,8 +218,8 @@
 	      event_ticket_first : "required",
 	    },
 	    messages: {
-	      nick_name: "nick name must be more than 4 character",
-	      email_addr: "email address is not correct",
+	      nickName: "nick name must be more than 4 character",
+	      email: "email address is not correct",
 	      phone     : "mobile number must be 10 digit with unique",
 	      event_ticket_first : "select ticket"
 	    },

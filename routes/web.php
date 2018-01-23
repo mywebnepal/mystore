@@ -15,6 +15,7 @@ Route::get('/event-list', 'eventController@getEventDetail')->name('client.event.
 Route::get('/create-event', 'eventController@getEventForm')->name('client.event.form');
 Route::post('/create-event-user', 'eventController@createOrganizerName')->name('client.create.organizer');
 Route::post('/create-event', 'eventController@store')->name('client.event.create');
+
 Route::get('/event-details/{slug}', 'eventController@show')->name('client.show.event.details');
 Route::get('/delete-event/{id}', 'eventController@destroy')->name('client.delete.event');
 Route::get('/event-booking-status', 'eventController@bookingChangeStatus')->name('client.event.boookingStatus');
@@ -24,8 +25,8 @@ Route::post('event/{id}/update', 'eventController@update')->name('client.event.u
 
 Route::get('event/{slug}', 'eventController@getSingleEventBySlug')->name('client.event.single');
 
-Route::post('event/event-booking', 'eventController@clientEventBooking')->name('client.event.booking');
-/*ending of event*/
+/*event booking*/
+Route::post('event/event-booking', 'bookingController@eventBooking')->name('client.event.booking');
 
 /*viewed producted*/
 Route::post('/viewProduct/{id}', 'HomeController@viewedProduct')->name('mostViewProduct');

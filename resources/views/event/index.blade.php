@@ -23,14 +23,14 @@
                      @endif
                    @else
                      <p>Sorry we do not have your organizer name please create organizer name first to create your event</p>
-                     {!! Form::open(['route'=>'client.create.organizer', 'method'=>'post']) !!}
+                     {!! Form::open(['route'=>'client.create.organizer', 'method'=>'post', 'name'=>'organizer']) !!}
                         @include('event.organizer')
                      {!! Form::close() !!}
                    @endif
                    <!--  -->
                <div class="row">
-
-                 @if($usr->user_id == Auth::user()->id && $usr->status == 1)
+                 @if(isset($usr))
+                 @if(($usr->user_id == Auth::user()->id) && $usr->status == 1)
                    <div class="col-sm-12">
                      <p class="pull-right">
                           <button class="btn btn-success btn-sm btnCreateEvent">
@@ -124,6 +124,7 @@
                         </table>
                      @endif
                    </div>
+                 @endif
                  @endif
                </div>
             </div>

@@ -19,64 +19,74 @@ class eventController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('getEventDetail', 'getSingleEventBySlug', 'clientEventBooking');
+        $this->middleware('auth')->except('getEventDetail', 'getSingleEventBySlug');
     }
 
     public function store(eventValidation $request)
     {
         $time = date('Y-m-d h:i:s');
         $tickets = [];
-        if ($request->has('event_ticket_name')) {
-            $ticketName = $request->event_ticket_name;
-            $ticketPrice = $request->event_ticket_price;
-            $ticketSeat = $request->event_ticket_seat;
-            $ticketCount = count($ticketName);
-            for ($i=0; $i < $ticketCount; $i++) { 
-                array_push($tickets, [
-                    'name' => $ticketName[$i],
-                    'price' => $ticketPrice[$i],
-                    'seat' => $ticketSeat[$i]
-                ]);
-            }
+        $eventCount = Event::count();
+
+        $eventCount = Event::select('event_users', 'event_title')->where('event_users', Auth::user()->id)->get();
+        $countEvent = count($eventCount);
+        
+      if ($countEvent <=3) {
+         if ($request->has('event_ticket_name')) {
+             $ticketName = $request->event_ticket_name;
+             $ticketPrice = $request->event_ticket_price;
+             $ticketSeat = $request->event_ticket_seat;
+             $ticketCount = count($ticketName);
+             for ($i=0; $i < $ticketCount; $i++) { 
+                 array_push($tickets, [
+                     'name' => $ticketName[$i],
+                     'price' => $ticketPrice[$i],
+                     'seat' => $ticketSeat[$i]
+                 ]);
+             }
+         }
+         $save = new Event;
+         $save->event_users = Auth::user()->id;
+         $save->event_title = $request->event_title;
+         $save->event_code  = getCode($request->event_title);
+         $save->event_slug  = getSlug($request->event_title);
+         $save->event_start_date = $request->event_start_date;
+         $save->event_end_date = $request->event_end_date;
+         $save->event_tel         = $request->event_tel;
+         $save->event_phone       = $request->event_phone;
+         $save->event_email       = $request->event_email;
+
+         $save->event_city_id       = $request->event_city;
+         $save->event_vanue_addr = $request->event_vanue_addr;
+         $save->event_postal_code = $request->event_postal_code ? $request->event_postal_code : '';
+
+         if ($request->hasFile('event_featured_img')) {
+            $eventImage      = $request->file('event_featured_img');
+
+            $chngEventImgNam = str_replace(' ', '', $request->event_title).$time.'.'.$eventImage->getClientOriginalExtension();
+
+            Image::make($eventImage )->resize(480, 300 )->save('event/' . $chngEventImgNam );
+            $save->event_featured_img = 'event/'.$chngEventImgNam;
+         }
+         $save->event_desc = $request->event_desc;
+         $save->event_tax  = $request->event_tax;
+         // $save->event_discount = $request->event_discount;
+         $save->event_status   = 1;
+         $save->event_google_map = 'N/A';
+         $save->event_ticket_name = serialize($tickets);
+
+        $save->event_ticket_type = $request->event_ticket_type;
+
+        $save = $save->save();
+        if ($save) {
+            return back()->withMessage('successfully created your event');
+        }else{
+         return back()->withMessage('Oops sorry try it again something goes wrong')->withInput();
         }
-        $save = new Event;
-        $save->event_users = Auth::user()->id;
-        $save->event_title = $request->event_title;
-        $save->event_code  = getCode($request->event_title);
-        $save->event_slug  = getSlug($request->event_title);
-        $save->event_start_date = $request->event_start_date;
-        $save->event_end_date = $request->event_end_date;
-        $save->event_tel         = $request->event_tel;
-        $save->event_phone       = $request->event_phone;
-        $save->event_email       = $request->event_email;
-
-        $save->event_city_id       = $request->event_city;
-        $save->event_vanue_addr = $request->event_vanue_addr;
-        $save->event_postal_code = $request->event_postal_code ? $request->event_postal_code : '';
-
-        if ($request->hasFile('event_featured_img')) {
-           $eventImage      = $request->file('event_featured_img');
-
-           $chngEventImgNam = str_replace(' ', '', $request->event_title).$time.'.'.$eventImage->getClientOriginalExtension();
-
-           Image::make($eventImage )->resize(480, 300 )->save('event/' . $chngEventImgNam );
-           $save->event_featured_img = 'event/'.$chngEventImgNam;
-        }
-        $save->event_desc = $request->event_desc;
-        $save->event_tax  = $request->event_tax;
-        // $save->event_discount = $request->event_discount;
-        $save->event_status   = 0;
-        $save->event_google_map = 'N/A';
-        $save->event_ticket_name = serialize($tickets);
-
-       $save->event_ticket_type = $request->event_ticket_type;
-
-       $save = $save->save();
-       if ($save) {
-           return back()->withMessage('successfully created your event');
-       }else{
-        return back()->withMessage('Oops sorry try it again something goes wrong')->withInput();
-       }
+      }else{
+        return back()->withMessage('Sorry you can only upload three event in free of cost');
+      }
+        
 
        
     }
@@ -235,8 +245,6 @@ class eventController extends Controller
     public function getEventForm(){
         $page['page_title']       = 'mywebnepal : create event';
         $page['page_description'] =  'event all over nepal';
-       
-        
         $evnt = Event::where('event_users', Auth::user()->id)->orderby('created_at', 'desc')->paginate(15);
         $myEvent = $evnt ? $evnt : '';
         return view('event.index', compact(['page', 'evnt']));
@@ -275,12 +283,14 @@ class eventController extends Controller
              return back()->withMessage('$request->organizer_name user already have');
          }
         $this->validate($request, [
-               'organizer_name' => 'required|min:6|max:20'
+               'organizer_name' => 'required|min:6|max:20',
+               'desc'           => 'required|min:10|max:6000'
            ]);
         EventUser::create([
          'user_id'        => Auth::user()->id,
          'organizer_name' => $request->organizer_name,
-         'status'         => 0,
+         'desc'           => $request->desc,
+         'status'         => 1,
         ]);
        return $this->getEventForm();
 
@@ -322,9 +332,5 @@ class eventController extends Controller
              $evnt = Event::orderby('created_at', 'desc')->where('event_start_date', '>=', $date)->where('event_status', 1)->paginate(15);
         }
         return $evnt;
-    }
-
-    public function clientEventBooking(){
-        dd('i am in right place');
     }
 }

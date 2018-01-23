@@ -84,18 +84,7 @@
     </div>
     @include('inc.header')
     <div class="container">
-      @if(session::has('errors'))
-        <ul>
-           @foreach ($errors->all() as $error)
-            <div class="alert alert-danger alert-dismissable" style="text-align: center">
-              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-              <li>{{ $error }}</li>
-            </div>
-         @endforeach
-         </ul>
-      @endif
        <div class="siteInfoMsg"></div>
-
        @yield('content')  
     </div>
     @include('inc.footer')

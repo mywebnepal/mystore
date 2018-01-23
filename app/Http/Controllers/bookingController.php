@@ -110,4 +110,25 @@ class bookingController extends Controller
       <?php
        }
     }
+
+    public function eventBooking(Request $request){
+    $this->validate($request, [
+           'nickName'           => 'required|min:4|max:50',
+           'email'              => 'required|email',
+           'phone'              => 'required|numeric',
+           'event_ticket_first' => 'required'
+
+       ]);
+    if ($request->event_ticket_name) {
+        foreach ($request->event_ticket_name as $ticket) {
+         $this->validate($request, [
+                'ticket'           => 'required'
+            ]);
+        }
+    }
+    if ($request->event_ticket_name) {
+
+    }
+
+  }
 }
