@@ -19,7 +19,7 @@ class eventController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('getEventDetail', 'getSingleEventBySlug');
+        $this->middleware('auth')->except('getEventDetail', 'getSingleEventBySlug', 'eventComment');
     }
 
     public function store(eventValidation $request)
@@ -105,7 +105,6 @@ class eventController extends Controller
       $page['page_description'] = 'mywebnepal:-'.$evnt->event_desc ? $evnt->event_desc : 'No event fount';
 
       $singleEvent->event_ticket_name = unserialize($singleEvent->event_ticket_name);
-        
       return view('event.show', compact(['page', 'singleEvent']));
     }
 
@@ -315,7 +314,6 @@ class eventController extends Controller
       }
     }
 
-
     private function getEventIdBySlug($slug){
        if (!$slug) {
            return null;
@@ -332,5 +330,9 @@ class eventController extends Controller
              $evnt = Event::orderby('created_at', 'desc')->where('event_start_date', '>=', $date)->where('event_status', 1)->paginate(15);
         }
         return $evnt;
+    }
+
+    public function eventComment(Request $request){
+    
     }
 }

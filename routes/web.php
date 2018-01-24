@@ -28,6 +28,8 @@ Route::get('event/{slug}', 'eventController@getSingleEventBySlug')->name('client
 /*event booking*/
 Route::post('event/event-booking', 'bookingController@eventBooking')->name('client.event.booking');
 
+Route::post('event/event-comment', 'eventController@eventComment')->name('client.event.comment');
+
 /*viewed producted*/
 Route::post('/viewProduct/{id}', 'HomeController@viewedProduct')->name('mostViewProduct');
 

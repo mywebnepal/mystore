@@ -53,6 +53,9 @@
                 </ul>
                 <div class="tab-content bg-white mb-sm-2 mb-md-4" id="first-pills-tabContent">
                     <div class="tab-pane fade show active" id="pills-new-description" role="tabpanel" aria-labelledby="pills-new-description-tab">
+                        @if(Session::has('message'))
+                           {{ Session::get('message') }}
+                        @endif
                         <div class="">
                             <p class="mb-2">
                                 <small><strong>Event Details</strong></small>
@@ -75,8 +78,7 @@
                             		  {{ $eventBySlug->event_desc }}
                             		</p>
                             	</div>
-                            	@if($eventBySlug->event_ticket_type =='Ticket')
-                            	<div class="col col-4" style="margin-top: -5em; background: #3eb143;">
+                              <div class="col col-4" style="margin-top: -5em; background: #3eb143;">
                               @if(Session::has('errors'))
                                      <ul>
                                         @foreach ($errors->all() as $error)
@@ -87,15 +89,18 @@
                                       @endforeach
                                       </ul>
                                    @endif
-                            	<h4 align="center">Book now...</h4>
-                    		         {!! Form::open(['route'=>'client.event.booking', 'method'=>'post', 'name'=>'client_event_booking']) !!}
-                    		         <fieldset>
-                    		        @include('partial.commanField')
-                    					<div class="row">
+                              <h4 align="center">Book now...</h4>
+                                 {!! Form::open(['route'=>'client.event.booking', 'method'=>'post', 'name'=>'client_event_booking']) !!}
+                                 <fieldset>
+                                 {{ Form::hidden('event_id', $eventBySlug->id) }}
+                                 {{ Form::hidden('event_type', $eventBySlug->event_ticket_type) }}
+                                @include('partial.commanField')
+                            	@if($eventBySlug->event_ticket_type =='Ticket')
+                              <div class="row">
                     						<section class="col col-12">
                     						  <label class="col col-12">
           		                     <select name='event_ticket_first' class='event_ticket_first form-control'>
-          		                        <option class=''>Please select ticket name</option>@foreach($eventBySlug->event_ticket_name as $ticket)
+          		                        <option value=''>Please select ticket name</option>@foreach($eventBySlug->event_ticket_name as $ticket)
                                        <option value='{{$ticket['name']}}'>
                                          {{$ticket['name']}} &nbsp;-- Rs.{{$ticket['price']}}
                                        </option>
@@ -108,11 +113,20 @@
                     				    <div class="row addTicket"></div>
                                           <a href="javascript:void(0)" class="btn btn-success btn-sm pull-right addMoreTicket">Add more ticket</a>
                     				   @endif
-                    		         </fieldset>
-                    		         <p align="center">{{ Form::submit('Book now..', ['class'=>'btn btn-success btn-md']) }}</p>
-                    		         {!! Form::close() !!}
-                            	</div>
+
+                               @else
+                               <div class="row">
+                                   <section class="col col-12">
+                                       <label class="col col-12">
+                                       {!! Form::text('profession', null, ['placeholder'=>'please enter your profession', 'class'=>'form-control profession', 'title'=>'Please enter your profession']) !!}
+                                       </label>
+                                   </section>
+                               </div>
                             	@endif
+                                 </fieldset>
+                                 <p align="center">{{ Form::submit('Book now..', ['class'=>'btn btn-success btn-md']) }}</p>
+                                 {!! Form::close() !!}
+                              </div>
                             </div>
                         </div>
                         <div class="row">
@@ -139,26 +153,9 @@
                              <dd>asdfds</dd>
                            </dl>
                         <div class="">
-                            {!! Form::open(['url'=>route('product.comment'), 'id'=>'prdComment']) !!}
-                              
-                                 @if (Auth::check())
-                                    <div class="form-group float-label-control">
-                                         <h4>Hai, {{ Auth::user()->name }} 
-                                         <small>Please comment this Event</small>
-                                         </h4>
-                                    </div>
-                                    {!! Form::hidden('usr_id', Auth::user()->id, ['class'=>'form-control']) !!}
-
-                                 @else
-                                      <div class="form-group float-label-control">
-                                       {!! Form::text('user_email', null, ['class'=>'form-control', 'placeholder'=>'Your email address']) !!}
-                                    </div>          
-                                 @endif
-                                 
-                                 <div class="form-group float-label-control">
-                                  {!! Form::textarea('comment', null, ['class'=>'form-control', 'placeholder'=>'Your comment', 'rows'=>'3']) !!}
-                                  </div>
-
+                            {!! Form::open(['url'=>route('client.event.comment'), 'name'=>'eventComment']) !!}
+                                 {!! Form::hidden('event_id', $eventBySlug->id) !!}
+                                 @include('partial.comment_field')
                                   <div class="form-group float-label-control">
                                      <p class="pull-right">
                                          {!! Form::submit('submit', ['class'=>'btn btn-info btn-sm']) !!}
@@ -181,7 +178,7 @@
 	$('.addMoreTicket').on('click', function(e){
       e.preventDefault();
       if (counter <= 3) {
-      	   var file = "@include('inc.ticketselect')";
+      	   var file = "@include('partial.ticketselect')";
            $('.addTicket').append(file);
            counter ++;
       }else{

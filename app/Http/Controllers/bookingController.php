@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\models\Hotel;
-
 use App\models\City;
 use App\models\Product;
 use App\models\roomType;
+use App\models\Event;
+use App\models\EventBooking;
+use App\models\Mylogic;
 
 class bookingController extends Controller
 {
@@ -116,19 +118,85 @@ class bookingController extends Controller
            'nickName'           => 'required|min:4|max:50',
            'email'              => 'required|email',
            'phone'              => 'required|numeric',
-           'event_ticket_first' => 'required'
-
+           'event_id'           => 'required|numeric'
        ]);
-    if ($request->event_ticket_name) {
-        foreach ($request->event_ticket_name as $ticket) {
-         $this->validate($request, [
-                'ticket'           => 'required'
+     $eventName = $this->getSingleEventDetails($request->event_id);
+     if ($eventName) {
+        $checkBooking =$this->checkBookingByPhone($request->event_id, $request->phone);
+        if ($checkBooking == 0) {
+          $save = new EventBooking;
+          $save->event_id      = $request->event_id;
+          $save->event_type    = $request->event_type;
+          $save->nickName      = $request->nickName;
+          $save->email         = $request->email;
+          $save->phone         = $request->phone;
+          $save->bookingCode   = getCode($eventName->event_title);
+          $save->isUser        = Mylogic::isSystemUser($request->email);
+
+          if ($eventName->event_ticket_type == 'Ticket') {
+            $this->validate($request, [
+             'event_ticket_first' => 'required'
             ]);
+            $MoreTicket[];
+
+            $save->ticket        = $request->event_ticket_first;
+            $save->tax           = $eventName->event_tax;
+            $save->rate          = 'N/A';
+
+            if ($request->has('event_booking_phone')) {
+               $eventPhone    = $request->event_booking_phone;
+               $eventTicket   = $request->event_ticket;
+               $eventPrice    = 'N/A';
+               $ticketCount   = count($eventPhone);
+               for ($i=0; $i < $ticketCount; $i++) { 
+                   array_push($MoreTicket, [
+                       'phone' => $eventPhone[$i],
+                       'ticket' => $eventTicket[$i],
+                       'price' => $eventPrice[$i]
+                   ]);
+               }
+
+
+           }
+          }else{
+            $this->validate($request, [
+             'profession' => 'required'
+            ]);
+            $save->profession    = $request->profession;
+          }
+          $save->payId = 'N/A';
+          $save->status = 0;
+
+          $save->save();
+           if ($save) {
+              return back()->withMessage('successfully inserted');
+           }else{
+              return back()->withMessage('OOps sorry try it again');
+           }
+        }else{
+          return back()->withMessage('already booked by this number please change you phone number');
         }
-    }
-    if ($request->event_ticket_name) {
+        
+     }else{
+      return back()->withMessage('sorry event not found');
+     }
+     
 
-    }
 
+
+  }
+  public function getSingleEventDetails($id){
+   $event = Event::where('id', $id)->first();
+   return $event ? $event : '';
+  }
+
+  public function getPriceRate($id, $search){
+   $event = Event::where('id', $id)->first();
+   $event->event_ticket_name = unserialize($event->event_ticket_name);
+  
+  }
+  public function checkBookingByPhone($id, $phone){
+   $checkBooking = EventBooking::select('phone')->where('phone', $phone)->where('event_id', $id)->first();
+   return $checkBooking ? 1 : 0;
   }
 }
