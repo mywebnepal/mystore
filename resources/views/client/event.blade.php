@@ -26,7 +26,9 @@
 		    			  <i class="fa fa-map-marker text-success">&nbsp;
 		    			  <span class="text-mute">{{ $evnt->event_vanue_addr }}</span></i><br>
 		    			  <i class="fa fa-user text-success">&nbsp;Interested:10</i>&nbsp;&nbsp;&nbsp;
-		    			  <i class="fa fa-comment text-success">&nbsp;3-</i>
+		    			  <i class="fa fa-comment text-success">&nbsp;3</i>&nbsp;&nbsp;&nbsp;
+
+		    			  <i class="fa fa-eye text-success">&nbsp;3</i>
 		    			</div>
 
 		    			<div class="col-sm-6 pull-right">
@@ -51,7 +53,7 @@
 
 		    	      <div class="col-sm-12">
 		    	      <p class="pull-right">
-		    	      	<button class="btn btn-default btn-sm">Booking...</button>
+		    	      	<a href="{{ route('client.event.single', $evnt->event_slug) }}"><button class="btn btn-success btn-sm">Booking...</button></a>
 		    	      </p>
 		    	         <p class="pull-left">
 		    	         	@if($evnt->event_ticket_name)

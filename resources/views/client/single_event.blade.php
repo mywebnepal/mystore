@@ -21,7 +21,7 @@
 	     <i class="fa fa-envelope">&nbsp;{{ $eventBySlug->event_email }}</i>
 	     <br>
 	     <i class="fa fa-user text-success">&nbsp;Interested:10</i>&nbsp;&nbsp;&nbsp;
-	     <i class="fa fa-comment text-success">&nbsp;3</i>
+	     <i class="fa fa-comment text-success">&nbsp;{{ count($eventComment) }}</i>
 		
 	</div>
 	<div class="col col-6">
@@ -145,24 +145,48 @@
                     </div>
 
                     <div class="tab-pane fade" id="pills-offers-items" role="tabpanel" aria-labelledby="pills-offers-items-tab">
-                           <dl>
-                             <dt>
-                             <span>
-                                 <i class="fa fa-user-o" aria-hidden="true"></i>
-                             </span>sdfds</dt>
-                             <dd>asdfds</dd>
-                           </dl>
+                    <div class="row">
+                      <div class="col col-6">
                         <div class="">
-                            {!! Form::open(['url'=>route('client.event.comment'), 'name'=>'eventComment']) !!}
+                            {!! Form::open(['url'=>route('client.event.comment'), 'name'=>'eventComment', 'id'=>'frmEventComment', 'method'=>'post']) !!}
                                  {!! Form::hidden('event_id', $eventBySlug->id) !!}
                                  @include('partial.comment_field')
                                   <div class="form-group float-label-control">
-                                     <p class="pull-right">
-                                         {!! Form::submit('submit', ['class'=>'btn btn-info btn-sm']) !!}
-                                     </p>
+                                     <p align="center">{{ Form::submit('Share your comment..', ['class'=>'btn btn-success btn-md']) }}</p>
                                   </div>
                             {!! Form::close() !!}
                         </div>
+                      </div>
+                      <div class="col col-6">
+                        @if(count($eventComment) > 0)
+                            @foreach($eventComment as $comment)
+                                <dl>
+                                  <dt>
+                                  <span>
+                                      <div class="userNickName"><i class="fa fa-user-o" aria-hidden="true">&nbsp;{{ $comment->nickName }}</i></div>
+                                  </span></dt>
+                                  <dd>
+                                    <div class="userComment">
+                                      <i class="fa fa-comment">&nbsp; {{ $comment->event_comment }}</i>
+                                    </div>
+                                  </dd>
+                                </dl>
+                            @endforeach
+                        @endif
+                              <dl>
+                                <dt>
+                                <span>
+                                    <div class="userNickName"><i class="fa fa-user-o" aria-hidden="true">&nbsp;</i></div>
+                                </span></dt>
+                                <dd>
+                                  <div class="userComment">
+                                    <i class="fa fa-comment"></i>
+                                  </div>
+                                </dd>
+                              </dl>
+                      </div>
+                    </div>
+                     
                     </div>
                 </div>
             </div>
@@ -191,8 +215,6 @@
            $(this).parent().remove(); 
            counter  = counter - 1; 
       }); 
-    
-
     /*---------*/
 	$(function() {
 	  $("form[name='client_event_booking']").validate({
@@ -200,7 +222,7 @@
 	      nickName :{
 	      	required  : true,
 	      	minlength : 4,
-	      	maxlength  : 20,
+	      	maxlength  : 20
 	      },
 	      email : {
 	      	required :true,
@@ -225,5 +247,64 @@
 	    }
 	  });
 	});
+
+
+  $(function() {
+    var siteInfoMsg = $('.siteInfoMsg');
+    $("form[name='eventComment']").validate({
+      rules: {
+        nickName :{
+          required  : true,
+          minlength : 4,
+          maxlength  : 20
+        },
+        email : {
+          required :true,
+          email    : true
+        },
+        phone      : {
+          required : true,
+          number: true,
+          minlength:10,
+          maxlength : 10
+        },
+        event_comment :{
+          required : true,
+          minlength:5,
+          maxlength : 100
+        }
+      },
+      messages: {
+        nickName: "nick name must be more than 4 character",
+        email: "email address is not correct",
+        phone     : "mobile number must be 10 digit with unique",
+        event_comment : "please share your views at least 10 character"
+      },
+      submitHandler: function(form) {
+        var url  = $('#frmEventComment').attr('action');
+        var data = $('#frmEventComment').serialize();
+        $.ajax({
+           'type' : 'POST',
+           'url'  : url,
+           'data' : data,
+           success: function(response){;
+             if (response.success == true) {
+                siteInfoMsg.css('display', 'block').fadeOut(5000);
+                siteInfoMsg.append(response.message);
+                $('.userNickName').append(response.nickName);
+                $('.userComment').append(response.comment);
+            }else{
+                siteInfoMsg.css('display', 'block').addClass('alert alert-danger').fadeOut(5000);
+                siteInfoMsg.append(response.message);
+            }
+           },
+           complete :function(){
+            $('#frmEventComment').trigger('reset');
+           }
+        });
+        return false;
+      }
+    });
+  });
 </script>
 @endsection

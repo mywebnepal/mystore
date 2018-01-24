@@ -8,6 +8,8 @@ use App\models\Event;
 use Intervention\Image\Facades\Image;
 use AppHelper;
 use File;
+use App\models\EventComment;
+use App\models\Mylogic;
 
 class eventController extends Controller
 {
@@ -19,7 +21,7 @@ class eventController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('getEventDetail', 'getSingleEventBySlug', 'eventComment');
+        $this->middleware('auth')->except('getEventDetail', 'getSingleEventBySlug', 'eventComment', 'getEventComment');
     }
 
     public function store(eventValidation $request)
@@ -270,7 +272,8 @@ class eventController extends Controller
                $page['page_description'] = $eventBySlug ? 'mywebnepal:'.$eventBySlug->event_desc : '';
 
                $eventBySlug->event_ticket_name = unserialize($eventBySlug->event_ticket_name);
-               return view('client.single_event', compact(['eventBySlug', 'page']));
+               $eventComment = $this->getEventComment($eventBySlug['id']);
+               return view('client.single_event', compact(['eventBySlug', 'page', 'eventComment']));
            }
            
         }
@@ -333,6 +336,54 @@ class eventController extends Controller
     }
 
     public function eventComment(Request $request){
-    
+    $this->validate($request, [
+           'nickName'       => 'required|min:3|max:20',
+           'event_comment'  => 'required|min:5|max:100',
+           'event_id'       => 'required'
+           
+       ]);
+    $save = new EventComment;
+    $save->event_id = $request->event_id;
+    if (isset(Auth::user()->id)){
+      $userDetails = Mylogic::getUserDetails(Auth::user()->id);
+      $save->isUser = 1;
+      $save->email  =  $userDetails['email'];
+      $save->phone  =  $userDetails['phone'];
+    }else{
+      $this->validate($request, [
+             'email'       => 'required',
+             'phone'       => 'required' 
+         ]);
+       $save->isUser = 0;
+       $save->email  = $request->email;
+       $save->phone  = $request->phone;
+    }
+    $save->nickName  = $request->nickName;
+    $save->event_comment = $request->event_comment;
+    $save->status     = 1;
+
+    $save = $save->save();
+    if ($save) {
+      return response()->json([
+         'success' => true,
+         'message' => 'successfully inserted',
+         'nickName' => $request->nickName,
+         'comment'  => $request->event_comment
+        ], 200);
+    }else{
+      return response()->json([
+        'success'  => false,
+        'message'  => 'oops sorry your comment is not post try it again'
+        ], 403);
+    }
+    }
+
+    protected function getEventComment($id){
+    $eventComment = EventComment::where('event_id', $id)->where('status', 1)->orderby('created_at', 'desc')->get();
+     return $eventComment ? $eventComment : '';
+    }
+
+    public function eventView($eventId){
+     
     }
 }
