@@ -16,4 +16,8 @@ class Event extends Model
     public function eventUsers(){
     	return $this->belongsTo('App\User', 'event_users');
     }
+
+    public function eventView() {
+        return $this->hasOne('App\models\EventViewCount', 'event_id');
+    }
 }

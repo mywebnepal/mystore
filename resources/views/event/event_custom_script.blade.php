@@ -73,12 +73,12 @@ $('#eventDiscount').on('mousemove', function(){
      rules:{
       organizer_name : {
         minlength : 6,
-        maxlength : 20,
+        maxlength : 20
       },
       desc : {
-        minlength : 10,
+        minlength : 10
       },
-     }
+     },
      messages: {
        organizer_name : "Please choose your organizer name up to 6 character",
        desc           : "please enter organizer details at least 10 character"

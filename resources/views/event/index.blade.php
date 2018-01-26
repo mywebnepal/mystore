@@ -95,7 +95,10 @@
                                  </a>
                                </td>
                              
-                              <td>number of booking</td>
+                              <td>
+                              <button class="btn btn-primary btn-sm">
+                                    View Booking&nbsp;<span class="badges text-default">2</span>
+                              </button></td>
                               <td>
                                  <span>
                                     <a href="{{ route('client.event.edit', $event->id) }}" title="edit my event">

@@ -30,8 +30,11 @@ Route::post('event/event-booking', 'bookingController@eventBooking')->name('clie
 
 Route::post('event/event-comment', 'eventController@eventComment')->name('client.event.comment');
 
+Route::get('/event-save-view/view-count/{id}', 'eventController@saveEventViewCount')->name('client.view.count.save');
+
 /*viewed producted*/
 Route::post('/viewProduct/{id}', 'HomeController@viewedProduct')->name('mostViewProduct');
+
 
 /*cart*/
 Route::get('/cart/{id}', 'cartController@addCart')->name('addCart');

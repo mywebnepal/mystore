@@ -134,29 +134,9 @@ class bookingController extends Controller
           $save->isUser        = Mylogic::isSystemUser($request->email);
 
           if ($eventName->event_ticket_type == 'Ticket') {
-            $this->validate($request, [
-             'event_ticket_first' => 'required'
-            ]);
-            $MoreTicket[];
-
-            $save->ticket        = $request->event_ticket_first;
-            $save->tax           = $eventName->event_tax;
-            $save->rate          = 'N/A';
-
-            if ($request->has('event_booking_phone')) {
-               $eventPhone    = $request->event_booking_phone;
-               $eventTicket   = $request->event_ticket;
-               $eventPrice    = 'N/A';
-               $ticketCount   = count($eventPhone);
-               for ($i=0; $i < $ticketCount; $i++) { 
-                   array_push($MoreTicket, [
-                       'phone' => $eventPhone[$i],
-                       'ticket' => $eventTicket[$i],
-                       'price' => $eventPrice[$i]
-                   ]);
-               }
-
-
+            if ($request->has('event_ticket')) {
+                
+            }
            }
           }else{
             $this->validate($request, [

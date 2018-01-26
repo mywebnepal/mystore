@@ -10,6 +10,7 @@ use AppHelper;
 use File;
 use App\models\EventComment;
 use App\models\Mylogic;
+use App\models\EventViewCount;
 
 class eventController extends Controller
 {
@@ -21,7 +22,7 @@ class eventController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth')->except('getEventDetail', 'getSingleEventBySlug', 'eventComment', 'getEventComment');
+        $this->middleware('auth')->except('getEventDetail', 'getSingleEventBySlug', 'eventComment', 'getEventComment', 'saveEventViewCount');
     }
 
     public function store(eventValidation $request)
@@ -383,7 +384,23 @@ class eventController extends Controller
      return $eventComment ? $eventComment : '';
     }
 
-    public function eventView($eventId){
-     
+    protected function getEventViewCount($eventId){
+     $eventCount = EventViewCount::where('event_id', $eventId)->get();
+     $viewCount = count($eventCount);
+     return $viewCount ? $viewCount : '';
+    }
+    
+    /* //TO DO browser cache*/
+    public function saveEventViewCount($id){
+    $save = new EventViewCount;
+      if ($id) {
+        $save->event_id    = $id;
+        $save->viewCount   = 1;
+        $save->save();
+        /*return response()->json([
+          'success' => true,
+          'message' => 'workign fine'
+          ], 200);*/
+      }
     }
 }

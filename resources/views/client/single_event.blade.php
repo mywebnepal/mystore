@@ -20,8 +20,8 @@
 	     <i class="fa fa-phone"> &nbsp;{{ $eventBySlug->event_phone }}</i>
 	     <i class="fa fa-envelope">&nbsp;{{ $eventBySlug->event_email }}</i>
 	     <br>
-	     <i class="fa fa-user text-success">&nbsp;Interested:10</i>&nbsp;&nbsp;&nbsp;
-	     <i class="fa fa-comment text-success">&nbsp;{{ count($eventComment) }}</i>
+	     <i class="fa fa-eye text-success">&nbsp;{{ getEventViewCount($eventBySlug->id) }}</i>&nbsp;&nbsp;&nbsp;
+	     <i class="fa fa-comment text-success">&nbsp;{{ getEventCommentCount($eventBySlug->id) }}</i>
 		
 	</div>
 	<div class="col col-6">
@@ -61,11 +61,6 @@
                                 <small><strong>Event Details</strong></small>
                             </p>
                             <p class="mb-2">
-	                            <!-- @if($eventBySlug->event_discount)
-	                                <small>
-	                                	Discount:-{{ $eventBySlug->event_discount }}%
-	                                </small>
-	                            @endif -->
                             	@if($eventBySlug->event_tax)
                             	 <small>
                             	 	Tax:-{{ $eventBySlug->event_tax }}%
@@ -99,9 +94,9 @@
                               <div class="row">
                     						<section class="col col-12">
                     						  <label class="col col-12">
-          		                     <select name='event_ticket_first' class='event_ticket_first form-control'>
+          		                     <select name='event_ticket[]' class='frmEventTicket form-control'>
           		                        <option value=''>Please select ticket name</option>@foreach($eventBySlug->event_ticket_name as $ticket)
-                                       <option value='{{$ticket['name']}}'>
+                                       <option value="{{ $ticket['name'] }}" data-seat="{{ $ticket['seat'] }}" data-price="{{ $ticket['price'] }}">
                                          {{$ticket['name']}} &nbsp;-- Rs.{{$ticket['price']}}
                                        </option>
                                      @endforeach
@@ -111,9 +106,11 @@
                     				    <hr class="col col-sm">
                     				    @if($eventBySlug->event_ticket_type =='Ticket')
                     				    <div class="row addTicket"></div>
-                                          <a href="javascript:void(0)" class="btn btn-success btn-sm pull-right addMoreTicket">Add more ticket</a>
+                                         <div class="addMoreEventTicket">
+                                           <a href="javascript:void(0)" class="btn btn-success btn-sm pull-right addMoreTicket">Add more ticket</a>
+                                         </div>
+                                          
                     				   @endif
-
                                @else
                                <div class="row">
                                    <section class="col col-12">
@@ -219,6 +216,10 @@
 	$(function() {
 	  $("form[name='client_event_booking']").validate({
 	    rules: {
+        'event_ticket[]': {
+          required: true,
+          minlength: 1
+        }, 
 	      nickName :{
 	      	required  : true,
 	      	minlength : 4,

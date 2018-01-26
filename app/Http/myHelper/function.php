@@ -8,6 +8,8 @@
    use App\models\Brand;
    use App\models\HomeSlider;
    use App\models\EventUser;
+   use App\models\EventViewCount;
+   use App\models\EventComment;
     
 
 function getDiscountPrice($prdAmt, $per){
@@ -109,5 +111,17 @@ function getCode($name){
   $name = str_replace(' ', '_', $name);
   $code = $name.'_'.$my_date.'_'.$rand;
   return $code;
+}
+
+function getEventViewCount($eventId){
+ $eventCount = EventViewCount::where('event_id', $eventId)->get();
+ $viewCount = count($eventCount);
+ return $viewCount ? $viewCount : '';
+}
+
+function getEventCommentCount($eventId){
+ $eventCount = EventComment::where('event_id', $eventId)->get();
+ $viewCount = count($eventCount);
+ return $viewCount ? $viewCount : 'N/A';
 }
 

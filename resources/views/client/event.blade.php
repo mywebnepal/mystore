@@ -9,26 +9,25 @@
 			   <h3> {{ $page['page_heading'] }}</h3>
 			 </div>
 	    </div>
-        
         @if(count($myEvent) > 0)
          @foreach($myEvent as $evnt)
+
 		    <div class="row event-class">
-		    	<div class="col-sm-3">
-		    		<a href="{{ route('client.event.single', $evnt->event_slug) }}">
+		    	<div class="col-xs-3 col-sm-3 col-md-3">
+		    		<a href="{{ route('client.event.single', $evnt->event_slug) }}" class="frmViewCount" data-id="{{ $evnt->id }}">
 		    		  <img src="{{ asset($evnt->event_featured_img) }}" class="img img-responsive"  height="180" width="100%">
 		    		</a>
 		    	</div>
-		    	<div class="col-sm-9">
-		    		<a href="{{ route('client.event.single', $evnt->event_slug) }}"><h4>{{ $evnt->event_title }}
+		    	<div class="col-xs-9 col-sm-9 col-md-9">
+		    		<a href="{{ route('client.event.single', $evnt->event_slug) }}" class="frmViewCount" data-id="{{ $evnt->id }}"><h4>{{ $evnt->event_title }}
 		    		<span class="badge badge-warning badge-sm">{{ $evnt->event_ticket_type }}</span></h4></a>
 		    		<div class="row">
 		    			<div class="col-sm-6">
 		    			  <i class="fa fa-map-marker text-success">&nbsp;
 		    			  <span class="text-mute">{{ $evnt->event_vanue_addr }}</span></i><br>
-		    			  <i class="fa fa-user text-success">&nbsp;Interested:10</i>&nbsp;&nbsp;&nbsp;
-		    			  <i class="fa fa-comment text-success">&nbsp;3</i>&nbsp;&nbsp;&nbsp;
+		    			  <i class="fa fa-comment text-success">&nbsp;{{ getEventCommentCount($evnt->id) }}</i>&nbsp;&nbsp;&nbsp;
 
-		    			  <i class="fa fa-eye text-success">&nbsp;3</i>
+		    			  <i class="fa fa-eye text-success">&nbsp;{{ getEventViewCount($evnt->id) }}</i>
 		    			</div>
 
 		    			<div class="col-sm-6 pull-right">
@@ -52,9 +51,6 @@
 		    	      </div>
 
 		    	      <div class="col-sm-12">
-		    	      <p class="pull-right">
-		    	      	<a href="{{ route('client.event.single', $evnt->event_slug) }}"><button class="btn btn-success btn-sm">Booking...</button></a>
-		    	      </p>
 		    	         <p class="pull-left">
 		    	         	@if($evnt->event_ticket_name)
 		    	         	@foreach($evnt->event_ticket_name as $ticket)
@@ -62,6 +58,9 @@
 		    	         	@endforeach
 		    	         	@endif
 		    	         </p>
+		    	      <p class="pull-right">
+		    	      	<a href="{{ route('client.event.single', $evnt->event_slug) }}" class="frmViewCount" data-id="{{ $evnt->id }}"><button class="btn btn-success btn-sm">Booking...</button></a>
+		    	      </p>
 		    	      </div>
 		    	      
 		    	</div><hr>
@@ -107,6 +106,18 @@ frmSearchHotel.on('submit', function(e){
           searchHotelInfo.fadeOut();
           searchResult.append(response);
          }
+   });
+});
+
+/*view count*/
+var frmViewCount = $('.frmViewCount');
+frmViewCount.on('click', function(e){
+var event_id  	= $(this).data('id')
+var url  		= "{{URL::to('/')}}" + "/event-save-view/view-count/"+event_id;
+   $.ajax({
+   	     'type' : 'get',
+         'url'  : url,
+          timeout : 3000,
    });
 });
 </script>

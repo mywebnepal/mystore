@@ -15,6 +15,8 @@ class CreateEventViewCountsTable extends Migration
     {
         Schema::create('event_view_counts', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('event_id');
+            $table->string('viewCount');
             $table->timestamps();
         });
     }

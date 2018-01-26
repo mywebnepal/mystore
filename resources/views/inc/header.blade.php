@@ -44,7 +44,7 @@
             <div class="py-2  py-lg-3 middle-header theme-bg-light">
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class="d-none d-lg-block col-lg-2">
+                        <div class="col-lg-2">
                             <a class="navbar-brand p-0" href="{!! url('/') !!}" style="color: #e1dcef;">
                                 <!-- <img src="{{ asset('img/logo/mywebnepal.png') }}" height="100"> -->
                                 myWebNepal
