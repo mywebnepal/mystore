@@ -14,7 +14,7 @@
                                    $catViewData = getCategoryName();
                                   foreach ($catViewData as $myCat) {?>
                                       <li class="breadcrumb-item">
-                                           <a href="{!! route('page_slug', $myCat->slug) !!}" class="btn theme-bg-dark text-white btn-sm mt-2 mt-sm-0" style="border:1px solid #FFF;">
+                                           <a href="{!! route('page_slug', $myCat->slug) !!}" class="btn btn-outline-light btn-sm" style="border:1px solid #FFF;">
                                            <?php echo $myCat->name;   ?>
                                             </a>
                                        </li>
@@ -44,7 +44,7 @@
             <div class="py-2  py-lg-3 middle-header theme-bg-light">
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class="col-lg-2">
+                        <div class="d-none d-sm-block col-lg-2">
                             <a class="navbar-brand p-0" href="{!! url('/') !!}" style="color: #e1dcef;">
                                 <!-- <img src="{{ asset('img/logo/mywebnepal.png') }}" height="100"> -->
                                 myWebNepal

@@ -9,6 +9,7 @@
 			   <h3> {{ $page['page_heading'] }}</h3>
 			 </div>
 	    </div>
+	    <!-- {{ @dump($myEvent) }} -->
         @if(count($myEvent) > 0)
          @foreach($myEvent as $evnt)
 

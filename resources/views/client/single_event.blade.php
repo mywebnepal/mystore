@@ -68,12 +68,21 @@
                             	@endif
                             </p>
                             <div class="row">
-                            	<div class="col col-8">
+                            	<div class="col-xs-12 col-sm-8">
                             		<p class="lead">
                             		  {{ $eventBySlug->event_desc }}
                             		</p>
+                                <p class="pull-left" style="margin-bottom: 6em; ">
+                               @if($eventBySlug->event_ticket_type =='Ticket')
+                                      @if($eventBySlug->event_ticket_name)
+                                      @foreach($eventBySlug->event_ticket_name as $ticket)
+                                      <i class="fa fa-money">&nbsp; {{$ticket['name']}}:- Rs. {{$ticket['price']}}</i>&nbsp;
+                                      @endforeach
+                                    @endif
+                                    @endif
+                                   </p><br><hr>
                             	</div>
-                              <div class="col col-4" style="margin-top: -5em; background: #3eb143;">
+                              <div class="col-sm-4 col-xs-12" style="margin-top: -5em; background: #3eb143;">
                               @if(Session::has('errors'))
                                      <ul>
                                         @foreach ($errors->all() as $error)
@@ -125,19 +134,6 @@
                                  {!! Form::close() !!}
                               </div>
                             </div>
-                        </div>
-                        <div class="row">
-                        	<div class="col col-6 pull-left">
-                                   <p class="pull-left">
-                        		   @if($eventBySlug->event_ticket_type =='Ticket')
-	                                   	@if($eventBySlug->event_ticket_name)
-	                                   	@foreach($eventBySlug->event_ticket_name as $ticket)
-	                                   	<i class="fa fa-money">&nbsp; {{$ticket['name']}}:- Rs. {{$ticket['price']}}</i>&nbsp;
-	                                   	@endforeach
-                                   	@endif
-                                   </p>
-                        	</div>
-                		  @endif
                         </div>
                     </div>
 

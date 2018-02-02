@@ -108,6 +108,7 @@ class eventController extends Controller
       $page['page_description'] = 'mywebnepal:-'.$evnt->event_desc ? $evnt->event_desc : 'No event fount';
 
       $singleEvent->event_ticket_name = unserialize($singleEvent->event_ticket_name);
+      return $singleEvent;
       return view('event.show', compact(['page', 'singleEvent']));
     }
 
@@ -261,7 +262,6 @@ class eventController extends Controller
             $event->event_ticket_name = unserialize($event->event_ticket_name);
         }
         $myEvent = $allEvent ? $allEvent : '';
-
         return view('client.event', compact(['page', 'myEvent']));  
     }
 

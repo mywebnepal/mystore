@@ -2,25 +2,10 @@
 @section('page_title', $page['page_title'])
 @section('page_description', $page['page_description'])
 @section('content')
-<div class="row" style="padding-top:1em;">
+<div class="row">
 	<div class="container">
-		<div class="col-sm-12 col-md-12" style="background: #F5F5F5;">
-		<li class="pull-left booking-heading"><h4>Secure your booking today</h4></li>
-			<ul class="nav nav-tabs pull-right" role="tablist">
-			  <li class="nav-item">
-			    <a class="nav-link active" data-toggle="tab" href="#hotel" role="tab">Hotel Booking</a>
-			  </li>
-			  <li class="nav-item">
-			    <a class="nav-link" data-toggle="tab" href="#event_vanue" role="tab">
-			    	Tour & travel
-			    </a>
-			  </li>
-			</ul>
-		</div>		
-
-			<!-- Tab panes -->
-			<div class="clearfix"></div>
-		<div class="col-sm-12 col-md-12" style="background: #FFF">
+		<div class="clearfix"></div>
+		<div class="col-sm-12 col-md-12">    
 			<div class="tab-content">
 			  <div class="tab-pane active" id="hotel" role="tabpanel">
 			  <div class="row">
@@ -61,77 +46,51 @@
 			  </div>
 			       @if($myHotelBooking)
                         @foreach($myHotelBooking as $hotel)
-                    <div class="panel panel-success">
-				  	  <div class="panel-head">
-				  	     <h4><a href="#">{{ $hotel->name }}</a></h4>
-				  	     
-                          <small class="text-muted"><b>Hotel:</b> {{ $hotel->rooms->name }}&nbsp; <b>City:</b>{{ $hotel->cities->name }} </small>
-				  	  </div>
-				  	  <div class="panel-body">
-				  	    <div class="row">
-				  	    	   <div class="col-sm-3">
-				  	    	   	<img src="{{ asset($hotel->img_path) }}" class="img img-thumbnail">
-				  	    	   </div>
-				  	    	   <div class="col-sm-9">
-				  	    		   <p>{!! $hotel->desc !!}</p>
-				  	    	   </div>
-				  	    </div>
-				  	  </div>
-				  	  <div class="panel-footer">
-				  	  <p class="pull-left">
-				  	    <i class="fa fa-money" aria-hidden="true">
-				  	       &nbsp;<small>Rs. {{ $hotel->price }}</small>&nbsp;&nbsp;
-				  	    </i>
-				  	  	<i class="fa fa-map-marker">
-				  	  		<small>{{ $hotel->address }}</small>
-				  	  	</i>
+                            <!--  -->
+                             	    <div class="row event-class">
+                             	    	<div class="col-xs-3 col-sm-3 col-md-3">
+                             	    		<a href="" class="frmViewCount" data-id="">
+                             	    		  <img src="{{ asset($hotel->img_path) }}" class="img img-thumbnail"  height="100" width="100%">
+                             	    		</a>
+                             	    	</div>
+                             	    	<div class="col-xs-9 col-sm-9 col-md-9">
+                             	    		<a href="" class="frmViewCount" data-id=""><h4>{{ $hotel->name }}
+                             	    		</a>
+                             	    		<span class="badge badge-warning badge-sm">5<i class="fa fa-star" aria-hidden="true"></i></span>
+                             	    		<span class="pull-right btn theme-bg-dark text-white btn-sm mt-2 mt-sm-0">RoomType 3</span></h4>
+                             	    		<div class="row">
+                             	    			<div class="col-sm-6">
+                             	    			  <i class="fa fa-map-marker text-success">&nbsp;
+                             	    			  <span class="text-mute">{{ $hotel->address }}</span></i><br>
+                             	    			  <i class="fa fa-comment text-success">&nbsp;1</i>&nbsp;&nbsp;&nbsp;
 
-				  	  </p>
-				  	     <p class="pull-right">
-				  	     	
-                            <a href="tel:18475555555" type="button" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="" data-original-title="Call us now">
-                                <i class="fa fa-phone"></i>
-                            </a>
+                             	    			  <i class="fa fa-eye text-success">&nbsp;3</i>
+                             	    			</div>
+                             	    		</div>
+                             	    		
+                             	    		<div class="col-sm-12">
+                             	    		  <p>
+                             	    		    {!!
+                             	    		       str_limit($hotel->desc, $limit = 200)
+                             	    		    !!}
+                                               </p>
+                             	    	      </div>
 
-                             <button type="button" class="btn btn-success"  data-placement="top" title="" data-original-title="Email" data-toggle="modal" data-target="#customerForm">
-                                <i class="fa fa-envelope"></i>
-                            </button>
-				  	     </p>
-				  	  </div>
-				  	</div>
-				  	<hr class="my-4 hr-lg">
-				  	<div class="clearfix"></div>
+                             	    	      <div class="col-sm-12">
+                             	    	         <p class="pull-left alert-success">
+                             	    	         	NPRS. 1500 <small>Breakfast luch included....</small>
+                             	    	         </p>
+
+                             	    	         <p class="pull-right alert-danger">
+                                                    Room already booked try with other
+                             	    	         </p>
+                             	    	      </div>
+                             	    	      
+                             	    	</div><hr>
+                             	    </div>
                         @endforeach
 			       @endif
 				  	</div>
-
-			  <!--  -->
-			  <div class="tab-pane" id="event_vanue" role="tabpanel">
-			  	<div class="panel panel-success">
-				  	  <div class="panel-head">
-				  	     <h4><a href="#"> Underconstruction </a></h4><hr>
-				  	  </div>
-				  	  <div class="panel-body">
-				  	  	 <p>we will come with best tour package soon..</p>
-				  	  </div>
-				  	  <div class="panel-footer">
-				  	  <p class="pull-left">
-				  	  	<i class="fa fa-map-marker">
-				  	  		<small></small>
-				  	  	</i>
-
-				  	  </p>
-				  	     <p class="pull-right">
-				  	     	<span>
-				  	     	 <button class="btn btn-success btn-sm">enquiry</button>
-                            </span>
-                            <span>
-                            	 <button class="btn btn-success btn-sm">book now</button>
-                            </span>
-				  	     </p>
-				  	  </div>
-				 </div>
-			  </div>
 			</div>
 		</div>
 	</div>

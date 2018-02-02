@@ -2,6 +2,30 @@
    @section('page_title', $page['page_title'])
 @section('page_description', $page['page_description'])
    @section('content')
+   <!-- model example -->
+    <!-- Modal -->
+    <div id="myFlaxBox" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content" style="background: #247a09; margin-top: 3em;">
+          <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <div class="faceboxContain">
+              <h3 align="center">What do you want ?</h3>
+                <p align="center"><a href="/booking/hotelBooking"><button class="btn btn-success">Hotel Booking</button></a></p>
+                <p align="center"><a href="/event-list"><button class="btn btn-success">Event Ticketing</button></a></p>
+                <p align="center"><a href="/page/nepal_handcrift"><button class="btn btn-success">Nepal Handscript</button></a></p>
+                <p align="center"><a href="/page/men_mrt"><button class="btn btn-success">Men Fashion</button></a></p>
+                <p align="center"><a href="/page/women_mrt"><button class="btn btn-success">Women Fashion</button></a></p>
+              </div>
+          <p class="pull-right">
+            Save your time pure booking system....
+          </p>
+          </div>
+        </div>
+      </div>
+    </div>
+   <!-- model example -->
+
     <section id="second-section">
         <div class="container">
             <div class="row">
@@ -323,6 +347,7 @@
  @endsection
  @section('custom_script')
 <script type="text/javascript">
+     $("#myFlaxBox").modal();
     $('.siteInfo').fadeOut(3000);
 </script>
  @endsection

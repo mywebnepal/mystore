@@ -310,17 +310,20 @@ var TxtType = function(el, toRotate, period) {
         var name = $(this).data('name');
          var infoDiv   = $('.infoDiv');
         if (confirm("Are you sure your want to  delete  " + name +'?')) {
+            var node = this;
                 $.ajax({
                       'type' : "GET",
                       'url'  : url,
                       success:function(response){
                         console.log(response.message);
+                        // var tr = $(this).closest("tr");
                         if (response.success == true) {
                            infoDiv.addClass('alert alert-success').append(response.message).fadeOut(5000);
+                           $(node).closest('tr').remove();
                         }else{
                           infoDiv.addClass('alert alert-danger').append(response.message).fadeOut(5000);
                         }
-                       window.location.reload();
+                       // window.location.reload();
                       }
                 });
             }

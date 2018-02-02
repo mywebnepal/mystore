@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\models\Hotel;
 use App\models\City;
@@ -120,7 +118,7 @@ class bookingController extends Controller
            'phone'              => 'required|numeric',
            'event_id'           => 'required|numeric'
        ]);
-     $eventName = $this->getSingleEventDetails($request->event_id);
+     $eventName = $this->getSingleEventDetails($request->event_id); //all event data comes
      if ($eventName) {
         $checkBooking =$this->checkBookingByPhone($request->event_id, $request->phone);
         if ($checkBooking == 0) {
@@ -135,24 +133,34 @@ class bookingController extends Controller
 
           if ($eventName->event_ticket_type == 'Ticket') {
             if ($request->has('event_ticket')) {
-                
+                $tickets = [];
+                $ticketCount = count($request->event_ticket);
+                foreach ($eventName->event_ticket_name as $allTicket) {
+                    for ($i = 0; $i < $ticketCount; $i++) {
+                        if ($request->event_ticket[$i] === $allTicket['name']) {
+                            array_push($tickets, $allTicket);
+                        }
+                    }
+                    $save->ticket = serialize($tickets);
             }
-           }
-          }else{
+           }else{
             $this->validate($request, [
              'profession' => 'required'
             ]);
             $save->profession    = $request->profession;
           }
+        }
+          $save->tax = $eventName['event_tax'];
           $save->payId = 'N/A';
           $save->status = 0;
-
           $save->save();
            if ($save) {
+              
               return back()->withMessage('successfully inserted');
            }else{
               return back()->withMessage('OOps sorry try it again');
            }
+
         }else{
           return back()->withMessage('already booked by this number please change you phone number');
         }
@@ -160,20 +168,17 @@ class bookingController extends Controller
      }else{
       return back()->withMessage('sorry event not found');
      }
-     
-
-
-
   }
+
   public function getSingleEventDetails($id){
    $event = Event::where('id', $id)->first();
+   $event->event_ticket_name = unserialize($event->event_ticket_name);
    return $event ? $event : '';
   }
 
   public function getPriceRate($id, $search){
    $event = Event::where('id', $id)->first();
    $event->event_ticket_name = unserialize($event->event_ticket_name);
-  
   }
   public function checkBookingByPhone($id, $phone){
    $checkBooking = EventBooking::select('phone')->where('phone', $phone)->where('event_id', $id)->first();

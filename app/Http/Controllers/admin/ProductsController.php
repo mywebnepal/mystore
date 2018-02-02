@@ -391,7 +391,6 @@ class ProductsController extends Controller
     /*subscribe */
     public function userSubscribe(){
       $subData  = subscribe::orderBy('created_at', 'desc')->paginate();
-
         return view('admin.customer.subscribe', compact(['subData']));
     }
 }

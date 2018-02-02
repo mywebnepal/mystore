@@ -1617,5 +1617,42 @@ footer .copy-right-content {
       padding: 5px;
       float: left;
     }
+    .faceboxContain{
+      color: #FFF !important;
+      padding: 0em 3em;
+    }
+    .faceboxContain button{
+      max-width: 250px;
+      height: auto;
+      padding: 1em 2em;
+      /*margin: 1em 0em 1em 3em;*/
+      background: #880000;
+      border-radius: 2em;
+    }
+    .faceboxContain a{
+      text-decoration: none;
+      
+    }
+     @media (min-width: 768px) {
+        .faceboxContain button{
+          width: 100% !important;
+          display: table;
+        }
+    }
+    }
+    .hotelDiv{
+      margin-bottom: 1px;
+    }
+    .no-border {
+        border: 0;
+        border-bottom: 2px solid #DDD;
+        background: transparent;
+        text-align: center;
+    }
+    /*.hotelDiv img{
+      width: 200px;
+      height: 200px;
+      background-size: 100% 100%;
+    }*/
 
     

@@ -24,7 +24,14 @@
                    <p>Do you want to create your event please mail us or call us to varify your user </p>
 
                    <p align="center">
-                     <button class="btn btn-success btn-sm" style="background: #880000;">Create your event</button>
+                     <a href="/create-event"><button class="btn btn-success btn-sm" style="background: #880000;">Create your event</button></a>
+                   </p>
+                   <!--  -->
+                   <!--  -->
+                   <p>Do you want to make your hotel online booking to our site ? </p>
+
+                   <p align="center">
+                     <a href=""><button class="btn btn-success btn-sm" style="background: #880000;">Create your hotel details</button></a>
                    </p>
                </div>
 

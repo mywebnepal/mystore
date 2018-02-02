@@ -16,8 +16,6 @@
     <link rel="stylesheet" href="{{ asset('css/offcanvas.css') }}">
     <link rel="stylesheet" href="{{ asset('css/animate.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <!-- <link rel="stylesheet" type="text/css" href="{{ 'css/jquery.datetimepicker.css' }}"> -->
-
      <script src="{{ asset('js/jquery.min.js') }}"></script>
      <link rel="stylesheet" type="text/css" href="{{ asset('css/xzoom.css') }}" media="all" />
 

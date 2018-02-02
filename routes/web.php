@@ -52,10 +52,21 @@ Route::get('/product/{slug}', 'HomeController@singleProduct')->name('product.sin
 
 
 Auth::routes();
+/*hotel route*/
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/booking/hotelBooking', 'bookingController@getHotelBooking')->name('booking');
+
 /*hotel search*/
 Route::get('/booking/search', 'bookingController@getHotel')->name('searchHotel');
+
+Route::get('/create-hotel-user', 'client\HotelController@getHotelUserForm')->name('create-hotel-user');
+Route::post('/save-hotel-user', 'client\HotelController@saveHotelUserData')->name('save-hotel-user');
+Route::post('/save-hotel-details', 'client\HotelController@store')->name('save-hotel-details');
+ Route::get('/hotel-profile', 'client\HotelController@index')->name('my-hotel-profile');
+ Route::post('/addHotelRoom', 'client\HotelController@addRoom')->name('addHotelRoom');
+ Route::get('/delete-hotelRoom/{id}', 'client\HotelController@deleteHotelRoom')->name('delete-hotelRoom');
+ Route::post('/addHotelPolicy', 'client\HotelController@addHotelPolicy')->name('addHotelPolicy');
+ Route::get('/deleteHotelPolicy/{id}', 'client\HotelController@deleteHotelPolicy')->name('deleteHotelPolicy');
 
 
 /*client route*/
@@ -168,6 +179,7 @@ Route::prefix('sisadmin')->group(function(){
 
     Route::get('hotel/makeFeaturedHotel', 'admin\HotelController@makeFeaturedHotel')->name('sisadmin.hotel.makeFeaturedHotel');
 
+
     /*city*/
     Route::get('/city/index', 'admin\cityController@index')->name('sisadmin.city.index');
     Route::post('/city/save', 'admin\cityController@store')->name('sisadmin.city.save');
@@ -191,4 +203,6 @@ Route::prefix('sisadmin')->group(function(){
     Route::get('/slider/{id}/edit/', 'admin\sliderController@edit')->name('sisadmin.slider.edit');
      Route::post('slider/{id}/update', 'admin\sliderController@update')->name('sisadmin.slider.update');
     Route::get('/slider/delete/{id}', 'admin\sliderController@destroy')->name('sisadmin.slider.delete');
+
 });
+    /*hotel routing*/

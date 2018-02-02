@@ -1,17 +1,15 @@
 <?php
-
-   use App\models\SubCategory; 
-   use App\models\category;
-   use App\models\Product;
-   use App\models\City;
-   use App\models\roomType;
-   use App\models\Brand;
-   use App\models\HomeSlider;
-   use App\models\EventUser;
-   use App\models\EventViewCount;
-   use App\models\EventComment;
-    
-
+use App\models\SubCategory; 
+use App\models\category;
+use App\models\Product;
+use App\models\City;
+use App\models\roomType;
+use App\models\Brand;
+use App\models\HomeSlider;
+use App\models\EventUser;
+use App\models\EventViewCount;
+use App\models\EventComment;
+use App\models\HotelUser;
 function getDiscountPrice($prdAmt, $per){
 	 $disPrice = $prdAmt * $per / 100;
 	 $disAmount = $prdAmt - $disPrice;
@@ -112,7 +110,6 @@ function getCode($name){
   $code = $name.'_'.$my_date.'_'.$rand;
   return $code;
 }
-
 function getEventViewCount($eventId){
  $eventCount = EventViewCount::where('event_id', $eventId)->get();
  $viewCount = count($eventCount);
@@ -123,5 +120,15 @@ function getEventCommentCount($eventId){
  $eventCount = EventComment::where('event_id', $eventId)->get();
  $viewCount = count($eventCount);
  return $viewCount ? $viewCount : 'N/A';
+}
+
+function getHotelUser(){
+  $usr = HotelUser::where('user_id', Auth::user()->id)->first();
+  return $usr ? $usr : '';
+}
+
+function checkValidateHotelUser(){
+  $usr = HotelUser::where('user_id', Auth::user()->id)->where('status', 1)->first();
+  return $usr ? 1 : 0;
 }
 

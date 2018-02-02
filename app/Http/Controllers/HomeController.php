@@ -398,5 +398,9 @@ class HomeController extends Controller
     return $slug;
     }
 
+    public function createHotelUser(Request $request){
+    
+    }
+
 
 }

@@ -88,14 +88,8 @@ $('#eventDiscount').on('mousemove', function(){
   });
 
   $(function() {
-    // Initialize form validation on the registration form.
-    // It has the name attribute "registration"
     $("form[name='eventForm']").validate({
-      // Specify validation rules
       rules: {
-        // The key name on the left side is the name attribute
-        // of an input field. Validation rules are defined
-        // on the right side
         event_start_date: "required",
         event_end_date   : "required",
         event_city       : "required",

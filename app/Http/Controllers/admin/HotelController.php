@@ -232,4 +232,10 @@ class HotelController extends Controller
           ], 401);
         }
     }
+
+    public function createHotelUser(){
+      $page['page_title']       = 'Mywebnepal: create hotel user';
+      $page['page_description'] = 'Mywebnepal hotel profile';
+      return view('hotel.hotelUser');
+    }
 }
