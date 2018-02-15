@@ -111,6 +111,7 @@
                                     @endguest
                                      
                                      </div>
+                                     <!-- closing -->
                             </div>
                         </div>
                     </div>

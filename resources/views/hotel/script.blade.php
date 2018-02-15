@@ -3,6 +3,14 @@
      $('.frmHotelRoom').toggle();
     });
 
+    var btnAddMoreService = $('.btnAddMoreService');
+    btnAddMoreService.on('click', function(e){
+    e.preventDefault();
+    var textHotelService = $('.textHotelService');
+    var txtPolicy = "<div class='row dynamictextareaField'><div class='col-sm-10'><input type='text' class='form-control no-border' name='hotelServices[]' placeholder='add hotel services' rows='7'></div><button class='btn btn-danger btn-sm deleteDynamicField'>Remove</button></div>";
+     textHotelService.append(txtPolicy).css('display', 'block');
+    });
+
 
 
     var btnAddHotelPolicy = $('.btnAddHotelPolicy');

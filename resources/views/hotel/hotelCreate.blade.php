@@ -92,4 +92,13 @@
             {!! Form::textarea('desc', null, ['class'=>'form-control no-border', 'placeholder'=>'hotel short description', 'required']) !!}
         </p>
     </div>
+    <div class="col-xs-6 col-sm-6 col-md-6">
+    {!! Form::text('hotelServices[]', null, ['class'=>'form-control no-border', 'placeholder'=>'add your hotel services']) !!}
+    <div class="textHotelService" style="display: none;"></div>
+     <span>
+     <button class="btn btn-sm pull-right btnAddMoreService">
+       <i class="fa fa-plus">Add more Services</i></button>
+    </span>
+    
+    </div>
     </div>

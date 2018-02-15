@@ -1,11 +1,11 @@
 <div class="row" style="padding-left: 1em;">
-    <div class="col-sm-6">
+    <div class="col-sm-12">
     <p>
-    	{!! Form::text('organizer_name', null, ['class'=>'form-control', 'placeholder'=>'please enter your orginazer name', 'required']) !!}
+    	{!! Form::text('organizer_name', null, ['class'=>'form-control no-border', 'placeholder'=>'please enter your orginazer name', 'required']) !!}
     </p>
 
     <p>
-    	{!! Form::textarea('desc', null, ['class'=>'form-control', 'placeholder'=>'please enter short description', 'required']) !!}
+    	{!! Form::textarea('desc', null, ['class'=>'form-control no-border', 'placeholder'=>'please enter short description', 'required']) !!}
     </p>
     	
     </div>

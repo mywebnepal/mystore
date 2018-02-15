@@ -131,6 +131,7 @@ class bookingController extends Controller
           $save->bookingCode   = getCode($eventName->event_title);
           $save->isUser        = Mylogic::isSystemUser($request->email);
 
+          $price = [];
           if ($eventName->event_ticket_type == 'Ticket') {
             if ($request->has('event_ticket')) {
                 $tickets = [];
@@ -139,10 +140,13 @@ class bookingController extends Controller
                     for ($i = 0; $i < $ticketCount; $i++) {
                         if ($request->event_ticket[$i] === $allTicket['name']) {
                             array_push($tickets, $allTicket);
+                            array_push($price, $allTicket['price']);
                         }
                     }
-                    $save->ticket = serialize($tickets);
             }
+                    // return array_sum($price);
+                    // return $tickets;
+                    $save->ticket = serialize($tickets);
            }else{
             $this->validate($request, [
              'profession' => 'required'

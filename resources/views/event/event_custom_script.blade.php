@@ -33,7 +33,7 @@ var btnCreateTicket = $('.createEventTicket');
     counter = $(document).find('.event-ticket').length;
   e.preventDefault();
   if (counter < 3) {
-     var ticket = "<div class='row event-ticket'><div class='col col-4'>Ticket name"+ "<input type='text' name='event_ticket_name[]'>" +"</div>"+"<div class='col col-4'>Ticket price"+ "<input type='text' name='event_ticket_price[]'></div>"+"<div class='col col-3'>Total ticket"+ "<input type='text' name='event_ticket_seat[]'></div><button type='button' name='remove'  class='btn btn-danger btn_remove btn-sm'>X</button></div>";
+     var ticket = "<div class='row event-ticket'><div class='col col-4'>Ticket name"+ "<input type='text' name='event_ticket_name[]' class='form-control'>" +"</div>"+"<div class='col col-4'>Ticket price"+ "<input type='text' name='event_ticket_price[]' class='form-control'></div>"+"<div class='col col-3'>Reserved seat"+ "<input type='text' name='event_ticket_seat[]' class='form-control'></div><button type='button' name='remove'  class='btn btn-danger btn_remove btn-sm'>X</button></div>";
       $('.ticketDiv').append(ticket);
      counter ++;
   }else{
@@ -182,5 +182,32 @@ $('#eventDiscount').on('mousemove', function(){
   }else{
     return false;
   }
+  });
+
+  /*date picker*/
+  $(function () {
+      //default date range picker
+      $('#daterange').daterangepicker({
+          autoApply:true
+      });
+
+      //date time picker
+      $('#datetime').daterangepicker({
+          timePicker: true,
+          timePickerIncrement: 30,
+          locale: {
+              format: 'MM/DD/YYYY h:mm A'
+          }
+      });
+
+      //single date
+      $('.date').daterangepicker({
+          timePicker: true,
+          singleDatePicker: true,
+          minDate: moment(),
+          locale: {
+              format: 'MM/DD/YYYY h:mm A'
+          }
+      });
   });
 </script>

@@ -76,8 +76,8 @@
 
                         <div class="form-group">
                             <div class="col-md-12 col-sm-12 pull-right">
-                                <button type="submit" class="btn btn-primary">
-                                    Register
+                                <button type="submit" class="btn btn-primary pull-right">
+                                    Register me
                                 </button>
                             </div>
                         </div>

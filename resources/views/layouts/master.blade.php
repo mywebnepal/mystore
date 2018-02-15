@@ -24,6 +24,9 @@
      <link type="text/css" rel="stylesheet" media="all" href="{{ asset('magnific-popup/css/magnific-popup.css') }}" />
      <script type="text/javascript" src="{{ asset('fancybox/source/jquery.fancybox.js') }}"></script>
      <script type="text/javascript" src="{{ asset('magnific-popup/js/magnific-popup.js') }}"></script>
+
+     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" />
+     <link rel="stylesheet" type="text/css" href="{{ asset('css/daterangepicker.css') }}" />
 </head>
 <body>
 <div id="">

@@ -9,11 +9,9 @@
               </div>
            @endif
        <div class="row">
-           <div class="col-md-4 col-lg-3">
-               @include('clientDashboard.sidebar')
-           </div>
+           
            @php $usr = getOrganizerName()  @endphp
-           <div class="col-md-8 col-lg-9">
+           <div class="col-md-12 col-lg-12">
                <div class="jumbotron">
                    @if(count($usr) > 0)
                      @if($usr->status == 0)
@@ -22,7 +20,7 @@
                         <strong class="text-success">Contact Email:- dipeshbanjade@gmail.com</strong> Or wait for 24 hour to varified</p>
                      @endif
                    @else
-                     <p>Sorry we do not have your organizer name please create organizer name first to create your event</p>
+                     <h3 align="center">please create organizer name first to create your event</h3><hr>
                      {!! Form::open(['route'=>'client.create.organizer', 'method'=>'post', 'name'=>'organizer']) !!}
                         @include('event.organizer')
                      {!! Form::close() !!}
@@ -47,7 +45,7 @@
                       <div class="row ticketDiv"></div>
                       <section class="col col-4 divCreateTicket" style="display: none;">
                           {!! Form::label('event_type', 'Create multiple ticket') !!}
-                          <label class="input">
+                          <label class="input"><hr>
                               <button class="btn btn-info btn-sm createEventTicket" title="click me to create more ticket">
                                 <i class="fa fa-plus">Create Ticket</i>
                               </button>

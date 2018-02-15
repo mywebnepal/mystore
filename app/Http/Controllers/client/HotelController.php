@@ -36,13 +36,23 @@ class HotelController extends Controller
             $roomData = Mylogic::getHotelRoomByHotelId($hotelData->id);
             if (count($roomData) > 0) {
                 foreach ($roomData as $hotelRoom) {
-                  $roomData->fooding = unserialize($hotelRoom->fooding);
+                  $roomFooding = [];
+                  $roomFooding = unserialize($hotelRoom->fooding);
+                  $roomFooding = array_column($roomFooding, 'hotelFood');
+                  $roomFooding = implode(' , ', $roomFooding);
+                  $hotelRoom->fooding = $roomFooding;
+
                 }
             }
            /*hotel policy */
            if ($hotelData) {
                $hotelPolicy = myLogic::getHotelPolicy($hotelData->id);
-               
+               if (count($hotelPolicy) > 0) {
+                 foreach ($hotelPolicy as $policy) {
+                   $policy = [];
+                   // $myPolicy = unserialize($policy->policyName);
+                 }
+               }
            }
             
         }
@@ -79,6 +89,19 @@ class HotelController extends Controller
             $save->email         = $request->email;
             $save->vedio_link    = $request->vedio_link ? $request->vedio_link : 'N/A';
             $save->desc          = $request->desc;
+
+            if ($request->hotelServices) {
+              $services = [];
+              $cntSer = count($request->hotelServices);
+                  for ($i=0; $i < $cntSer; $i++) { 
+                      array_push($services, [
+                            'hotelService' => $request->hotelServices[$i],
+                          ]);
+                  }
+                  $save->hotelServices = serialize($services);
+              }else{
+              $save->hotelServices = 'N/A';
+            }
 
             if ($request->hasFile('logo')) {
                $imgFile = $request->file('logo');
@@ -299,9 +322,9 @@ class HotelController extends Controller
             $policy = [];
             $arrCount = count($request->hotelPolicy);
             for ($i=0; $i < $arrCount; $i++) { 
-                array_push($policy, [
-                    'policy' => $request->hotelPolicy[$i]
-                    ]);
+              array_push($policy, [
+                  'policy' => $request->hotelPolicy[$i]
+                  ]);
             }
            $save  = new HotelPolicy;
            $save->hotels_id = $request->hotel_id;

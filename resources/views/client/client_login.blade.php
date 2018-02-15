@@ -132,7 +132,7 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-success btn-sm pull-right">
-                                    Register
+                                    Register me
                                 </button>
                             </div>
                         </div>

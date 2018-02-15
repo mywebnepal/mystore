@@ -261,6 +261,7 @@ class eventController extends Controller
         foreach ($allEvent as $event) {
             $event->event_ticket_name = unserialize($event->event_ticket_name);
         }
+        
         $myEvent = $allEvent ? $allEvent : '';
         return view('client.event', compact(['page', 'myEvent']));  
     }

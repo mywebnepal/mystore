@@ -8,29 +8,29 @@
 			<fieldset>					
 				<div class="row">
 					<section class="col-xs-6 col-sm-4 col-md-4">
-					    {!! Form::label('name', 'Name') !!}
 					    <label class="input">
+					    {!! Form::label('name', 'Name') !!}
 					    {!! Form::text('event_title', null, ['placeholder'=>'Please enter event title', 'class'=>'form-control event_title']) !!}
 					    </label>
 					</section>
 					<section class="col-xs-6 col-sm-4 col-md-4">
-						{!! Form::label('event_start_date', 'Event start date') !!}
                         <label class="input">
-						{!! Form::date('event_start_date', null, ['placeholder'=>'event start date', 'class'=>'event_start_date form-control']) !!}
+						{!! Form::label('event_start_date', 'Event start date') !!}
+						{!! Form::text('event_start_date', null, ['placeholder'=>'event start date', 'class'=>'event_start_date date form-control']) !!}
 						</label>
 					</section>
 
 					<section class="col-xs-6 col-sm-4 col-md-4">
-						{!! Form::label('event_start_date', 'Event end date') !!}
                         <label class="input">
-						{!! Form::date('event_end_date', null, ['placeholder'=>'event end date', 'class'=>'event_end_date']) !!}
+						{!! Form::label('event_end_date', 'Event end date') !!}<br>
+						{!! Form::text('event_end_date', null, ['placeholder'=>'event end date', 'class'=>'form-control event_end_date date']) !!}
 						</label>
 					</section>
 				</div>
 				<!--  -->
 				<div class="row">
 				    <section class="col-xs-6 col-sm-4 col-md-4">
-					    {!! Form::label('event_city', 'Select event city') !!}
+					    {!! Form::label('event_city', 'Select event city') !!}<br>
                         <label class="input">
                         <?php $city = getCity();   ?>
                         <select class="hotel_city form-control" name="event_city">
@@ -45,14 +45,14 @@
 					</section>
 
 					<section class="col-xs-6 col-sm-4 col-md-4">
-						{!! Form::label('event_vanue_addr', 'Event Vanue') !!}
+						{!! Form::label('event_vanue_addr', 'Event Vanue') !!}<br>
                         <label class="input">
 						{!! Form::text('event_vanue_addr', null, ['placeholder'=>'event vanue address', 'class'=>'form-control event_vanue_addr']) !!}
 						</label>
 					</section>
 
 					<section class="col-xs-6 col-sm-4 col-md-4">
-					    {!! Form::label('event_postal_code', 'Postal Code') !!}
+					    {!! Form::label('event_postal_code', 'Postal Code') !!}<br>
 					    <label class="input">
 					    {!! Form::text('event_postal_code', null, ['placeholder'=>'event postal code', 'class'=>'form-control event_postal_code']) !!}
 					    </label>
@@ -61,21 +61,21 @@
 				<!--  -->
 				<div class="row">
 				     <section class="col-xs-6 col-sm-4 col-md-4">
-					    {!! Form::label('event_tel', 'Telephone no') !!}
+					    {!! Form::label('event_tel', 'Telephone no') !!}<br>
 					    <label class="input">
 					    {!! Form::text('event_tel', null, ['placeholder'=>'event contact  tel no.', 'class'=>'form-control event_tel']) !!}
 					    </label>
 					</section>
 
 				    <section class="col-xs-6 col-sm-4 col-md-4">
-						{!! Form::label('event_phone', 'Mobile no') !!}
+						{!! Form::label('event_phone', 'Mobile no') !!}<br>
                         <label class="input">
 						{!! Form::text('event_phone', null, ['placeholder'=>'Mobile number up to 10 digit', 'class'=>'form-control event_phone']) !!}
 						</label>
 					</section>
 
 					<section class="col-xs-6 col-sm-4 col-md-4">
-						{!! Form::label('event_email', 'Event Email') !!}
+						{!! Form::label('event_email', 'Event Email') !!}<br>
                         <label class="input">
 						{!! Form::text('event_email', null, ['placeholder'=>'event email address', 'class'=>'form-control event_email']) !!}
 						</label>
@@ -85,13 +85,13 @@
 				<div class="row">
 				    <section class="col-xs-12 col-sm-4 col-md-4">
 				   
-				    <img src="{{ asset(isset($editEvent) ? $editEvent->event_featured_img : '')  }}" width="180" height="180" class="img img-thumbnail">
+				    <img src="{{ asset(isset($editEvent) ? $editEvent->event_featured_img : '')  }}" width="180" height="180" class="img img-thumbnail" id="event_image">
 
 				    <input name="event_featured_img" type='file' onchange="readEventFeaturedImage(this);" title="select event featured image" />
 					</section>
 
 					<section class="col-xs-12 col-sm-8 col-md-8">
-					    {!! Form::label('event_desc', 'Event short description') !!}
+					    {!! Form::label('event_desc', 'Event short description') !!}<br>
 					    <label class="input">
 					    {!! Form::textarea('event_desc', null, ['placeholder'=>'event short description', 'class'=>'form-control']) !!}
 					    </label>

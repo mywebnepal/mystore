@@ -1645,9 +1645,10 @@ footer .copy-right-content {
     }
     .no-border {
         border: 0;
-        border-bottom: 2px solid #DDD;
+        border-bottom: 2px solid #FFF;
         background: transparent;
         text-align: center;
+
     }
     /*.hotelDiv img{
       width: 200px;
