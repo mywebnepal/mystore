@@ -1,7 +1,23 @@
 <div class="row">
 	<div class="col-xs-12 col-sm-4">
         <p>
-        	{!! Form::text('roomName', null, ['class'=>'form-control no-border', 'placeholder'=>'room name', 'required', 'title'=>'add your room name']) !!}
+            <span>
+            <div class="row">
+                <div class="col-sm-8">
+                    {!! Form::text('roomName', null, ['class'=>'form-control no-border', 'placeholder'=>'room name with total room', 'required', 'title'=>'add your room name']) !!}
+                </div>
+                <div class="col-sm-4">
+                    <select class="form-control" name="roomNumber" title="how many room do you have to this room name">
+                        <?php
+                            for ($i=1; $i < 50; $i++) { ?>
+                              <option value="<?php echo $i  ?>"><?php echo $i;  ?></option>
+                               
+                            <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
         </p>
     </div>
 

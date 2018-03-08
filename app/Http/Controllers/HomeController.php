@@ -16,6 +16,8 @@ use App\models\viewedProduct;
 use App\models\myOrder;
 use Auth;
 use App\models\wishList;
+use App\models\Mylogic;
+use App\models\Hotel;
 
 class HomeController extends Controller
 {
@@ -26,7 +28,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth')->except('home', 'getProductSearchData', 'supportForm', 'userSubscribe', 'myPage', 'singleProduct', 'productComment', 'myBookingPage', 'client.subcategory', 'getProductBySubCategories');
+        $this->middleware('auth')->except('home', 'getProductSearchData', 'supportForm', 'userSubscribe', 'myPage', 'singleProduct', 'productComment', 'myBookingPage', 'client.subcategory', 'getProductBySubCategories', 'getSingleHotelDataBySlug');
 
         $this->nowDate = date('Y-m-d');
     }
@@ -401,6 +403,27 @@ class HomeController extends Controller
     public function createHotelUser(Request $request){
     
     }
+    
+    /*getting single hotel data only*/
+    public function getSingleHotelDataBySlug($slug){
+     $hotelId = $this->getHotelIdBySlug($slug);//hotel Id
+     /*hotel data*/
+     $hotelData = Mylogic::getSingleHotelDataById($hotelId);
+     $myHotelData =  $hotelData ?  $hotelData : '';
 
+     $page['page_title'] = 'mywebnepal :'. $hotelData->name;
+     $page['page_description'] = 'mywebnepal :' .$hotelData->name;
+
+     /*room data*/
+     $hotelRoom = Mylogic::getRoomDetailsById($hotelData->id); 
+     $myHotelRoom = $hotelRoom ? $hotelRoom : '';
+
+     return view('client.single-hotel', compact(['myHotelData', 'myHotelRoom', 'page']));
+    }
+    /*getting hotel id from slug*/
+    private function getHotelIdBySlug($slug){
+     $hotel = Hotel::select('id')->where('slug', $slug)->first();
+     return $hotel;
+    }
 
 }

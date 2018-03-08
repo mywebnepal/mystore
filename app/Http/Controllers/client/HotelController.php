@@ -10,6 +10,7 @@ use Intervention\Image\Facades\Image;
 use App\models\HotelUser;
 use App\models\HotelPolicy;
 use App\models\HotelRoomType;
+use App\models\OpenRoomBooking;
 use App\models\Hotel;
 use AppHelper;
 use File;
@@ -241,6 +242,7 @@ class HotelController extends Controller
         $save = new HotelRoomType;
         $save->hotels_id = $request->hotels_id;
         $save->roomName  = $request->roomName;
+        $save->roomNumber = $request->roomNumber;
         $save->bedName   = $request->bedName;
         $save->fitPerson = $request->fitPerson;
         $save->user_id   = Auth::user()->id;
@@ -359,7 +361,74 @@ class HotelController extends Controller
          ], 403);
       }
     }
-    public function openBooking(){
+    public function openRoomBooking(Request $request){
+       $arr = array_combine($request->roomName, $request->roomNumber);
+       return $arr;
+      $save = new OpenRoomBooking;
+      $save->dateFrom = $request->dateFrom;
+      $save->dateTo   = $request->dateTo;
+     if ($request->roomName) {
+        $roomName = [];
+        $countRoom = count($request->roomName);
+        for ($i=0; $i < $countRoom; $i++) { 
+          array_push($roomName, [
+                            'roomName' => $request->roomName[$i]
+
+                          ]);
+        }
+        $roomNameJson = json_encode($roomName);
+        $save->roomOnBooking = $roomNameJson;
+     }
+     $save = $save->save();
+
+     if ($save) {
+        return back()->withMessage('successfully inserted');
+     }else{
+      return back()->withMessage('try it again');
+     }
+    }
+
+    public function updateHotelPolicy(Request $request){
+     $updHotelPolicy = Hotel::findOrFail($request->id);
+     if ($updHotelPolicy) {
+        $updHotelPolicy->hotelPolicy = $request->hotelPolicy;
+        $hotelPolicy = $updHotelPolicy->update();
+
+        if ($hotelPolicy) {
+           return back()->withMessage('successfully update hotel policy');
+        }else{
+          return back()->withMessage('Oops sorry try it again');
+        }
+     }
+    }
+
+    public function updateHotelService(Request $request){
+    $hotelSer = Hotel::findOrFail($request->id);
+    if ($hotelSer) {
+       $hotelSer->hotelServices = $request->hotelServices;
+       $hotelPolicy = $hotelSer->update();
+
+       if ($hotelPolicy) {
+          return back()->withMessage('successfully update hotel policy');
+       }else{
+         return back()->withMessage('Oops sorry try it again');
+       }
+    }
+    }
+
+    public function getRoomNumberById($id){
+     $roomNum = HotelRoomType::select('name', 'roomNumber')->where('id', $id)->first();
+     if ($roomNum) {
+       return response()->json([
+             'success' => true,
+             'message' => 'product delete'
+            ], 200);
+     }else{
+      return response()->json([
+             'success' => false,
+             'message' => 'data not found'
+            ], 204);
+     }
 
     }
 }

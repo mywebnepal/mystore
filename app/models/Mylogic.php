@@ -3,13 +3,13 @@
 namespace App\models;
 use App\User;
 use App\models\HotelUser;
-use App\models\HotelRoomType;
 use App\models\HotelPolicy;
 use Auth;
 use Intervention\Image\Facades\Image;
 use AppHelper;
 use File;
 use App\models\Hotel;
+use App\models\HotelRoomType;
 class Mylogic
 {
 	public static function isSystemUser($email){
@@ -46,7 +46,7 @@ class Mylogic
 	}
 
 	public static function getHotelRoomByHotelId($id){
-    $room = HotelRoomType::where('hotels_id', $id)->get();
+    $room = HotelRoomType::orderby('roomName', 'asc')->where('hotels_id', $id)->get();
     return $room ? $room : '';
 	}
 
@@ -54,4 +54,16 @@ class Mylogic
     $hotelPolicy = HotelPolicy::where('hotels_id', $id)->get();
     return $hotelPolicy ? $hotelPolicy : '';
 	}
+
+	public static function getSingleHotelDataById($id){
+		return $singleHotel = Hotel::findOrfail($id)->first();
+	}
+
+	public static function getRoomDetailsById($hotel_id){
+	    return HotelRoomType::where('hotels_id', $hotel_id)->get();
+		
+	}
+
+	
+
 }

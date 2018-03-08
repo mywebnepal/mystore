@@ -60,12 +60,28 @@ Route::get('/booking/hotelBooking', 'bookingController@getHotelBooking')->name('
 Route::get('/booking/search', 'bookingController@getHotel')->name('searchHotel');
 
 Route::get('/create-hotel-user', 'client\HotelController@getHotelUserForm')->name('create-hotel-user');
+
 Route::post('/save-hotel-user', 'client\HotelController@saveHotelUserData')->name('save-hotel-user');
 Route::post('/save-hotel-details', 'client\HotelController@store')->name('save-hotel-details');
  Route::get('/hotel-profile', 'client\HotelController@index')->name('my-hotel-profile');
  Route::post('/addHotelRoom', 'client\HotelController@addRoom')->name('addHotelRoom');
+
+ /*getting room number*/
+Route::get('/getRoomNumber/{$id}', 'client\HotelController@getRoomNumberById')->name('getRoomNumber');
+
+ 
  Route::get('/delete-hotelRoom/{id}', 'client\HotelController@deleteHotelRoom')->name('delete-hotelRoom');
- Route::post('/addHotelPolicy', 'client\HotelController@addHotelPolicy')->name('addHotelPolicy');
+ Route::post('/openRoomBooking', 'client\HotelController@openRoomBooking')->name('openRoomBooking');
+ /*updating hotel policy*/
+ /*Route::post('/addHotelPolicy', 'client\HotelController@addHotelPolicy')->name('addHotelPolicy');*/
+ Route::post('/addHotelPolicy', 'client\HotelController@updateHotelPolicy')->name('addHotelPolicy');
+ /*updating hotel services*/
+  Route::post('/addHotelServices', 'client\HotelController@updateHotelService')->name('addHotelServices');
+
+  /*get single hotel data */
+  Route::get('/my-hotel/{slug}', 'HomeController@getSingleHotelDataBySlug')->name('getSingleHotelDataBySlug');
+
+
  Route::get('/deleteHotelPolicy/{id}', 'client\HotelController@deleteHotelPolicy')->name('deleteHotelPolicy');
 
 

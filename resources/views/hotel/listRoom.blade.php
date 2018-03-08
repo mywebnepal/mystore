@@ -23,9 +23,9 @@
 				<tr>
 					<td>{{ $count ++ }}</td>
 					<td><img src="{{ asset($room->roomImg1) }}" class="img img-thumbnail"></td>
-					<td>{{ $room->roomName }}</td>
-					<td>{{ $room->bedName }}</td>
-					<td>{{ $room->fitPerson }}</td>
+					<td>{{ $room->roomName }} &nbsp; room &nbsp; {{ $room->roomNumber }}</td>
+					<td><i class="fas fa-bed">{{ $room->bedName }}</i></td>
+					<td><i class="fa fa-user"> {{ $room->fitPerson }}</i></td>
 					@if($room->fooding)
     	         	 <td>
     	         	    {{ $room->fooding }}

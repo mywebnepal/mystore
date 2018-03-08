@@ -70,6 +70,7 @@ return array(
     'App\\models\\HotelUser' => $baseDir . '/app/models/HotelUser.php',
     'App\\models\\Mylogic' => $baseDir . '/app/models/Mylogic.php',
     'App\\models\\NoticeBoard' => $baseDir . '/app/models/NoticeBoard.php',
+    'App\\models\\OpenRoomBooking' => $baseDir . '/app/models/OpenRoomBooking.php',
     'App\\models\\Product' => $baseDir . '/app/models/Product.php',
     'App\\models\\SubCategory' => $baseDir . '/app/models/SubCategory.php',
     'App\\models\\ViewProduct' => $baseDir . '/app/models/ViewProduct.php',

@@ -28,6 +28,7 @@
 	    </li>
 	  </ul>
 </div>
+<!--  -->
 <div class="row">
 	<div class="tab-content" style="background: #FFF; width: 100% !important;">
 	    <div class="infoDiv"></div>
@@ -59,42 +60,37 @@
 	      	  {!! Form::close() !!}
 	          
 	      </div>
-	      <div class="clearfix"></div>
-	      
 	    </div>
-	    <!--  -->
-	    <div id="hotelServices" class="container tab-pane fade"><br>
-	      <h3>Booking</h3>
-	      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-	    </div>
-	    <div id="hotelServices" class="container tab-pane fade"><br>
-	      <h3>Add hotel services</h3>
-	      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+        
+        <!-- booking panel -->
+	    <div id="booking" class="container tab-pane fade"><br>
+	        @include('hotel.roomOnBooking')
 	    </div>
 
+	    <div id="hotelServices" class="container tab-pane fade"><br>
+	      <h3>Add hotel services</h3><br><hr>
+	      @php  $hotelservice = isset($hotelData) ? $hotelData->hotelServices : 'null' @endphp
+                {!! Form::open(['route'=>'addHotelServices', 'method'=>'post', 'name'=>'hotelServicesForm']) !!}
+                    {{ Form::hidden('id', $hotelData->id ? $hotelData->id : '') }}
+                    {{ Form::textarea('hotelServices', $hotelservice, ['class'=>'form-control summernote']) }}
+
+                    <p class="pull-right">{{ Form::submit('save policy', ['class'=>'btn btn-success btn-sm']) }}</p>
+  	      	   {!! Form::close() !!}
+	      
+	    </div>
+        <!-- hotel policy -->
 	    <div id="hotelPolicy" class="container tab-pane fade"><br>
 	      <h3>Add hotel policy</h3><hr>
-	      @include('hotel.hotelPolicyList')
-	      <p>
-	        <button class="btn btn-success btn-sm pull-right btnAddHotelPolicy">
-	      	   <i class="fa fa-plus">Add Hotel policy</i>
-	      </button></p>
+	      @php $hotelPolicyUpdate = $hotelData->hotelPolicy ?  $hotelData->hotelPolicy : 'null'   @endphp
+	     	      	   
+	   	      	   {!! Form::open(['route'=>'addHotelPolicy', 'method'=>'post', 'name'=>'hotelPolicyForm']) !!}
+	                     {{ Form::hidden('id', $hotelData->id ? $hotelData->id : '') }}
+	                     {{ Form::textarea('hotelPolicy', $hotelPolicyUpdate, ['class'=>'summernote']) }}
+
+	                     <p class="pull-right">{{ Form::submit('save policy', ['class'=>'btn btn-success btn-sm']) }}</p>
+	   	      	   {!! Form::close() !!}
+	     
 	      <div class="clearfix"></div>
-	      <div class="col-sm-12 frmHotelPolicy" style="display: none;">
-               <h3><small>Add hotel policy</small></h3><hr>
-	      	   {!! Form::open(['route'=>'addHotelPolicy', 'method'=>'post', 'name'=>'hotelPolicyForm']) !!}
-	      	      <div class="col-sm-12">
-                  	     @include('hotel.hotelPolicyTextForm')
-                  	     {!! Form::hidden('hotel_id', $hotelData->id ? $hotelData->id : '') !!}
-                  	     <div class="insertHotelPolicyText"></div><br>
-                  	    <p align="right">
-                  	    	<button class="btn btn-default btn-sm addPolicyTextBox">Add more policy</button>
-                  	    </p>
-                  </div>
-                  {!! Form::submit('Add hotel Policy', ['class'=>'btn btn-success']) !!}
-	      	   {!! Form::close() !!}
-	      </div>
-	      
 	    </div>
 	  </div>
 </div>

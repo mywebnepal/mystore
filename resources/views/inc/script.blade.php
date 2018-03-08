@@ -20,4 +20,49 @@
     $(document).ready(function(){
             $(".fix-to-top").sticky({topSpacing:0, zIndex: '999'});
         });
+
+          $('.summernote').summernote({
+                        height: 300,
+                        toolbar: [
+                        ['style', ['style']],
+                        ['font', ['bold', 'italic', 'underline', 'clear']],
+                        ['fontname', ['fontname']],
+                        ['color', ['color']],
+                        ['para', ['ul', 'ol', 'paragraph']],
+                        ['height', ['height']],
+                        ['table', ['table']],
+                        ['insert', ['link', 'picture', 'hr']],
+                        ['view', ['fullscreen', 'codeview', 'help']]
+
+                      ]
+                    });
+
+
+    $(function () {
+      //default date range picker
+      $('#daterange').daterangepicker({
+          autoApply:true
+      });
+
+      //date time picker
+      $('#datetime').daterangepicker({
+          timePicker: true,
+          timePickerIncrement: 30,
+          locale: {
+              format: 'MM/DD/YYYY h:mm A'
+          }
+      });
+
+      //single date
+      $('.date').daterangepicker({
+          timePicker: true,
+          singleDatePicker: true,
+          minDate: moment(),
+          locale: {
+              format: 'MM/DD/YYYY h:mm A'
+          }
+      });
+  });
+    $('.client-info').fadeOut('3000');
+
 </script>

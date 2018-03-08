@@ -135,4 +135,7 @@
 @endsection
 @section('custom_script')
 @include('event.event_custom_script')
+<script type="text/javascript">
+  $('.client-info').fadeOut(3000);
+</script>
 @endsection

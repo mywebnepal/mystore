@@ -2,6 +2,7 @@
 @section('page_title', $page['page_title'])
 @section('page_description', $page['page_description'])
 @section('content')
+<!-- hotel booking page -->
 <div class="row">
 	<div class="container">
 		<div class="clearfix"></div>
@@ -41,20 +42,24 @@
 	                   <div class="searchHotelInfo"></div> 
 			     </div>
 			  </div>
-			  <div class="row searchResult" style="display: none;">
-			  	gfdsgfdgs
-			  </div>
+			  <div class="row searchResult" style="display: none;"></div>
+              <?php 
+                 echo '<pre>';
+                      // print_r($myHotelBooking);
+                 echo '</pre>';
+
+              ?>
 			       @if($myHotelBooking)
                         @foreach($myHotelBooking as $hotel)
                             <!--  -->
                              	    <div class="row event-class">
                              	    	<div class="col-xs-3 col-sm-3 col-md-3">
-                             	    		<a href="" class="frmViewCount" data-id="">
-                             	    		  <img src="{{ asset($hotel->img_path) }}" class="img img-thumbnail"  height="100" width="100%">
+                             	    		<a href="{{ route('getSingleHotelDataBySlug', $hotel->slug) }}" class="frmViewCount" data-id="">
+                             	    		  <img src="{{ asset($hotel->featured_img_1) }}" class="img img-responsive" width="100%" height="200">
                              	    		</a>
                              	    	</div>
                              	    	<div class="col-xs-9 col-sm-9 col-md-9">
-                             	    		<a href="" class="frmViewCount" data-id=""><h4>{{ $hotel->name }}
+                             	    		<a href="{{ route('getSingleHotelDataBySlug', $hotel->slug) }}" class="frmViewCount" data-id=""><h4>{{ $hotel->name }}
                              	    		</a>
                              	    		<span class="badge badge-warning badge-sm">5<i class="fa fa-star" aria-hidden="true"></i></span>
                              	    		<span class="pull-right btn theme-bg-dark text-white btn-sm mt-2 mt-sm-0">RoomType 3</span></h4>

@@ -397,6 +397,7 @@ class ComposerStaticInit52440045976de7f0ddb0555b48bbe8c1
         'App\\models\\HotelUser' => __DIR__ . '/../..' . '/app/models/HotelUser.php',
         'App\\models\\Mylogic' => __DIR__ . '/../..' . '/app/models/Mylogic.php',
         'App\\models\\NoticeBoard' => __DIR__ . '/../..' . '/app/models/NoticeBoard.php',
+        'App\\models\\OpenRoomBooking' => __DIR__ . '/../..' . '/app/models/OpenRoomBooking.php',
         'App\\models\\Product' => __DIR__ . '/../..' . '/app/models/Product.php',
         'App\\models\\SubCategory' => __DIR__ . '/../..' . '/app/models/SubCategory.php',
         'App\\models\\ViewProduct' => __DIR__ . '/../..' . '/app/models/ViewProduct.php',
